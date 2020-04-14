@@ -9,7 +9,7 @@
 
 if Rails.env.development?
   Dir.glob(Rails.root.join('db', 'dev', '*.rb')).each do |file|
-    puts file
+    puts "Loading #{file}"
     load file
   end
 end
