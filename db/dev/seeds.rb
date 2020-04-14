@@ -9,13 +9,21 @@
 
 require 'faker'
 
-# Callbackを実行させるためにinsert_allを使用しない　
-50.times do
-  User.create!(name: Faker::Name.name)
-end
+now = Time.zone.now
 
-User.find_each do |user|
-  3.times do
-    user.posts.create!(content: Faker::Lorem.sentence(word_count: 5))
-  end
+user_attributes = 50.times.map do
+  { name: Faker::Name.name, created_at: now, updated_at: now }
 end
+User.insert_all(user_attributes)
+User.import
+
+post_attributes = User.find_each.map do |user|
+  {
+    user_id: user.id,
+    content: Faker::Lorem.sentence(word_count: 5),
+    created_at: now,
+    updated_at: now,
+  }
+end
+Post.insert_all(post_attributes)
+Post.import
