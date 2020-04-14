@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
