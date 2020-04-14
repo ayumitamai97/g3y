@@ -7,9 +7,15 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-if Rails.env.development?
-  Dir.glob(Rails.root.join('db', 'dev', '*.rb')).each do |file|
-    puts file
-    load file
+require 'faker'
+
+# Callbackを実行させるためにinsert_allを使用しない　
+50.times do
+  User.create!(name: Faker::Name.name)
+end
+
+User.find_each do |user|
+  3.times do
+    user.posts.create!(content: Faker::Lorem.sentence(word_count: 5))
   end
 end
