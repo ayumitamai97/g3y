@@ -15,7 +15,7 @@ user_attributes = 50.times.map do
   { name: Faker::Name.name, created_at: now, updated_at: now }
 end
 User.insert_all(user_attributes)
-User.import
+User.import(force: true)
 
 post_attributes = User.find_each.map do |user|
   {
@@ -26,4 +26,4 @@ post_attributes = User.find_each.map do |user|
   }
 end
 Post.insert_all(post_attributes)
-Post.import
+Post.import(force: true)
