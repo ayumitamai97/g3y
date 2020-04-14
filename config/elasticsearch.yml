@@ -1,0 +1,11 @@
+default: &default
+  host: 'localhost:9200'
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  host: <%= ENV.fetch('G3Y_ELASTICSEARCH_HOST') %>
