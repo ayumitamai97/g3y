@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 #
@@ -23,7 +24,7 @@ post_attributes = User.find_each.map do |user|
       user_id: user.id,
       content: Faker::Lorem.sentence(word_count: 5),
       created_at: now,
-      updated_at: now,
+      updated_at: now
     }
   end
 end.flatten

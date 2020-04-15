@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class G3ySchema < GraphQL::Schema
   mutation Types::MutationType
   query Types::QueryType
@@ -11,7 +13,7 @@ class G3ySchema < GraphQL::Schema
 
   use GraphQL::Execution::Errors
 
-  rescue_from ActiveRecord::RecordNotFound do |err, obj, args, ctx, field|
+  rescue_from ActiveRecord::RecordNotFound do |_err, _obj, _args, _ctx, field|
     raise GraphQL::ExecutionError, "#{field.type.unwrap.graphql_name} not found"
   end
 end

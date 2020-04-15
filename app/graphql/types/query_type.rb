@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Types
   class QueryType < Types::BaseObject
     # Add root-level fields here.
@@ -28,8 +30,6 @@ module Types
     def posts(content: nil)
       # TODO: kuromoji
       # TODO: pagination https://github.com/elastic/elasticsearch-rails/blob/19851a0273d74a2a80a99dd0309f0052046646b5/elasticsearch-model/README.md#pagination
-      # TODO: refactor もっとなにか書き方あるはず!!!!!!!
-      # https://graphql-ruby.org/fields/arguments.html - prepare function
 
       query = if content.blank?
                 { match_all: {} }
