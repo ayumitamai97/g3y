@@ -18,12 +18,14 @@ User.insert_all(user_attributes)
 User.import(force: true)
 
 post_attributes = User.find_each.map do |user|
-  {
-    user_id: user.id,
-    content: Faker::Lorem.sentence(word_count: 5),
-    created_at: now,
-    updated_at: now,
-  }
-end
+  3.times.map do
+    {
+      user_id: user.id,
+      content: Faker::Lorem.sentence(word_count: 5),
+      created_at: now,
+      updated_at: now,
+    }
+  end
+end.flatten
 Post.insert_all(post_attributes)
 Post.import(force: true)
