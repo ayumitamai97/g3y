@@ -17,17 +17,18 @@ module Types
     field :posts, [PostType], null: false do
       description 'Incremental searchに使われる想定'
       argument :content, String, required: false
+      argument :userId, ID, required: false, as: :user_id
     end
 
     def user(id: nil, name: nil)
-      User.find(id) || User.find_by!(name: name)
+      User.find(id) rescue User.find_by!(name: name)
     end
 
     def post(id:)
       Post.find(id)
     end
 
-    def posts(content: nil)
+    def posts(content: nil, user_id: nil)
       # TODO: kuromoji
       # TODO: pagination https://github.com/elastic/elasticsearch-rails/blob/19851a0273d74a2a80a99dd0309f0052046646b5/elasticsearch-model/README.md#pagination
 
