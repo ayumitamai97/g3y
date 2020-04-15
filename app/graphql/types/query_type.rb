@@ -14,7 +14,6 @@ module Types
 
     field :posts, [PostType], null: false do
       description 'Incremental searchに使われる想定'
-      argument :user_id, ID, required: false
       argument :content, String, required: false
     end
 
@@ -26,31 +25,19 @@ module Types
       Post.find(id)
     end
 
-    def posts(user_id: nil, content: nil)
+    def posts(content: nil)
       # TODO: kuromoji
       # TODO: pagination https://github.com/elastic/elasticsearch-rails/blob/19851a0273d74a2a80a99dd0309f0052046646b5/elasticsearch-model/README.md#pagination
       # TODO: refactor もっとなにか書き方あるはず!!!!!!!
       # https://graphql-ruby.org/fields/arguments.html - prepare function
 
-      if user_id.blank? && content.blank?
-        Post.search(query: { match_all: {} })
-      elsif user_id.blank?
-        Post.search(query: { match: { content: content } })
-      elsif content.blank?
-        Post.search(query: { match: { user_id: user_id } })
-      else
-        q = {
-          bool: {
-            must: [
-              { match: { user_id: user_id } },
-              { match: { content: content } },
-            ]
-          }
-        }
+      query = if content.blank?
+                { match_all: {} }
+              else
+                { match: { content: content } }
+              end
 
-        # TODO: join datatype
-        Post.search(query: q).records.to_a
-      end
+      Post.search(query: query).records.to_a
     end
   end
 end
