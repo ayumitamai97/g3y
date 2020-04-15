@@ -39,7 +39,7 @@ module G3y
     # Elasticsearch
     es_config = YAML.safe_load(
       ERB.new(File.read('config/elasticsearch.yml')).result,
-      aliases: true,
+      aliases: true
     )
     es_host = es_config.symbolize_keys[Rails.env.to_sym]['host']
     Elasticsearch::Model.client = Elasticsearch::Client.new(host: es_host)
