@@ -21,17 +21,20 @@ module Types
     end
 
     def user(id: nil, name: nil)
-      User.find(id) rescue User.find_by!(name: name)
+      User.find(id)
+    rescue StandardError
+      User.find_by!(name: name)
     end
 
     def post(id:)
       Post.find(id)
     end
 
-    def posts(content: nil, user_id: nil)
+    def posts(content: nil, user_id: nil) # rubocop:disable Lint/UnusedMethodArgument
       # TODO: kuromoji
       # TODO: pagination https://github.com/elastic/elasticsearch-rails/blob/19851a0273d74a2a80a99dd0309f0052046646b5/elasticsearch-model/README.md#pagination
 
+      # TODO: search by user_id
       query = if content.blank?
                 { match_all: {} }
               else

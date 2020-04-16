@@ -2,3 +2,17 @@ require: rubocop-rails
 
 Layout/LineLength:
     Max: 120
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - 'lib/tasks/**/*'
+
+Metrics/MethodLength:
+  Max: 15
+
+Naming/MethodParameterName:
+  Exclude:
+    - 'app/controllers/graphql_controller.rb'
