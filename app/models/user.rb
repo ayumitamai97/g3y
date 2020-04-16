@@ -33,6 +33,7 @@ class User < ApplicationRecord
 
   def self.create_index!(options = {})
     client = User.__elasticsearch__.client
+
     if options.delete(:force)
       begin
         client.indices.delete index: index_name
@@ -41,19 +42,21 @@ class User < ApplicationRecord
       end
     end
 
-    settings = User.settings.to_hash.merge Post.settings.to_hash
-    mapping_properties = { relation_type: { type: 'join',
-                                            relations: { User::JOIN_TYPE => Post::JOIN_TYPE } } }
-
+    mapping_properties = {
+      relation_type: {
+        type: 'join',
+        relations: { User::JOIN_TYPE => Post::JOIN_TYPE }
+      }
+    }
     merged_properties = mapping_properties
                         .merge(User.mappings.to_hash[:properties])
                         .merge(Post.mappings.to_hash[:properties])
-    mappings = { properties: merged_properties }
 
+    settings = User.settings.to_hash.merge(Post.settings.to_hash)
     client.indices.create({ index: index_name,
                             body: {
                               settings: settings.to_hash,
-                              mappings: mappings
+                              mappings: { properties: merged_properties }
                             } }.merge(options))
   end
 end
