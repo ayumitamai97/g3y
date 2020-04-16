@@ -12,17 +12,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const routes = [
     { path: '/foo', component: Foo },
-    { path: '/bar', component: Bar }
+    { path: '/bar', component: Bar },
   ]
 
   const router = new VueRouter({
-    routes: routes
+    routes,
   })
 
-  const app = new Vue({
+  new Vue({
     el: '#app',
     components: { App },
     template: '<App/>',
-    router: router,
+    router,
   })
 })

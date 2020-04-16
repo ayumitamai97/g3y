@@ -1,6 +1,7 @@
-class RootController < ActionController::Base
+# frozen_string_literal: true
+
+class RootController < ApplicationController
   layout 'application'
 
-  def index
-  end
+  def index; end
 end

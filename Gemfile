@@ -21,7 +21,7 @@ gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
 
 gem 'graphql'
-gem "slim-rails"
+gem 'slim-rails'
 gem 'webpacker', '~> 5.x'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible

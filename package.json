@@ -17,5 +17,8 @@
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-vue": "^6.2.2",
     "webpack-dev-server": "^3.10.3"
+  },
+  "scripts": {
+    "eslint": "eslint --fix app/javascript/**/*.ts"
   }
 }
