@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ]
 
   const router = new VueRouter({
+    mode: 'history',
     routes,
   })
 
