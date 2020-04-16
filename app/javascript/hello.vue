@@ -6,11 +6,11 @@
 
 <script lang='ts'>
 export default {
-  data: function () {
+  data() {
     return {
-      message: "Hello Vue!"
+      message: 'Hello Vue!',
     }
-  }
+  },
 }
 </script>
 

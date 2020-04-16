@@ -1,12 +1,14 @@
-/* eslint no-console: 0 */
+/* eslint no-new: 0 */
+import Vue from 'vue/dist/vue.esm'
+import VueRouter from 'vue-router'
+import Hello from '../hello.vue'
 
- import Vue from 'vue/dist/vue.esm'
- import Hello from '../hello.vue'
+document.addEventListener('DOMContentLoaded', () => {
+  Vue.use(VueRouter)
 
- document.addEventListener('DOMContentLoaded', () => {
-   const app = new Vue({
-     el: '#app',
-     components: { Hello },
-     template: '<Hello/>',
-   })
- })
+  new Vue({
+    el: '#app',
+    components: { Hello },
+    template: '<Hello/>',
+  })
+})
