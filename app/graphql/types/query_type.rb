@@ -30,18 +30,33 @@ module Types
       Post.find(id)
     end
 
-    def posts(content: nil, user_id: nil) # rubocop:disable Lint/UnusedMethodArgument
+    def posts(content: nil, user_id: nil)
       # TODO: kuromoji
       # TODO: pagination https://github.com/elastic/elasticsearch-rails/blob/19851a0273d74a2a80a99dd0309f0052046646b5/elasticsearch-model/README.md#pagination
 
-      # TODO: search by user_id
-      query = if content.blank?
+      query = if content.blank? && user_id.blank?
                 { match_all: {} }
+              elsif content.blank? && user_id.present?
+                { parent_id: { type: 'post', id: user_id } }
+              elsif content.present? && user_id.blank?
+                {
+                  has_child: {
+                    type: 'post',
+                    query: { match: { content: content } }
+                  }
+                }
               else
-                { match: { content: content } }
+                {
+                  bool: {
+                    must: [
+                      { parent_id: { type: 'post', id: user_id } },
+                      { match: { content: content } }
+                    ]
+                  }
+                }
               end
 
-      Post.search(query: query).records.to_a
+      Post.search(query: query.deep_stringify_keys).records.to_a
     end
   end
 end
