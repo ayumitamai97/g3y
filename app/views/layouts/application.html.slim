@@ -1,0 +1,9 @@
+html
+  head
+    title hoge
+    = csrf_meta_tags
+    = csp_meta_tag
+    = javascript_pack_tag 'app', 'data-turbolinks-track': 'reload'
+    / = stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+  body
+   = yield

@@ -1,10 +1,10 @@
 <template>
-  <div id="app">
+  <div id="hello">
     <p>{{ message }}</p>
   </div>
 </template>
 
-<script>
+<script lang='ts'>
 export default {
   data: function () {
     return {
