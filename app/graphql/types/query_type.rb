@@ -30,7 +30,7 @@ module Types
       Post.find(id)
     end
 
-    def posts(content: nil, user_id: nil) # rubocop:disable Lint/UnusedMethodArgument
+    def posts(content: nil, user_id: nil)
       # TODO: kuromoji
       # TODO: pagination https://github.com/elastic/elasticsearch-rails/blob/19851a0273d74a2a80a99dd0309f0052046646b5/elasticsearch-model/README.md#pagination
 

@@ -11,8 +11,9 @@ Metrics/BlockLength:
     - 'lib/tasks/**/*'
 
 Metrics/MethodLength:
-  Max: 15
+  Max: 30 # TODO
 
 Naming/MethodParameterName:
   Exclude:
     - 'app/controllers/graphql_controller.rb'
+
