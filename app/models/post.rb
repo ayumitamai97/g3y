@@ -29,16 +29,12 @@ class Post < ApplicationRecord
 
   index_name 'users_and_posts'
 
-  mapping do
-    indexes :content
-  end
-
   after_commit -> { __elasticsearch__.index_document(routing: user_id) }, on: :create
   after_commit -> { __elasticsearch__.update_document(routing: user_id) }, on: :update
   after_commit -> { __elasticsearch__.delete_document(routing: user_id) }, on: :destroy
 
   def as_indexed_json(options = {})
     json = as_json(options)[JOIN_TYPE] || as_json(options)
-    json.merge(join_field: { name: JOIN_TYPE, parent: user_id })
+    json.merge(relation_type: { name: JOIN_TYPE, parent: user_id }).deep_stringify_keys
   end
 end
