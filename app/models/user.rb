@@ -26,12 +26,12 @@ class User < ApplicationRecord
     indexes :name
   end
 
+  after_commit -> { __elasticsearch__.index_document  }, on: :create
+  after_commit -> { __elasticsearch__.update_document }, on: :update
+  after_commit -> { __elasticsearch__.delete_document }, on: :destroy
+
   def as_indexed_json(options = {})
     json = as_json(options)[JOIN_TYPE] || as_json(options)
     json.merge(JOIN_METADATA)
   end
-
-  after_commit -> { __elasticsearch__.index_document  }, on: :create
-  after_commit -> { __elasticsearch__.update_document }, on: :update
-  after_commit -> { __elasticsearch__.delete_document }, on: :destroy
 end

@@ -9,8 +9,9 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 if Rails.env.development?
-  Dir.glob(Rails.root.join('db', 'dev', '*.rb')).each do |file|
-    puts "Loading #{file}"
+  Dir.glob(Rails.root.join('db/dev/*.rb')).each do |file|
+    logger = Logger.new(STDOUT)
+    logger.info "Loading #{file}"
     load file
   end
 end
