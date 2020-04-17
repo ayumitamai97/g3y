@@ -1,6 +1,11 @@
 <template>
   <div>
-    <p>{{ message }}, {{ userName() }}</p>
+    <p>{{ message }}, {{ this.user.name }}</p>
+    <ul>
+      <li v-for="post in posts" :key="post.content">
+        {{ post.user.name }}: {{ post.content }}
+      </li>
+    </ul>
 
     <router-link to='/foo'>go to foo</router-link>
     <router-link to='/bar'>go to bar</router-link>
@@ -16,6 +21,7 @@ export default {
   data() {
     return {
       user: '',
+      posts: '',
       message: 'Hello👋',
     }
   },
@@ -27,12 +33,16 @@ export default {
         name
       }
     }`,
+    posts: gql`query {
+      posts {
+        content
+        user {
+          id
+          name
+        }
+      }
+    }`,
   },
-  methods: {
-    userName() {
-      return this.user.name
-    }
-  }
 }
 </script>
 
