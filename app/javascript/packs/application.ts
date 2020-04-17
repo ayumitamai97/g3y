@@ -45,6 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
     template: '<App/>',
     router,
     apolloProvider,
-    render: h => h(App),
+    render: (h) => h(App),
   })
 })
