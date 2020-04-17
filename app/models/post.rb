@@ -27,8 +27,6 @@ class Post < ApplicationRecord
 
   JOIN_TYPE = 'post'
 
-  index_name 'users_and_posts'
-
   after_commit -> { __elasticsearch__.index_document(routing: user_id) }, on: :create
   after_commit -> { __elasticsearch__.update_document(routing: user_id) }, on: :update
   after_commit -> { __elasticsearch__.delete_document(routing: user_id) }, on: :destroy
