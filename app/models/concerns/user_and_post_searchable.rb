@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 module UserAndPostSearchable
   extend ActiveSupport::Concern
-  extend self
+
+  module_function
 
   INDEX_NAME = 'users_and_posts'
 
@@ -22,14 +25,14 @@ module UserAndPostSearchable
       }
     }
     merged_properties = mapping_properties
-      .merge(User.mappings.to_hash[:properties])
-      .merge(Post.mappings.to_hash[:properties])
+                        .merge(User.mappings.to_hash[:properties])
+                        .merge(Post.mappings.to_hash[:properties])
 
     settings = User.settings.to_hash.merge(Post.settings.to_hash)
     client.indices.create({ index: INDEX_NAME,
                             body: {
-      settings: settings.to_hash,
-      mappings: { properties: merged_properties }
-    } }.merge(options))
+                              settings: settings.to_hash,
+                              mappings: { properties: merged_properties }
+                            } }.merge(options))
   end
 end
