@@ -10,8 +10,8 @@
 
 require 'faker'
 
-Rails.application.load_tasks
-Rake::Task['es:create_indices'].execute
+system('bundle exec rake es:delete_indices')
+system('bundle exec rake es:create_indices')
 
 now = Time.zone.now
 
