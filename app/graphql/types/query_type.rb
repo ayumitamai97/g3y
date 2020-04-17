@@ -39,12 +39,7 @@ module Types
               elsif content.blank? && user_id.present?
                 { parent_id: { type: 'post', id: user_id } }
               elsif content.present? && user_id.blank?
-                {
-                  has_child: {
-                    type: 'post',
-                    query: { match: { content: content } }
-                  }
-                }
+                { match: { content: content } }
               else
                 {
                   bool: {
