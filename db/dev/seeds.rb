@@ -10,6 +10,9 @@
 
 require 'faker'
 
+Rails.application.load_tasks
+Rake::Task['es:create_indices'].execute
+
 now = Time.zone.now
 
 user_attributes = 50.times.map do
