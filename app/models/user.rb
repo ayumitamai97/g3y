@@ -11,6 +11,7 @@
 #
 class User < ApplicationRecord
   include Elasticsearch::Model
+  include UserAndPostSearchable
 
   has_many :posts, dependent: :destroy
 

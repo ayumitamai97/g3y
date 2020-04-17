@@ -3,6 +3,10 @@
 module UserAndPostSearchable
   extend ActiveSupport::Concern
 
+  included do
+    index_name INDEX_NAME
+  end
+
   module_function
 
   INDEX_NAME = 'users_and_posts'
