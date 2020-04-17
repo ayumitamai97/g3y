@@ -8,7 +8,7 @@ namespace :es do
 
     concerns = [UserAndPostSearchable]
     concerns.each do |concern|
-      concern.create_index! if existing_indices.include?(concern::INDEX_NAME.to_s)
+      concern.create_index! unless existing_indices.include?(concern::INDEX_NAME.to_s)
     rescue StandardError => e
       next logger.error(e)
     end
