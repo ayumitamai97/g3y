@@ -35,7 +35,7 @@ module Types
       # TODO: pagination https://github.com/elastic/elasticsearch-rails/blob/19851a0273d74a2a80a99dd0309f0052046646b5/elasticsearch-model/README.md#pagination
 
       query = if content.blank? && user_id.blank?
-                { match_all: {} }
+                { match: { relation_type: 'post' } }
               elsif content.blank? && user_id.present?
                 { parent_id: { type: 'post', id: user_id } }
               elsif content.present? && user_id.blank?
@@ -51,7 +51,7 @@ module Types
                 }
               end
 
-      Post.search(query: query.deep_stringify_keys).records.to_a
+      Post.search(query: query.deep_stringify_keys, sort: { created_at: 'desc' }).results
     end
   end
 end

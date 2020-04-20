@@ -8,6 +8,7 @@
     "graphql": "^15.0.0",
     "graphql-tag": "^2.10.3",
     "pnp-webpack-plugin": "^1.6.4",
+    "sass-resources-loader": "^2.0.3",
     "ts-loader": "^7.0.0",
     "typescript": "^3.8.3",
     "vue": "^2.6.11",

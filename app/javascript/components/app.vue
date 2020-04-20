@@ -1,16 +1,12 @@
 <template>
-  <div>
-    <p>{{ message }}, {{ this.user.name }}</p>
-    <ul>
-      <li v-for="post in posts" :key="post.content">
-        {{ post.user.name }}: {{ post.content }}
-      </li>
-    </ul>
-
-    <router-link to='/foo'>go to foo</router-link>
-    <router-link to='/bar'>go to bar</router-link>
-
-    <router-view></router-view>
+  <div class="p-home">
+    <h1 class="p-home__title">Home Timeline</h1>
+    <div class="p-home__posts">
+      <div v-for="post in posts" :key="post.id" class="p-home__posts__item c-post">
+        <div class="c-post--username">{{ post.user.name }}</div>
+        <div class="c-post--content">{{ post.content }}</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -22,7 +18,6 @@ export default {
     return {
       user: '',
       posts: '',
-      message: 'Hello👋',
     }
   },
   apollo: {
@@ -46,9 +41,29 @@ export default {
 }
 </script>
 
-<style scoped>
-p {
-  font-size: 2em;
-  text-align: center;
-}
+<style scoped lang="sass">
+  .p-home {
+    margin: 20px 15px;
+    font-size: 16px;
+
+    &__title {
+      margin: 20px 0;
+    }
+
+    &__posts {
+      margin: 20px 0;
+    }
+  }
+
+  .c-post {
+    margin: 15px 0;
+
+    &--username {
+      font-size: 0.75em;
+    }
+
+    &--content {
+      font-size: 1em;
+    }
+  }
 </style>
