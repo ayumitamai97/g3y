@@ -40,30 +40,3 @@ export default {
   },
 }
 </script>
-
-<style scoped lang="sass">
-  .p-home {
-    margin: 20px 15px;
-    font-size: 16px;
-
-    &__title {
-      margin: 20px 0;
-    }
-
-    &__posts {
-      margin: 20px 0;
-    }
-  }
-
-  .c-post {
-    margin: 15px 0;
-
-    &--username {
-      font-size: 0.75em;
-    }
-
-    &--content {
-      font-size: 1em;
-    }
-  }
-</style>

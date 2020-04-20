@@ -8,6 +8,8 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import VueApollo from 'vue-apollo'
 import App from '../components/app.vue'
 
+import './application.scss'
+
 document.addEventListener('DOMContentLoaded', () => {
   Vue.use(VueRouter)
   Vue.use(VueApollo)
