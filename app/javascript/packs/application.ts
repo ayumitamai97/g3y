@@ -9,8 +9,6 @@ import VueApollo from 'vue-apollo'
 import InfiniteLoading from 'vue-infinite-loading'
 import App from '../components/app.vue'
 
-import './application.scss'
-
 document.addEventListener('DOMContentLoaded', () => {
   Vue.use(VueRouter)
   Vue.use(VueApollo)
