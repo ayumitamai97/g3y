@@ -11,7 +11,7 @@
 <script lang='ts'>
 import gql from 'graphql-tag'
 
-const pagePer = 50
+const pagePer: number = 50
 
 export default {
   data() {
@@ -41,18 +41,16 @@ export default {
   },
   methods: {
     // ref. https://apollo.vuejs.org/guide/apollo/pagination.html
-    showMore() {
+    showMore(): void {
       this.page += 1
       this.$apollo.queries.posts.fetchMore({
         variables: {
           page: this.page,
           pagePer,
         },
-        updateQuery: (previousResult, { fetchMoreResult }) => {
-          return {
-            posts: [...previousResult.posts, ...fetchMoreResult.posts],
-          }
-        },
+        updateQuery: (previousResult, { fetchMoreResult }): Object => ({
+          posts: [...previousResult.posts, ...fetchMoreResult.posts],
+        }),
       })
     },
   },

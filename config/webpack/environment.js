@@ -20,11 +20,9 @@ dotenvFiles.forEach((dotenvFile) => {
   dotenv.config({ path: dotenvFile, silent: true })
 })
 
-environment.plugins.prepend(
-  'Environment',
-  new webpack.EnvironmentPlugin({
-    HOST: process.env.HOST,
-  }),
-)
+// https://webpack.js.org/plugins/environment-plugin/#usage-with-default-values
+environment.plugins.prepend('Environment', new webpack.EnvironmentPlugin({
+  HOST: process.env.HOST,
+}))
 
 module.exports = environment

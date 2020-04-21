@@ -37,7 +37,7 @@ module Types
         query: posts_query(content: content, user_id: user_id).deep_stringify_keys,
         sort: { created_at: 'desc' },
         size: page_per,
-        from: page_per * page,
+        from: page_per * page
       }
       # TODO: resolve N+1 query
       Post.search(req).results
