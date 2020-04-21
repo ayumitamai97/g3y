@@ -49,6 +49,4 @@ test:
 #
 production:
   <<: *default
-  database: g3y_production
-  username: g3y
-  password: <%= ENV['G3Y_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
