@@ -18,10 +18,10 @@ namespace :es do
     logger = Logger.new(STDOUT)
 
     client = Elasticsearch::Model.client
-    existing_indices = client.indices.stats.dig('indices')&.keys.map(&:to_s)
 
-    existing_indices.each do |index|
-      client.indices.delete(index: index)
+    concerns = [UserAndPostSearchable]
+    concerns.each do |concern|
+      client.indices.delete(index: concern::INDEX_NAME.to_s)
     rescue StandardError => e
       next logger.error(e)
     end

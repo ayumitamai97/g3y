@@ -2,8 +2,12 @@
 
 module Types
   class PostType < Types::BaseObject
-    field :id, Integer, null: false
+    field :id, ID, null: false
     field :user, UserType, null: false
     field :content, String, null: false
+
+    def user
+      User.find(object.user_id)
+    end
   end
 end

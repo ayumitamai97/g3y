@@ -1,24 +1,23 @@
 <template>
-  <div>
-    <p>{{ message }}, {{ userName() }}</p>
-
-    <router-link to='/foo'>go to foo</router-link>
-    <router-link to='/bar'>go to bar</router-link>
-
-    <router-view></router-view>
+  <div class="p-home">
+    <h1 class="p-home__title">Home Timeline</h1>
+    <div class="p-home__posts">
+      <posts></posts>
+    </div>
   </div>
 </template>
 
 <script lang='ts'>
 import gql from 'graphql-tag'
+import Posts from './posts'
 
 export default {
   data() {
     return {
       user: '',
-      message: 'Hello👋',
     }
   },
+  components: { Posts },
   apollo: {
     // TODO: ログイン中のユーザ
     user: gql`query {
@@ -28,17 +27,5 @@ export default {
       }
     }`,
   },
-  methods: {
-    userName() {
-      return this.user.name
-    }
-  }
 }
 </script>
-
-<style scoped>
-p {
-  font-size: 2em;
-  text-align: center;
-}
-</style>

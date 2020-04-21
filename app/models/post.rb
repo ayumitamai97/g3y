@@ -20,6 +20,7 @@
 #
 class Post < ApplicationRecord
   include Elasticsearch::Model
+  include UserAndPostSearchable
 
   belongs_to :user
 

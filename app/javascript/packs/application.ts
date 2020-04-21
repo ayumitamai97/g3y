@@ -6,11 +6,15 @@ import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import VueApollo from 'vue-apollo'
+import InfiniteLoading from 'vue-infinite-loading'
 import App from '../components/app.vue'
+
+import './application.scss'
 
 document.addEventListener('DOMContentLoaded', () => {
   Vue.use(VueRouter)
   Vue.use(VueApollo)
+  Vue.use(InfiniteLoading) // TODO: implement infinite scrolling
 
   const Foo = { template: '<div>foo</div>' }
   const Bar = { template: '<div>bar</div>' }
@@ -20,24 +24,15 @@ document.addEventListener('DOMContentLoaded', () => {
     { path: '/bar', component: Bar },
   ]
 
-  const router = new VueRouter({
-    mode: 'history',
-    routes,
-  })
+  const router = new VueRouter({ mode: 'history', routes })
 
   const httpLink = createHttpLink({
     // TODO: environmental variable
     uri: 'http://localhost:3000/graphql',
   })
   const cache = new InMemoryCache()
-  const apolloClient = new ApolloClient({
-    link: httpLink,
-    cache,
-  })
-
-  const apolloProvider = new VueApollo({
-    defaultClient: apolloClient,
-  })
+  const apolloClient = new ApolloClient({ link: httpLink, cache })
+  const apolloProvider = new VueApollo({ defaultClient: apolloClient })
 
   new Vue({
     el: '#app',
@@ -45,6 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
     template: '<App/>',
     router,
     apolloProvider,
-    render: h => h(App),
+    render: (h) => h(App),
   })
 })
