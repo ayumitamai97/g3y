@@ -8,4 +8,4 @@ test:
   <<: *default
 
 production:
-  host: <%= ENV['G3Y_ELASTICSEARCH_HOST'] %>
+  host: <%= ENV['SEARCHBOX_URL'] %>

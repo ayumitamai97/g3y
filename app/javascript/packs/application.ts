@@ -16,20 +16,14 @@ document.addEventListener('DOMContentLoaded', () => {
   Vue.use(VueApollo)
   Vue.use(InfiniteLoading) // TODO: implement infinite scrolling
 
-  const Foo = { template: '<div>foo</div>' }
-  const Bar = { template: '<div>bar</div>' }
-
+  // const Foo = { template: '<div>foo</div>' }
   const routes = [
-    { path: '/foo', component: Foo },
-    { path: '/bar', component: Bar },
+    // { path: '/foo', component: Foo },
   ]
 
   const router = new VueRouter({ mode: 'history', routes })
 
-  const httpLink = createHttpLink({
-    // TODO: environmental variable
-    uri: 'http://localhost:3000/graphql',
-  })
+  const httpLink = createHttpLink({ uri: `${process.env.HOST}/graphql` })
   const cache = new InMemoryCache()
   const apolloClient = new ApolloClient({ link: httpLink, cache })
   const apolloProvider = new VueApollo({ defaultClient: apolloClient })
