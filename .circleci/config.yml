@@ -1,0 +1,36 @@
+version: 2.1
+orbs:
+  ruby: circleci/ruby@0.1.2
+
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.6.5-stretch-node
+    executor: ruby/default
+    steps:
+      - checkout
+      - run:
+          name: Which bundler?
+          command: bundle -v
+      - ruby/bundle-install
+      - run:
+          name: Rubocop
+          command: bundle exec rubocop
+      - restore_cache:
+          name: yarn restore cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: yarn install
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          name: Save yarn packages cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run:
+          name: ESLint
+          command: yarn run eslint
+      - run:
+          name: stylelint
+          command: yarn run stylelint
