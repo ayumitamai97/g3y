@@ -31,7 +31,7 @@
     "webpack-dev-server": "^3.10.3"
   },
   "scripts": {
-    "eslint": "eslint --ext .ts,.js,.vue --fix app/javascript/",
+    "eslint": "eslint --ext .ts,.js,.vue app/javascript/",
     "stylelint": "stylelint  \"app/javascript/**/*.scss\""
   }
 }
