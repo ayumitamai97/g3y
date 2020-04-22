@@ -13,7 +13,24 @@ jobs:
           name: Which bundler?
           command: bundle -v
       - ruby/bundle-install
-  lint:
-    steps:
-      - run: bundle exec rubocop
-      - run: yarn run eslint
+      - run:
+          name: Rubocop
+          command: bundle exec rubocop
+      - restore_cache:
+          name: yarn restore cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: yarn install
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          name: Save yarn packages cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run:
+          name: ESLint
+          command: yarn run eslint
+      - run:
+          name: stylelint
+          command: yarn run stylelint

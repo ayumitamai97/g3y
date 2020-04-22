@@ -9,6 +9,8 @@
     "graphql": "^15.0.0",
     "graphql-tag": "^2.10.3",
     "pnp-webpack-plugin": "^1.6.4",
+    "stylelint": "^13.3.3",
+    "stylelint-config-standard": "^20.0.0",
     "ts-loader": "^7.0.0",
     "typescript": "^3.8.3",
     "vue": "^2.6.11",
@@ -29,6 +31,7 @@
     "webpack-dev-server": "^3.10.3"
   },
   "scripts": {
-    "eslint": "eslint --ext .ts,.js,.vue --fix app/javascript/"
+    "eslint": "eslint --ext .ts,.js,.vue --fix app/javascript/",
+    "stylelint": "stylelint  \"app/javascript/**/*.scss\""
   }
 }
