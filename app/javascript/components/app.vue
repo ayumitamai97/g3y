@@ -8,7 +8,7 @@
 </template>
 
 <script lang='ts'>
-import Posts from './posts'
+import Posts from './posts.vue'
 
 export default {
   components: { Posts },

@@ -13,3 +13,7 @@ jobs:
           name: Which bundler?
           command: bundle -v
       - ruby/bundle-install
+  lint:
+    steps:
+      - run: bundle exec rubocop
+      - run: yarn run eslint
