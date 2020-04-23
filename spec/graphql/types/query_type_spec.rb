@@ -58,12 +58,15 @@ RSpec.describe Types::QueryType do
         second_user.posts.create!(content: query_content_string)
         create_list(:post, 5, user: second_user, content: ['good morning', 'good night'].sample)
       end
-      sleep 3 # Wait for indexing?
+
+      sleep 3
     end
 
     after do
       Elasticsearch::DeleteIndicesService.new.execute
       Elasticsearch::CreateIndicesService.new.execute
+
+      sleep 3
     end
 
     context 'search latest 100 posts' do
