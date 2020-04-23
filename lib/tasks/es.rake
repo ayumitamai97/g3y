@@ -4,7 +4,7 @@ namespace :es do
   task create_indices: :environment do
     logger = Logger.new(STDOUT)
 
-    existing_indices = Elasticsearch::Model.client.indices.stats.dig('indices')&.keys.map(&:to_s)
+    existing_indices = Elasticsearch::Model.client.indices.stats.dig('indices')&.keys&.map(&:to_s)
 
     concerns = [UserAndPostSearchable]
     concerns.each do |concern|
