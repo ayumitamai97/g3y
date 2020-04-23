@@ -10,8 +10,8 @@
 
 require 'faker'
 
-system('bundle exec rake es:delete_indices')
-system('bundle exec rake es:create_indices')
+Elasticsearch::DeleteIndicesService.new.execute
+Elasticsearch::CreateIndicesService.new.execute
 
 5.times do
   User.create!(name: Faker::Name.name)

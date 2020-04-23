@@ -38,6 +38,7 @@ jobs:
             echo Failed waiting for MySQL && exit 1
 
       - ruby/bundle-install
+
       - run:
           name: Create database
           command: RAILS_ENV=test bundle exec rails db:create
@@ -65,6 +66,10 @@ jobs:
       - run:
           name: stylelint
           command: yarn run stylelint
+
+      - run:
+          name: Wait for Elasticsearch
+          command: dockerize -wait tcp://localhost:9200 -timeout 1m
       - run:
           name: RSpec
           command: bundle exec rspec spec/
