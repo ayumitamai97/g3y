@@ -28,6 +28,7 @@ gem 'webpacker', '~> 5.x'
 # gem 'rack-cors'
 
 group :development, :test do
+  gem 'factory_bot_rails'
   gem 'pry-rails'
   gem 'rspec-rails', '~> 4.0.0'
 end
