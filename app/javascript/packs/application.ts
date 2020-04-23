@@ -7,7 +7,7 @@ import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import VueApollo from 'vue-apollo'
 import InfiniteLoading from 'vue-infinite-loading'
-import App from 'components/app.vue'
+import App from '../components/app.vue'
 
 document.addEventListener('DOMContentLoaded', () => {
   Vue.use(VueRouter)
