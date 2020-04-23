@@ -63,4 +63,12 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  config.include FactoryBot::Syntax::Methods
+
+  config.around(:all) do |example|
+    Elasticsearch::CreateIndicesService.new.execute
+    example.run
+    Elasticsearch::DeleteIndicesService.new.execute
+  end
 end

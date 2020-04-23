@@ -28,13 +28,14 @@ gem 'webpacker', '~> 5.x'
 # gem 'rack-cors'
 
 group :development, :test do
+  gem 'factory_bot_rails'
+  gem 'faker', require: false
   gem 'pry-rails'
   gem 'rspec-rails', '~> 4.0.0'
 end
 
 group :development do
   gem 'annotate'
-  gem 'faker', require: false
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'rubocop-rails', require: false
   gem 'spring'

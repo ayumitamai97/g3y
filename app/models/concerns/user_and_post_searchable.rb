@@ -9,7 +9,7 @@ module UserAndPostSearchable
 
   module_function
 
-  INDEX_NAME = 'users_and_posts'
+  INDEX_NAME = "users_and_posts_#{Rails.env}"
 
   def create_index!(options = {})
     delete_index if options.delete(:force)
@@ -24,8 +24,6 @@ module UserAndPostSearchable
     }.merge(options)
     elastic_client.indices.create(index_info)
   end
-
-  private
 
   def delete_index
     elastic_client.indices.delete index: INDEX_NAME

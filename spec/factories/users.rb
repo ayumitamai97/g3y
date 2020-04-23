@@ -9,11 +9,8 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-require 'rails_helper'
-
-RSpec.describe User, type: :model do
-  describe 'factory' do
-    it { expect { create(:user) }.not_to raise_error }
-    it { expect { create(:user) }.to change { User.count }.by 1 }
+FactoryBot.define do
+  factory :user do
+    sequence(:name) { |n| "user_#{n}" }
   end
 end

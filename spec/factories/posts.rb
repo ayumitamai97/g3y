@@ -18,11 +18,11 @@
 #
 #  fk_rails_...  (user_id => users.id)
 #
-require 'rails_helper'
+require 'faker'
 
-RSpec.describe Post, type: :model do
-  describe 'factory' do
-    it { expect { create(:post) }.not_to raise_error }
-    it { expect { create(:post) }.to change { Post.count }.by 1 }
+FactoryBot.define do
+  factory :post do
+    user
+    content { "#{Faker::Science.scientist} #{Faker::Verb.base}" }
   end
 end
