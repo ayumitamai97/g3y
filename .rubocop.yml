@@ -1,10 +1,8 @@
-Style/Documentation:
-  Enabled: false
+require: rubocop-rails
 
 Metrics/MethodLength:
   Exclude:
     - 'app/controllers/graphql_controller.rb'
-
 Metrics/BlockLength:
   Exclude:
     - 'lib/tasks/auto_annotate_models.rake'
@@ -12,6 +10,18 @@ Metrics/BlockLength:
 Naming/MethodParameterName:
   Exclude:
     - 'app/controllers/graphql_controller.rb'
+
+Style/Documentation:
+  Enabled: false
+Style/ExponentialNotation:
+  Enabled: true
+Style/HashEachMethods:
+  Enabled: true
+Style/HashTransformKeys:
+  Enabled: true
+Style/HashTransformValues:
+  Enabled: true
+
 
 # Cookpad styleguide
 # https://github.com/cookpad/styleguide/blob/master/.rubocop.yml
@@ -36,6 +46,8 @@ Layout/IndentationConsistency:
 Layout/InitialIndentation:
   Enabled: true
 Layout/CommentIndentation:
+  Enabled: true
+Layout/SpaceAroundMethodCallOperator:
   Enabled: true
 
 # [MUST] When you want to pass a block in the last method call of a long method chain, you must extract the receiver of the last method call into a local variable. Afterwards, write the method call with block as a separate statement on the following line.
@@ -214,6 +226,11 @@ Style/ParallelAssignment:
 Lint/AssignmentInCondition:
   Enabled: true
   AllowSafeAssignment: false
+
+Lint/RaiseException:
+  Enabled: true
+Lint/StructNewOverride:
+  Enabled: true
 
 ########################
 # Control structures
