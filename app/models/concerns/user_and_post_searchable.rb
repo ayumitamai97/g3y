@@ -25,8 +25,6 @@ module UserAndPostSearchable
     elastic_client.indices.create(index_info)
   end
 
-  private
-
   def delete_index
     elastic_client.indices.delete index: INDEX_NAME
   rescue StandardError

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Elasticsearch
-  class CreateIndicesService < Elasticsearch::BaseService
+  class CreateIndicesService < BaseService
     def execute
       @concerns.each do |concern|
         concern.create_index! unless @existing_indices.include?(concern::INDEX_NAME.to_s)
