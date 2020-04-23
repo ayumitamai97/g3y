@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class RootController < ActionController::Base # rubocop:disable Rails/ApplicationController
+class RootController < ActionController::Base
   layout 'application'
 
   def index; end

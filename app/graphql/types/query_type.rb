@@ -37,31 +37,43 @@ module Types
         query: posts_query(content: content, user_id: user_id).deep_stringify_keys,
         sort: { created_at: 'desc' },
         size: page_per,
-        from: page_per * page
+        from: page_per * page,
       }
       # TODO: resolve N+1 query
       Post.search(req).results
     end
+
+    private
 
     def posts_query(content:, user_id:)
       # TODO: kuromoji
 
       if content.blank? && user_id.blank?
         { match: { relation_type: 'post' } }
-      elsif content.blank? && user_id.present?
-        { parent_id: { type: 'post', id: user_id } }
-      elsif content.present? && user_id.blank?
-        { match: { content: content } }
+      elsif content.blank?
+        parent_id(child_type: 'post', parent_id: user_id)
+      elsif user_id.blank?
+        match(content: content)
       else
-        {
-          bool: {
-            must: [
-              { parent_id: { type: 'post', id: user_id } },
-              { match: { content: content } }
-            ]
-          }
-        }
+        parent_query = parent_id(child_type: 'post', parent_id: user_id)
+        and_condition(parent_query: parent_query, match_query: match(content: content))
       end
+    end
+
+    def parent_id(child_type:, parent_id:)
+      { parent_id: { type: child_type, id: parent_id } }
+    end
+
+    def match(hash)
+      { match: hash }
+    end
+
+    def and_condition(parent_query:, match_query:)
+      {
+        bool: {
+          must: [parent_query, match_query],
+        },
+      }
     end
   end
 end
