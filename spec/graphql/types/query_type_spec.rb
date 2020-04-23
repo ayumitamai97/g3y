@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 # ref. Testing Interface-Level Behaviors
@@ -45,23 +47,22 @@ RSpec.describe Types::QueryType do
     let!(:first_user) { create(:user) }
 
     around(:each) do |e|
-      # TODO: system をやめる, rescueする etc
-      system('bundle exec rake es:delete_indices')
-      system('bundle exec rake es:create_indices')
+      Elasticsearch::DeleteIndicesService.new.execute
+      Elasticsearch::CreateIndicesService.new.execute
       e.run
-      system('bundle exec rake es:delete_indices')
+      Elasticsearch::DeleteIndicesService.new.execute
     end
 
     before do
       # First user
       first_user.posts.create!(content: 'happy birthday')
       first_user.posts.create!(content: 'hello')
-      create_list(:post, 5, user: first_user, content: ['good morning', 'good evening', 'good night'].shuffle.first)
+      create_list(:post, 5, user: first_user, content: ['good morning', 'good evening', 'good night'].sample)
 
       # Second user
       second_user = create(:user)
       second_user.posts.create!(content: 'hello')
-      create_list(:post, 5, user: second_user, content: ['good morning', 'good evening', 'good night'].shuffle.first)
+      create_list(:post, 5, user: second_user, content: ['good morning', 'good evening', 'good night'].sample)
       sleep 1 # Wait for indexing?
     end
 
@@ -149,11 +150,11 @@ RSpec.describe Types::QueryType do
 
       it 'returns the posts by first_user containing query string' do
         result = G3ySchema.execute(query, {
-          variables: {
-            content: query_content_string,
-            user_id: first_user.id,
-          }
-        })
+                                     variables: {
+                                       content: query_content_string,
+                                       user_id: first_user.id,
+                                     },
+                                   })
         result_posts = result.dig('data', 'posts')
 
         expect(result_posts.count).to eq Post.where(content: query_content_string, user: first_user).count

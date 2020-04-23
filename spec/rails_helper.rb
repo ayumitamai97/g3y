@@ -66,9 +66,9 @@ RSpec.configure do |config|
 
   config.include FactoryBot::Syntax::Methods
 
-  config.around(:all) do |e|
-    system('bundle exec rake es:create_indices')
-    e.run
-    system('bundle exec rake es:delete_indices')
+  config.around(:all) do |example|
+    Elasticsearch::CreateIndicesService.new.execute
+    example.run
+    Elasticsearch::DeleteIndicesService.new.execute
   end
 end
