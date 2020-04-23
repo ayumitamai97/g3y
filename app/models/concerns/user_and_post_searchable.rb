@@ -9,7 +9,7 @@ module UserAndPostSearchable
 
   module_function
 
-  INDEX_NAME = 'users_and_posts'
+  INDEX_NAME = "users_and_posts_#{Rails.env}"
 
   def create_index!(options = {})
     delete_index if options.delete(:force)

@@ -65,4 +65,10 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.include FactoryBot::Syntax::Methods
+
+  config.around(:all) do |e|
+    system('bundle exec rake es:create_indices')
+    e.run
+    system('bundle exec rake es:delete_indices')
+  end
 end
