@@ -46,14 +46,9 @@ RSpec.describe Types::QueryType do
     let(:query_content_string) { 'hello' }
     let!(:first_user) { create(:user) }
 
-    around(:each) do |e|
-      Elasticsearch::DeleteIndicesService.new.execute
-      Elasticsearch::CreateIndicesService.new.execute
-      e.run
-      Elasticsearch::DeleteIndicesService.new.execute
-    end
-
     before do
+      Elasticsearch::Model.client.indices.flush
+
       # First user
       first_user.posts.create!(content: 'happy birthday')
       first_user.posts.create!(content: 'hello')
@@ -63,7 +58,7 @@ RSpec.describe Types::QueryType do
       second_user = create(:user)
       second_user.posts.create!(content: 'hello')
       create_list(:post, 5, user: second_user, content: ['good morning', 'good evening', 'good night'].sample)
-      sleep 1 # Wait for indexing?
+      sleep 0.5 # Wait for indexing?
     end
 
     context 'search latest 100 posts' do
