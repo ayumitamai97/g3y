@@ -66,9 +66,9 @@ RSpec.describe Types::QueryType do
     end
 
     after do
-      Elasticsearch::DeleteIndicesService.new.execute
-      Elasticsearch::CreateIndicesService.new.execute
-      # Elasticsearch::Model.client.indices.flush
+      # Elasticsearch::DeleteIndicesService.new.execute
+      # Elasticsearch::CreateIndicesService.new.execute
+      Elasticsearch::Model.client.indices.flush
     end
 
     context 'search latest 100 posts' do
