@@ -5,9 +5,9 @@
 # Table name: users
 #
 #  id              :bigint           not null, primary key
-#  email           :string(255)      not null
+#  email           :string(255)      default(""), not null
 #  name            :string(255)      not null
-#  password_digest :string(255)      not null
+#  password_digest :string(255)      default(""), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
@@ -20,7 +20,7 @@ class User < ApplicationRecord
   include Elasticsearch::Model
   include UserAndPostSearchable
 
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i.freeze
   has_secure_password
 
   has_many :posts, dependent: :destroy

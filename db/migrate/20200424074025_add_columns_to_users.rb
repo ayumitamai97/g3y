@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 class AddColumnsToUsers < ActiveRecord::Migration[6.0]
   def change
-    add_column :users, :email, :string, null: false, index: { unique: true }
-    add_column :users, :password_digest, :string, null: false
-    add_index :users, :name, unique: true
-    add_index :users, :email, unique: true
+    change_table :users, bulk: true do |t|
+      t.index :name, unique: true
+      t.string :email, null: false, index: { unique: true }, default: ''
+      t.string :password_digest, null: false, default: ''
+    end
   end
 end
