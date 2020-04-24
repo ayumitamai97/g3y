@@ -47,10 +47,6 @@ RSpec.describe Types::QueryType do
     let!(:first_user) { create(:user) }
 
     before do
-      # Elasticsearch::Model.client.indices.flush
-      # Elasticsearch::DeleteIndicesService.new.execute
-      # Elasticsearch::CreateIndicesService.new.execute
-
       # First user
       ActiveRecord::Base.transaction do
         first_user.posts.create!(content: 'happy birthday')
@@ -66,9 +62,8 @@ RSpec.describe Types::QueryType do
     end
 
     after do
-      # Elasticsearch::DeleteIndicesService.new.execute
-      # Elasticsearch::CreateIndicesService.new.execute
-      Elasticsearch::Model.client.indices.flush
+      Elasticsearch::DeleteIndicesService.new.execute
+      Elasticsearch::CreateIndicesService.new.execute
     end
 
     context 'search latest 100 posts' do
