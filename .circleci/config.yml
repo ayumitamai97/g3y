@@ -3,7 +3,111 @@ orbs:
   ruby: circleci/ruby@0.1.2
 
 jobs:
+  checkout_code:
+    working_directory: ~/g3y
+    docker:
+      - image: circleci/ruby:2.6.5-stretch-node
+    steps:
+      - checkout
+      - save_cache:
+          key: source-v1-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - ~/g3y
+
   build:
+    working_directory: ~/g3y
+
+    docker:
+      - image: circleci/ruby:2.6.5-stretch-node
+        environment:
+          RAILS_ENV: test
+
+    executor: ruby/default
+
+    steps:
+      - restore_cache:
+          keys:
+            - source-v1-{{ .Branch }}-{{ .Revision }}
+            - source-v1-{{ .Branch }}-
+            - source-v1-
+      - checkout
+      - save_cache:
+          key: source-v1-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - ~/g3y
+
+      - ruby/bundle-install
+      - save_cache:
+          key: gem-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+      - run:
+          name: yarn install
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          name: Save yarn packages cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+
+  lint:
+    working_directory: ~/g3y
+    docker:
+      - image: circleci/ruby:2.6.5-stretch-node
+        environment:
+          RAILS_ENV: test
+    steps:
+      - restore_cache:
+          keys:
+            - source-v1-{{ .Branch }}-{{ .Revision }}
+            - source-v1-{{ .Branch }}-
+            - source-v1-
+      - checkout
+      - save_cache:
+          key: source-v1-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - ~/g3y
+
+      - restore_cache:
+          keys:
+            - gem-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+            - gem-cache-v1-{{ arch }}-{{ .Branch }}
+            - gem-cache-v1
+
+      - ruby/bundle-install
+
+      - save_cache:
+          key: gem-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+      - restore_cache:
+          name: Restore yarn packages cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: yarn install
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          name: Save yarn packages cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+
+      - run:
+          name: ESLint
+          command: yarn run eslint
+      - run:
+          name: stylelint
+          command: yarn run stylelint
+
+      - run:
+          name: Rubocop
+          command: bundle exec rubocop
+
+  spec:
+    working_directory: ~/g3y
     docker:
       - image: circleci/ruby:2.6.5-stretch-node
         environment:
@@ -23,9 +127,26 @@ jobs:
           - http.port: 9200
           - discovery.type: single-node
 
-    executor: ruby/default
     steps:
+      - restore_cache:
+          keys:
+            - source-v1-{{ .Branch }}-{{ .Revision }}
+            - source-v1-{{ .Branch }}-
+            - source-v1-
       - checkout
+      - save_cache:
+          key: source-v1-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - ~/g3y
+
+      - restore_cache:
+          keys:
+            - gem-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+            - gem-cache-v1-{{ arch }}-{{ .Branch }}
+            - gem-cache-v1
+
+      - ruby/bundle-install
+
       - run:
           name: Waiting for MySQL to be ready
           command: |
@@ -36,40 +157,37 @@ jobs:
               sleep 1
             done
             echo Failed waiting for MySQL && exit 1
-
-      - ruby/bundle-install
-
       - run:
           name: Create database
           command: RAILS_ENV=test bundle exec rails db:create
       - run:
           name: Setup database
           command: RAILS_ENV=test bin/rails db:schema:load --trace
-      - run:
-          name: Rubocop
-          command: bundle exec rubocop
-      - restore_cache:
-          name: yarn restore cache
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
-      - run:
-          name: yarn install
-          command: yarn install --frozen-lockfile
-      - save_cache:
-          name: Save yarn packages cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
-      - run:
-          name: ESLint
-          command: yarn run eslint
-      - run:
-          name: stylelint
-          command: yarn run stylelint
 
       - run:
           name: Wait for Elasticsearch
           command: dockerize -wait tcp://localhost:9200 -timeout 1m
+
+      - save_cache:
+          key: gem-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
       - run:
           name: RSpec
           command: bundle exec rspec spec/
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - checkout_code
+      - build:
+          requires:
+            - checkout_code
+      - lint:
+          requires:
+            - build
+      - spec:
+          requires:
+            - build
