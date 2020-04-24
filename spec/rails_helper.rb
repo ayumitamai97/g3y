@@ -65,9 +65,11 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.include FactoryBot::Syntax::Methods
+  config.order = 'random'
 
   config.around(:all) do |example|
     Elasticsearch::CreateIndicesService.new.execute
+    sleep 3
     example.run
     Elasticsearch::DeleteIndicesService.new.execute
   end

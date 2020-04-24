@@ -47,18 +47,23 @@ RSpec.describe Types::QueryType do
     let!(:first_user) { create(:user) }
 
     before do
-      Elasticsearch::Model.client.indices.flush
-
       # First user
-      first_user.posts.create!(content: 'happy birthday')
-      first_user.posts.create!(content: 'hello')
-      create_list(:post, 5, user: first_user, content: ['good morning', 'good evening', 'good night'].sample)
+      ActiveRecord::Base.transaction do
+        first_user.posts.create!(content: 'happy birthday')
+        first_user.posts.create!(content: query_content_string)
+        create_list(:post, 5, user: first_user, content: ['good morning', 'good night'].sample)
 
-      # Second user
-      second_user = create(:user)
-      second_user.posts.create!(content: 'hello')
-      create_list(:post, 5, user: second_user, content: ['good morning', 'good evening', 'good night'].sample)
-      sleep 0.5 # Wait for indexing?
+        # Second user
+        second_user = create(:user)
+        second_user.posts.create!(content: query_content_string)
+        create_list(:post, 5, user: second_user, content: ['good morning', 'good night'].sample)
+      end
+      sleep 3 # Wait for indexing?
+    end
+
+    after do
+      Elasticsearch::DeleteIndicesService.new.execute
+      Elasticsearch::CreateIndicesService.new.execute
     end
 
     context 'search latest 100 posts' do
