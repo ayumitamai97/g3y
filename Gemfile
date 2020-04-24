@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 
 ruby '2.6.5'
 
+gem 'bcrypt'
 gem 'mysql2', '~> 0.4.10'
 gem 'puma', '~> 4.1'
 gem 'rails', '~> 6.0.2', '>= 6.0.2.2'
