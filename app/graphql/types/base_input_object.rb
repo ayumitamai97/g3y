@@ -5,4 +5,3 @@ module Types
     argument_class Types::BaseArgument
   end
 end
-

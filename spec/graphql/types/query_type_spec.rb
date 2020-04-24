@@ -52,6 +52,7 @@ RSpec.describe Types::QueryType do
         first_user.posts.create!(content: 'happy birthday')
         first_user.posts.create!(content: query_content_string)
         create_list(:post, 5, user: first_user, content: ['good morning', 'good night'].sample)
+        sleep 3
 
         # Second user
         second_user = create(:user)
