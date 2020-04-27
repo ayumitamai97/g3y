@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 # NOTE: メソッド単位のユニットテストではなく Interface-Level Behaviors
@@ -29,7 +31,7 @@ RSpec.describe Mutations::CreateUser do
     end
 
     it 'increments User.count' do
-      expect { G3ySchema.execute(query, variables: variables) }.to change { User.count }.by 1
+      expect { G3ySchema.execute(query, variables: variables) }.to(change { User.count }.by(1))
     end
 
     it 'returns successful object' do
@@ -55,7 +57,7 @@ RSpec.describe Mutations::CreateUser do
     end
 
     it 'does not increment User.count' do
-      expect { G3ySchema.execute(query, variables: variables) }.not_to change { User.count }
+      expect { G3ySchema.execute(query, variables: variables) }.not_to(change { User.count })
     end
 
     it 'returns object with errors' do
@@ -74,7 +76,7 @@ RSpec.describe Mutations::CreateUser do
     end
 
     it 'does not increment User.count' do
-      expect { G3ySchema.execute(query, variables: variables) }.not_to change { User.count }
+      expect { G3ySchema.execute(query, variables: variables) }.not_to(change { User.count })
     end
 
     it 'returns object with errors' do
@@ -93,7 +95,7 @@ RSpec.describe Mutations::CreateUser do
     end
 
     it 'does not increment User.count' do
-      expect { G3ySchema.execute(query, variables: variables) }.not_to change { User.count }
+      expect { G3ySchema.execute(query, variables: variables) }.not_to(change { User.count })
     end
 
     it 'returns object with errors' do
@@ -114,7 +116,7 @@ RSpec.describe Mutations::CreateUser do
     end
 
     it 'does not increment User.count' do
-      expect { G3ySchema.execute(query, variables: variables) }.not_to change { User.count }
+      expect { G3ySchema.execute(query, variables: variables) }.not_to(change { User.count })
     end
 
     it 'returns object with errors' do
