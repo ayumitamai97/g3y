@@ -8,9 +8,11 @@ module Mutations
     field :errors, [String], null: true
 
     argument :name, String, required: true
+    argument :email, String, required: true
+    argument :password, String, required: true
 
-    def resolve(name:)
-      user = User.create(name: name)
+    def resolve(name:, email:, password:)
+      user = User.create(name: name, email: email, password: password)
 
       {
         user: user.persisted? ? user : nil,
