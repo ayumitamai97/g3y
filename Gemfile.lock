@@ -60,6 +60,7 @@ GEM
       activerecord (>= 3.2, < 7.0)
       rake (>= 10.4, < 14.0)
     ast (2.4.0)
+    bcrypt (3.1.13)
     bootsnap (1.4.6)
       msgpack (~> 1.0)
     builder (3.2.4)
@@ -240,6 +241,7 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
+  bcrypt
   bootsnap (>= 1.4.2)
   elasticsearch-model
   elasticsearch-rails
