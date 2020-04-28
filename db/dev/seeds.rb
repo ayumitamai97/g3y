@@ -17,7 +17,7 @@ Elasticsearch::CreateIndicesService.new.execute
   User.create!(
     name: Faker::Name.name,
     email: Faker::Internet.email,
-    password: Faker::Number.number(digits: 8).to_s,
+    password: Faker::Number.number(digits: 8).to_s
   )
 end
 
