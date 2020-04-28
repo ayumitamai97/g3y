@@ -53,12 +53,12 @@ export default {
         },
         updateQuery: (previousResult, { fetchMoreResult }): Object => {
           if (fetchMoreResult.posts.length > 0) {
-            $state.loaded();
+            $state.loaded()
           } else {
-            $state.complete();
+            $state.complete()
           }
           return { posts: [...previousResult.posts, ...fetchMoreResult.posts] }
-        }
+        },
       })
     },
   },
