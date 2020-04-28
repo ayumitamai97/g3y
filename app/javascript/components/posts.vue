@@ -4,14 +4,15 @@
       <div class="c-post--username">{{ post.user.name }}</div>
       <div class="c-post--content">{{ post.content }}</div>
     </div>
-    <button v-if="showMoreEnabled" @click="showMore">Show more</button>
+
+    <infinite-loading @infinite="infiniteHandler"></infinite-loading>
   </div>
 </template>
 
 <script lang='ts'>
 import gql from 'graphql-tag'
 
-const pagePer: number = 50
+const pagePer: number = 20
 
 export default {
   data() {
@@ -40,17 +41,24 @@ export default {
     },
   },
   methods: {
-    // ref. https://apollo.vuejs.org/guide/apollo/pagination.html
-    showMore(): void {
+    // ref.
+    // https://apollo.vuejs.org/guide/apollo/pagination.html
+    // https://peachscript.github.io/vue-infinite-loading/guide/start-with-hn.html
+    infiniteHandler($state): void {
       this.page += 1
       this.$apollo.queries.posts.fetchMore({
         variables: {
           page: this.page,
           pagePer,
         },
-        updateQuery: (previousResult, { fetchMoreResult }): Object => ({
-          posts: [...previousResult.posts, ...fetchMoreResult.posts],
-        }),
+        updateQuery: (previousResult, { fetchMoreResult }): Object => {
+          if (fetchMoreResult.posts.length > 0) {
+            $state.loaded();
+          } else {
+            $state.complete();
+          }
+          return { posts: [...previousResult.posts, ...fetchMoreResult.posts] }
+        }
       })
     },
   },
