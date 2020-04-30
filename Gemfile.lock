@@ -253,6 +253,7 @@ DEPENDENCIES
   faker
   graphql
   graphql-batch
+  i18n
   listen (>= 3.0.5, < 3.2)
   mysql2 (~> 0.4.10)
   pry-rails

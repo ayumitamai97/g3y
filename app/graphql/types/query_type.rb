@@ -39,7 +39,7 @@ module Types
         size: page_per,
         from: page_per * page,
       }
-      # TODO: resolve N+1 query
+
       Post.search(req).results
     end
 

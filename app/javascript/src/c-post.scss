@@ -1,11 +1,16 @@
 .c-post {
   margin: 15px 0;
 
-  &--username {
-    font-size: 0.75em;
+  &__meta {
+    display: flex;
+
+    &--username, &--created-at {
+      font-size: 0.75em;
+      padding-right: 7px;
+    }
   }
 
-  &--content {
+  &__content {
     font-size: 1em;
   }
 }
