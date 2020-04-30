@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class G3ySchema < GraphQL::Schema
-  mutation(Types::MutationType)
   mutation Types::MutationType
   query Types::QueryType
 
