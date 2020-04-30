@@ -1,13 +1,10 @@
 # frozen_string_literal: true
 
 module Mutations
-  class CreateSession < BaseMutation
+  class AuthenticateUser < BaseMutation
     # TODO: ほんとにこれでいいのか？？
-    field :csrf, String, null: true
     field :access, String, null: true
     field :access_expires_at, String, null: true
-    field :refresh, String, null: true
-    field :refresh_expires_at, String, null: true
     field :errors, [String], null: true
 
     argument :email, String, required: true

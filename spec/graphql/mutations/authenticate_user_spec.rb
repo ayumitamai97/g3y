@@ -2,6 +2,6 @@
 
 require 'rails_helper'
 
-RSpec.describe Mutations::CreateSession do
+RSpec.describe Mutations::AuthenticateUser do
   pending 'pending'
 end
