@@ -13,6 +13,8 @@ class G3ySchema < GraphQL::Schema
 
   use GraphQL::Execution::Errors
 
+  use GraphQL::Batch
+
   rescue_from ActiveRecord::RecordNotFound do |_err, _obj, _args, _ctx, field|
     raise GraphQL::ExecutionError, "#{field.type.unwrap.graphql_name} not found"
   end
