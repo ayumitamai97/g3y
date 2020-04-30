@@ -43,5 +43,8 @@ module G3y
     )
     es_host = es_config.symbolize_keys[Rails.env.to_sym]['host']
     Elasticsearch::Model.client = Elasticsearch::Client.new(host: es_host)
+
+    # I18n.load_path << Dir[File.expand_path("config/locales") + "/*.yml"]
+    I18n.default_locale = :en # TODO: :ja
   end
 end

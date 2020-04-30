@@ -5,9 +5,14 @@ module Types
     field :id, ID, null: false
     field :user, UserType, null: false
     field :content, String, null: false
+    field :created_at, String, null: false
 
     def user
-      User.find(object.user_id)
+      RecordLoader.for(User).load(object.user_id)
+    end
+
+    def created_at
+      I18n.l(object.created_at.to_datetime, format: :custom)
     end
   end
 end

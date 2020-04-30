@@ -22,6 +22,8 @@ gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
 
 gem 'graphql'
+gem 'graphql-batch'
+gem 'i18n'
 gem 'slim-rails'
 gem 'webpacker', '~> 5.x'
 
