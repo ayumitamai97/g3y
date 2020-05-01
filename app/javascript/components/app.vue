@@ -1,15 +1,27 @@
 <template>
-  <div>
-    <div v-if='!isAuthenticated()'>
-      <router-link to="/login">Login</router-link>
-      <router-link to="/signup">Signup</router-link>
-    </div>
-    <div v-if='isAuthenticated()'>
-      <!-- TODO -->
-      <p>Logged in as hogehoge</p>
-      <button v-on:click='logout'>Logout</button>
-    </div>
-    <router-view></router-view>
+  <div class='columns'>
+    <section class='section column is-3 is-offset-1'>
+      <div>
+        <h1 class='title is-1'>
+          <router-link to='/'>g3y</router-link>
+        </h1>
+      </div>
+      <div>
+        <div v-if='!isAuthenticated()'>
+          <router-link to="/login">Login</router-link>
+          <span> | </span>
+          <router-link to="/signup">Signup</router-link>
+        </div>
+        <div v-if='isAuthenticated()'>
+          <!-- TODO -->
+          <p>Logged in as hogehoge</p>
+          <a v-on:click='logout'>Logout</a>
+        </div>
+      </div>
+    </section>
+    <section class='section column is-four-fifths is-6'>
+      <router-view></router-view>
+    </section>
   </div>
 </template>
 

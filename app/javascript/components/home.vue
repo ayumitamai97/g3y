@@ -1,7 +1,7 @@
 <template>
-  <div class="p-home">
-    <h1 class="p-home__title">Home Timeline</h1>
-    <div class="p-home__posts">
+  <div class='container'>
+    <h2 class='title is-2'>Home Timeline</h2>
+    <div>
       <posts></posts>
     </div>
   </div>
@@ -9,8 +9,14 @@
 
 <script lang='ts'>
 import Posts from './posts.vue'
+import authUtil from '../src/authUtil.ts'
 
 export default {
   components: { Posts },
+  created() {
+    if (!authUtil.isAuthenticated()) {
+      this.$router.push('/login')
+    }
+  },
 }
 </script>
