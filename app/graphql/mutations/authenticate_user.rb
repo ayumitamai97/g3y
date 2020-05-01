@@ -9,6 +9,7 @@ module Mutations
     argument :email, String, required: true
     argument :password, String, required: true
 
+    # TODO: refresh
     def resolve(email:, password:)
       user = User.find_by(email: email)
 
