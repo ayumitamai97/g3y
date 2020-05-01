@@ -1,23 +1,35 @@
 <template>
-  <div class='p-signup'>
-    <div class='p-signup__form'>
-      <div>
-        <label for="email">Email</label>
-        <input type="email" name='email' v-model="user.email">
-      </div>
-      <div>
-        <label for="name">Username</label>
-        <input type="text" name='name' v-model="user.name">
-      </div>
-      <div>
-        <label for="password">Password</label>
-        <input type="password" name='password' v-model="user.password">
+  <div>
+    <div>
+      <div class='field'>
+        <div class='control'>
+          <input type="text" v-model='user.name'
+           placeholder='Username' class='input'>
+        </div>
       </div>
 
-      <button v-on:click="signup">Signup</button>
+      <div class='field'>
+        <div class='control'>
+          <input type="email" v-model='user.email'
+           placeholder='Email' class='input'>
+        </div>
+      </div>
+
+      <div class='field'>
+        <div class='control'>
+          <input type="password" v-model='user.password'
+           placeholder='Password' class='input'>
+        </div>
+      </div>
+
+      <div class='field'>
+        <div class='control'>
+          <button v-on:click='signup' class='button'>Signup</button>
+        </div>
+      </div>
     </div>
 
-    <div class='p-signup__errors'>
+    <div>
       <div v-for='error in errors' :key='error'>
         <p>{{ error }}</p>
       </div>
