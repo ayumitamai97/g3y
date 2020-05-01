@@ -1,16 +1,15 @@
 <template>
-  <div class="p-home">
-    <h1 class="p-home__title">Home Timeline</h1>
-    <div class="p-home__posts">
-      <posts></posts>
-    </div>
+  <div>
+    <!-- ↓ TODO: ログアウト時のみ  -->
+    <router-link to="/login">Login</router-link>
+    <router-view></router-view>
   </div>
 </template>
 
 <script lang='ts'>
-import Posts from './posts.vue'
+import Home from './home.vue'
 
 export default {
-  components: { Posts },
+  components: { Home },
 }
 </script>

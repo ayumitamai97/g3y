@@ -8,15 +8,17 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import VueApollo from 'vue-apollo'
 import InfiniteLoading from 'vue-infinite-loading'
 import App from '../components/app.vue'
+import Home from '../components/home.vue'
+import Login from '../components/login.vue'
 
 document.addEventListener('DOMContentLoaded', () => {
   Vue.use(VueRouter)
   Vue.use(VueApollo)
-  Vue.use(InfiniteLoading) // TODO: implement infinite scrolling
+  Vue.use(InfiniteLoading)
 
-  // const Foo = { template: '<div>foo</div>' }
   const routes = [
-    // { path: '/foo', component: Foo },
+    { path: '/', component: Home },
+    { path: '/login', component: Login },
   ]
 
   const router = new VueRouter({ mode: 'history', routes })
