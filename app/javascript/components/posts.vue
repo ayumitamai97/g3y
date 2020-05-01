@@ -28,7 +28,7 @@ export default {
   apollo: {
     // TODO: 検索結果にもこのコンポーネントが使われる
     posts: {
-      query: gql`query posts ($page: Int!, $pagePer: Int) {
+      query: gql`query posts ($page: Int!, $pagePer: Int!) {
         posts(page: $page, pagePer: $pagePer) {
           content
           createdAt
