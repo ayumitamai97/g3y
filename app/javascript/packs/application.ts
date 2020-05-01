@@ -10,6 +10,7 @@ import InfiniteLoading from 'vue-infinite-loading'
 import App from '../components/app.vue'
 import Home from '../components/home.vue'
 import Login from '../components/login.vue'
+import Signup from '../components/signup.vue'
 
 document.addEventListener('DOMContentLoaded', () => {
   Vue.use(VueRouter)
@@ -19,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const routes = [
     { path: '/', component: Home },
     { path: '/login', component: Login },
+    { path: '/signup', component: Signup },
   ]
 
   const router = new VueRouter({ mode: 'history', routes })
