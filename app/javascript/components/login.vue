@@ -27,7 +27,7 @@ import authUtil from '../src/authUtil.ts'
 export default {
   data() {
     return {
-      user: {},
+      user: { name: '', email: '', password: '' },
       errors: [],
     }
   },
