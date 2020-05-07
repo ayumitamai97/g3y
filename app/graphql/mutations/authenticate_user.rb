@@ -20,7 +20,9 @@ module Mutations
         }
       else
         {
-          errors: ['user does not exist'],
+          errors: [
+            { message: 'user does not exist' },
+          ],
         }
       end
     end
