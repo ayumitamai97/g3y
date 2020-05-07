@@ -1,7 +1,9 @@
 /* eslint no-new: 0 */
 
-import Vue from 'vue/dist/vue.esm'
+import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Vuex from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
 import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'
 import { setContext } from 'apollo-link-context'
@@ -17,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   Vue.use(VueRouter)
   Vue.use(VueApollo)
   Vue.use(InfiniteLoading)
+  Vue.use(Vuex)
 
   const routes = [
     { path: '/', component: Home },
@@ -45,11 +48,25 @@ document.addEventListener('DOMContentLoaded', () => {
   })
   const apolloProvider = new VueApollo({ defaultClient: apolloClient })
 
+  // Vuex
+  const store = new Vuex.Store({
+    state: {
+      user_name: '',
+    },
+    mutations: {
+      setUserName(state, userName) {
+        state.user_name = userName
+      },
+    },
+    plugins: [createPersistedState()],
+  })
+
   new Vue({
     el: '#app',
     components: { App },
     template: '<App/>',
     router,
+    store,
     apolloProvider,
     render: (h) => h(App),
   })

@@ -13,8 +13,7 @@
           <router-link to="/signup">Signup</router-link>
         </div>
         <div v-if='isAuthenticated()'>
-          <!-- TODO -->
-          <p>Logged in as hogehoge</p>
+          <p>Logged in as {{ userName() }}</p>
           <a v-on:click='logout'>Logout</a>
         </div>
       </div>
@@ -34,6 +33,9 @@ export default {
     this.isAuthenticated = authUtil.isAuthenticated
   },
   methods: {
+    userName() {
+      return this.$store.state.user_name
+    },
     logout(): void {
       localStorage.removeItem('access')
       localStorage.removeItem('accessExpiresAt')
