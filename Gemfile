@@ -24,7 +24,7 @@ gem 'elasticsearch-rails'
 gem 'graphql'
 gem 'graphql-batch'
 gem 'i18n'
-gem 'jwt_sessions'
+gem 'jwt'
 gem 'slim-rails'
 gem 'webpacker', '~> 5.x'
 
