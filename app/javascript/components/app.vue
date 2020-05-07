@@ -1,16 +1,47 @@
 <template>
-  <div class="p-home">
-    <h1 class="p-home__title">Home Timeline</h1>
-    <div class="p-home__posts">
-      <posts></posts>
-    </div>
+  <div class='columns'>
+    <section class='section column is-3 is-offset-1'>
+      <div>
+        <h1 class='title is-1'>
+          <router-link to='/'>g3y</router-link>
+        </h1>
+      </div>
+      <div>
+        <div v-if='!isAuthenticated()'>
+          <router-link to="/login">Login</router-link>
+          <span> | </span>
+          <router-link to="/signup">Signup</router-link>
+        </div>
+        <div v-if='isAuthenticated()'>
+          <p>Logged in as {{ userName() }}</p>
+          <a v-on:click='logout'>Logout</a>
+        </div>
+      </div>
+    </section>
+    <section class='section column is-four-fifths is-6'>
+      <router-view></router-view>
+    </section>
   </div>
 </template>
 
 <script lang='ts'>
-import Posts from './posts.vue'
+import authUtil from '../src/authUtil.ts'
 
 export default {
-  components: { Posts },
+  name: 'app',
+  created() {
+    this.isAuthenticated = authUtil.isAuthenticated
+  },
+  methods: {
+    userName() {
+      return this.$store.state.user_name
+    },
+    logout(): void {
+      localStorage.removeItem('access')
+      localStorage.removeItem('accessExpiresAt')
+      localStorage.removeItem('vuex')
+      this.$router.push('/login')
+    },
+  },
 }
 </script>
