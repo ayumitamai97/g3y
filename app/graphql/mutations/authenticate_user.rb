@@ -14,17 +14,20 @@ module Mutations
       user = User.find_by(email: email)
 
       if user.present? && user.authenticate(password)
-        payload = {
-          user_id: user.id,
-          user_name: user.name,
-        }
-        session = ::JWTSessions::Session.new(payload: payload)
-        session.login.merge(errors: [], user_name: user.name)
+        session = ::JWTSessions::Session.new(payload: payload(user: user))
+        session.login.merge(errors: [])
       else
         {
           errors: ['user does not exist'],
         }
       end
+    end
+
+    def payload(user:)
+      {
+        user_id: user.id,
+        user_name: user.name,
+      }
     end
   end
 end

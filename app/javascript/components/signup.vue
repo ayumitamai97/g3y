@@ -39,6 +39,7 @@
 
 <script lang="ts">
 import gql from 'graphql-tag'
+import jwtDecode from 'jwt-decode'
 import authUtil from '../src/authUtil.ts'
 
 export default {
@@ -76,6 +77,7 @@ export default {
         await this.setToken()
 
         if (authUtil.isAuthenticated()) {
+          this.$store.commit('setUserName', jwtDecode(localStorage.getItem('access')).user_name)
           this.$router.push('/')
         }
       } else if (data.createUser.errors.length > 0) {
