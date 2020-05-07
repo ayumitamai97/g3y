@@ -105,5 +105,5 @@ Rails.application.configure do
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 
-  JWTSessions.encryption_key = ENV.fetch('JWT_ENCRIPTION_KEY')
+  Rails.application.config.x.jwt_encryption_key = ENV.fetch('JWT_ENCRIPTION_KEY')
 end

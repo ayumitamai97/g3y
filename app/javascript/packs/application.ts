@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return {
       headers: {
         ...headers,
-        authorization: token ? `Bearer ${token}` : '',
+        authorization: token || '',
       },
     }
   })
