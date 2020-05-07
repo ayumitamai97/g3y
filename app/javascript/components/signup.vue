@@ -1,5 +1,12 @@
 <template>
   <div>
+    <div class='notification is-danger' v-if='errors.length > 0'>
+      <button class='delete'></button>
+      <div v-for='error in errors' :key='error'>
+        <p>{{ error }}</p>
+      </div>
+    </div>
+
     <div>
       <div class='field'>
         <div class='control'>
@@ -26,12 +33,6 @@
         <div class='control'>
           <button v-on:click='signup' class='button'>Signup</button>
         </div>
-      </div>
-    </div>
-
-    <div>
-      <div v-for='error in errors' :key='error'>
-        <p>{{ error }}</p>
       </div>
     </div>
   </div>
@@ -81,7 +82,9 @@ export default {
           this.$router.push('/')
         }
       } else if (data.createUser.errors.length > 0) {
-        data.createUser.errors.forEach((err) => this.errors.push(err))
+        const errors = []
+        data.createUser.errors.forEach((err) => errors.push(err))
+        this.errors = errors
       }
     },
   },
