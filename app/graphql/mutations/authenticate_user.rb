@@ -20,9 +20,7 @@ module Mutations
         }
       else
         {
-          errors: [
-            { message: 'user does not exist' },
-          ],
+          errors: [ 'user does not exist' ]
         }
       end
     end
@@ -34,8 +32,7 @@ module Mutations
         {
           user_id: user.id,
           user_name: user.name,
-          # TODO: Use constant
-          iss: 'g3y',
+          iss: Rails.application.config.x.jwt_iss,
         },
         Rails.application.config.x.jwt_encryption_key,
         'HS256'

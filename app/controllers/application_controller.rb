@@ -18,8 +18,7 @@ class ApplicationController < ActionController::API
       token,
       Rails.application.config.x.jwt_encryption_key,
       true,
-      # TODO: Use constant
-      { algorithm: 'HS256', iss: 'g3y', verify_iss: true }
+      { algorithm: 'HS256', iss: Rails.application.config.x.jwt_iss, verify_iss: true }
     )
   end
 

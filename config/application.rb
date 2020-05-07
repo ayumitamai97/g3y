@@ -49,5 +49,7 @@ module G3y
 
     config.time_zone = 'Tokyo'
     config.active_record.default_timezone = :local
+
+    Rails.application.config.x.jwt_iss = 'g3y'
   end
 end
