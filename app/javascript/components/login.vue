@@ -1,5 +1,12 @@
 <template>
   <div>
+    <div class='notification is-danger' v-if='errors.length > 0'>
+      <button class='delete'></button>
+      <div v-for='error in errors' :key='error'>
+        <p>{{ error }}</p>
+      </div>
+    </div>
+
     <div>
       <div class='field'>
         <div class='control'>
@@ -18,12 +25,6 @@
         <div class='control'>
           <button v-on:click='login' class='button'>Login</button>
         </div>
-      </div>
-    </div>
-
-    <div>
-      <div v-for='error in errors' :key='error'>
-        <p>{{ error }}</p>
       </div>
     </div>
   </div>
@@ -52,7 +53,7 @@ export default {
         this.$store.commit('setUserName', jwtDecode(localStorage.getItem('access')).user_name)
         this.$router.push('/')
       } else {
-        this.errors.push('Email or password is invalid')
+        this.errors = ['Email or password is invalid']
       }
     },
   },
