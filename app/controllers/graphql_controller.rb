@@ -6,12 +6,13 @@ class GraphqlController < ApplicationController
   # but you'll have to authenticate your user separately
   # protect_from_forgery with: :null_session
 
-  before_action { authorize_access_request! unless skip_authentication? }
+  before_action { authorize_user_with_token! unless skip_authentication? }
 
   def execute
     variables = ensure_hash(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
+
     # TODO: ユーザのホームタイムラインを表示するとき使える
     context = {
       # Query context goes here, for example:

@@ -49,10 +49,5 @@ module G3y
 
     config.time_zone = 'Tokyo'
     config.active_record.default_timezone = :local
-
-    JWTSessions.jwt_options.verify_iss = true
-    JWTSessions.jwt_options.verify_sub = true
-    JWTSessions.jwt_options.verify_iat = true
-    JWTSessions.jwt_options.verify_aud = true
   end
 end

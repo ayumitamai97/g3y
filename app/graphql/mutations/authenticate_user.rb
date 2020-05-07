@@ -14,8 +14,10 @@ module Mutations
       user = User.find_by(email: email)
 
       if user.present? && user.authenticate(password)
-        session = ::JWTSessions::Session.new(payload: payload(user: user))
-        session.login.merge(errors: [])
+        {
+          access: token(user: user),
+          access_expires_at: expires_at,
+        }
       else
         {
           errors: ['user does not exist'],
@@ -23,11 +25,23 @@ module Mutations
       end
     end
 
-    def payload(user:)
-      {
-        user_id: user.id,
-        user_name: user.name,
-      }
+    private
+
+    def token(user:)
+      JWT.encode(
+        {
+          user_id: user.id,
+          user_name: user.name,
+          # TODO: Use constant
+          iss: 'g3y',
+        },
+        Rails.application.config.x.jwt_encryption_key,
+        'HS256'
+      )
+    end
+
+    def expires_at
+      Time.now + 4 * 3600
     end
   end
 end

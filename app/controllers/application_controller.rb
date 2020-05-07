@@ -1,8 +1,18 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::API
-  include JWTSessions::RailsAuthorization
-  rescue_from JWTSessions::Errors::Unauthorized, with: :not_authorized
+  rescue_from JWT::VerificationError, with: :not_authorized
+
+  def authorize_user_with_token!
+    token = request.headers['Authorization']
+    JWT.decode(
+      token,
+      Rails.application.config.x.jwt_encryption_key,
+      true,
+      # TODO: Use constant
+      { algorithm: 'HS256', iss: 'g3y', verify_iss: true }
+    )
+  end
 
   private
 
