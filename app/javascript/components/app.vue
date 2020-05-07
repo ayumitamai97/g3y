@@ -39,6 +39,7 @@ export default {
     logout(): void {
       localStorage.removeItem('access')
       localStorage.removeItem('accessExpiresAt')
+      localStorage.removeItem('vuex')
       this.$router.push('/login')
     },
   },

@@ -76,13 +76,15 @@ $ tree app/javascript
 app/javascript
 ├── components
 │   ├── app.vue
-│   └── posts.vue
+│   ├── home.vue
+│   ├── login.vue
+│   ├── posts.vue
+│   └── signup.vue
 ├── packs
 │   ├── application.scss
 │   └── application.ts
 └── src
-    ├── c-post.scss
-    └── p-home.scss
+    └── authUtil.ts
 ```
 
 # Local
