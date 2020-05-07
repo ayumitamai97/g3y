@@ -1,12 +1,15 @@
 <template>
   <div>
-    <div v-for="post in posts" :key="post.id" class="p-home__posts__item c-post">
-      <div class="c-post__meta">
-        <div class="c-post__meta--username">{{ post.user.name }}</div>
-        <div class="c-post__meta--created-at">{{ post.createdAt }}</div>
+    <article v-for="post in posts" :key="post.id" class='media'>
+      <figure class='media-left'>image<br>image</figure>
+      <div class='media-content'>
+        <div>
+          <span class='has-text-weight-bold'>{{ post.user.name }}</span>
+          <span class='is-size-7'>{{ post.createdAt }}</span>
+        </div>
+        <div class='is-size-6'>{{ post.content }}</div>
       </div>
-      <div class="c-post__content">{{ post.content }}</div>
-    </div>
+    </article>
 
     <infinite-loading @infinite="infiniteHandler"></infinite-loading>
   </div>
@@ -28,7 +31,7 @@ export default {
   apollo: {
     // TODO: 検索結果にもこのコンポーネントが使われる
     posts: {
-      query: gql`query posts ($page: Int!, $pagePer: Int) {
+      query: gql`query posts ($page: Int!, $pagePer: Int!) {
         posts(page: $page, pagePer: $pagePer) {
           content
           createdAt
