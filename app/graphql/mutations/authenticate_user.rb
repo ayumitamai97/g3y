@@ -19,9 +19,7 @@ module Mutations
           access_expires_at: expires_at,
         }
       else
-        {
-          errors: [ 'user does not exist' ]
-        }
+        { errors: ['user does not exist'] }
       end
     end
 
@@ -40,7 +38,7 @@ module Mutations
     end
 
     def expires_at
-      Time.now + 4 * 3600
+      Time.zone.now + 4 * 3600
     end
   end
 end
