@@ -12,11 +12,6 @@ class GraphqlController < ApplicationController
     variables = ensure_hash(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
-    context = if require_authentication?
-                { current_user: current_user }
-              else
-                {}
-              end
 
     result = G3ySchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
@@ -27,6 +22,14 @@ class GraphqlController < ApplicationController
   end
 
   private
+
+  def context
+    if require_authentication?
+      { current_user: current_user }
+    else
+      {}
+    end
+  end
 
   # Handle form data, JSON body, or a blank value
   def ensure_hash(ambiguous_param)
