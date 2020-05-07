@@ -67,10 +67,12 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.order = 'random'
 
-  config.around(:all) do |example|
+  config.before(:suite) do
     Elasticsearch::CreateIndicesService.new.execute
     sleep 3
-    example.run
+  end
+
+  config.after(:suite) do
     Elasticsearch::DeleteIndicesService.new.execute
   end
 end

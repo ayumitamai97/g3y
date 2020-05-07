@@ -46,5 +46,8 @@ module G3y
 
     # I18n.load_path << Dir[File.expand_path("config/locales") + "/*.yml"]
     I18n.default_locale = :en # TODO: :ja
+
+    config.time_zone = 'Tokyo'
+    config.active_record.default_timezone = :local
   end
 end

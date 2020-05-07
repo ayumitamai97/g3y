@@ -147,10 +147,13 @@ jobs:
 
       - ruby/bundle-install
 
-      - save_cache:
-          key: gem-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-          paths:
-            - vendor/bundle
+      - restore_cache:
+          name: Restore yarn packages cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: yarn install
+          command: yarn install --frozen-lockfile
 
       - run:
           name: Waiting for MySQL to be ready
@@ -176,6 +179,10 @@ jobs:
       - run:
           name: Database rollback test
           command: RAILS_ENV=test bundle exec rake db:rollback STEP=10 db:migrate
+
+      - run:
+          name: Build with webpack
+          command: bin/webpack
 
       - run:
           name: RSpec
