@@ -59,6 +59,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // TODO: camel calse !!
         state.user_name = userName
       },
+      postsUpdated(state, datetime): void {
+        state.postsUpdatedDatetime = datetime
+      },
     },
     plugins: [createPersistedState()],
   })

@@ -17,6 +17,7 @@
 
 <script lang='ts'>
 import gql from 'graphql-tag'
+import Util from '../src/util.ts'
 
 const pagePer: number = 20
 
@@ -48,10 +49,12 @@ export default {
     },
   },
   created() {
-    // this.$store.subscribe((mutation, state) => {
-    //     console.log(state)
-    //     console.log(mutation.payload)
-    //     })
+    this.$store.subscribe(async (mutation, state) => {
+      if (mutation.type == 'postsUpdated') {
+        await Util.sleep(500)
+        this.$apollo.queries.posts.refetch()
+      }
+    })
   },
   methods: {
     // ref.

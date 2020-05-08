@@ -42,6 +42,7 @@ export default {
           content: this.post.content
         },
       })
+      this.$store.commit('postsUpdated', Date.now())
     },
   },
 }
