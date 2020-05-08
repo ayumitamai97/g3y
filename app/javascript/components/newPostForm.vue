@@ -26,7 +26,8 @@ export default {
   },
   methods: {
     expandTextarea(event): void {
-      event.target.style.height = event.target.scrollHeight
+      const { target } = event
+      target.style.height = target.scrollHeight
     },
     async createPost(): Promise<void> {
       await this.$apollo.mutate({
@@ -39,7 +40,7 @@ export default {
           }
         }`,
         variables: {
-          content: this.post.content
+          content: this.post.content,
         },
       })
       this.$store.commit('postsUpdated', Date.now())
@@ -47,4 +48,3 @@ export default {
   },
 }
 </script>
-
