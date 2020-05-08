@@ -47,12 +47,9 @@ module G3y
     # I18n.load_path << Dir[File.expand_path("config/locales") + "/*.yml"]
     I18n.default_locale = :en # TODO: :ja
 
-    JWTSessions.jwt_options.verify_iss = true
-    JWTSessions.jwt_options.verify_sub = true
-    JWTSessions.jwt_options.verify_iat = true
-    JWTSessions.jwt_options.verify_aud = true
-
     config.time_zone = 'Tokyo'
     config.active_record.default_timezone = :local
+
+    Rails.application.config.x.jwt_iss = 'g3y'
   end
 end
