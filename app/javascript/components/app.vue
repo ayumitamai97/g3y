@@ -2,7 +2,7 @@
   <div class='columns'>
     <section class='section column is-3 is-offset-1'>
       <div>
-        <h1 class='title is-1'>
+        <h1 class='title is-1 mb-20'>
           <router-link to='/'>g3y</router-link>
         </h1>
       </div>
@@ -13,8 +13,8 @@
           <router-link to="/signup">Signup</router-link>
         </div>
         <div v-if='isAuthenticated()'>
-          <p>Logged in as {{ userName() }}</p>
-          <a v-on:click='logout'>Logout</a>
+          <p class='mb-10'>Logged in as {{ userName() }}</p>
+          <a @click='logout'>Logout</a>
         </div>
       </div>
     </section>

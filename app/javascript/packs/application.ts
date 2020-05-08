@@ -52,9 +52,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const store = new Vuex.Store({
     state: {
       user_name: '',
+      postsUpdatedDatetime: Date.now(),
     },
     mutations: {
-      setUserName(state, userName) {
+      setUserName(state, userName): void {
+        // TODO: camel calse !!
         state.user_name = userName
       },
     },

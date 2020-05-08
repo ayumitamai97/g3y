@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class='container'>
     <article v-for="post in posts" :key="post.id" class='media'>
       <figure class='media-left'>image<br>image</figure>
       <div class='media-content'>
@@ -46,6 +46,12 @@ export default {
         pagePer,
       },
     },
+  },
+  created() {
+    // this.$store.subscribe((mutation, state) => {
+    //     console.log(state)
+    //     console.log(mutation.payload)
+    //     })
   },
   methods: {
     // ref.
