@@ -14,7 +14,7 @@ import App from '../components/app.vue'
 import Home from '../components/home.vue'
 import Login from '../components/login.vue'
 import Signup from '../components/signup.vue'
-import AdvancedSearch from '../components/advancedSearch.vue'
+import Explore from '../components/explore.vue'
 
 document.addEventListener('DOMContentLoaded', () => {
   Vue.use(VueRouter)
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { path: '/', component: Home },
     { path: '/login', component: Login },
     { path: '/signup', component: Signup },
-    { path: '/advanced_search', component: AdvancedSearch },
+    { path: '/explore', component: Explore },
   ]
 
   const router = new VueRouter({ mode: 'history', routes })

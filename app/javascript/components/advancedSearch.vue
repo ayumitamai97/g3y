@@ -7,9 +7,10 @@
         <button class='delete' @click='closeModal'></button>
       </div>
       <div class='modal-card-body'>
+        <input type='text' v-model='query.keywordOr' class='input' placeholder='OR search'>
       </div>
       <div class='modal-card-foot'>
-        <button class='button'>Search</button>
+        <button class='button' @click='search'>Search</button>
       </div>
     </div>
   </div>
@@ -17,9 +18,12 @@
 
 <script lang='ts'>
 export default {
-  // data() {
-  //   modalVisibility: true
-  // },
+  data() {
+    return {
+      query: { keywordOr: '', keywordAnd: '' },
+      modalVisibility: true
+    }
+  },
   computed: {
     modalVisibilityClass(): String {
       if (this.modalVisibility) {
@@ -32,6 +36,10 @@ export default {
   methods: {
     closeModal(): void {
       this.modalVisibility = false
+    },
+    search(): void {
+      this.closeModal()
+      this.$emit('searchPosts', this.query)
     },
   },
 }

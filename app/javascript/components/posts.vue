@@ -29,11 +29,18 @@ export default {
       showMoreEnabled: true,
     }
   },
+  props: {
+    keywordOr: {
+      type: String,
+    },
+    keywordAnd: {
+      type: String, // TODO
+    },
+  },
   apollo: {
-    // TODO: 検索結果にもこのコンポーネントが使われる
     posts: {
-      query: gql`query posts ($page: Int!, $pagePer: Int!) {
-        posts(page: $page, pagePer: $pagePer) {
+      query: gql`query posts ($content: String, $page: Int!, $pagePer: Int!) {
+        posts(content: $content, page: $page, pagePer: $pagePer) {
           content
           createdAt
           user {
@@ -42,11 +49,17 @@ export default {
           }
         }
       }`,
-      variables: {
-        page: 0,
-        pagePer,
+      // ref. Reactive parameters
+      // https://apollo.vuejs.org/guide/apollo/queries.html#reactive-parameters
+      variables () {
+        return {
+          content: this.keywordOr,
+          page: 0,
+          pagePer,
+        }
       },
     },
+
   },
   created() {
     this.$store.subscribe(async (mutation) => {
