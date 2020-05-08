@@ -51,7 +51,7 @@ export default {
       }`,
       // ref. Reactive parameters
       // https://apollo.vuejs.org/guide/apollo/queries.html#reactive-parameters
-      variables () {
+      variables() {
         return {
           content: this.keywordOr,
           page: 0,

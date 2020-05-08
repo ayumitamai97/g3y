@@ -10,6 +10,7 @@ import { setContext } from 'apollo-link-context'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import VueApollo from 'vue-apollo'
 import InfiniteLoading from 'vue-infinite-loading'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import App from '../components/app.vue'
 import Home from '../components/home.vue'
 import Login from '../components/login.vue'
@@ -67,6 +68,10 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     plugins: [createPersistedState()],
   })
+
+  // FontAwesome
+  Vue.component('font-awesome-icon', FontAwesomeIcon)
+  Vue.config.productionTip = false
 
   new Vue({
     el: '#app',

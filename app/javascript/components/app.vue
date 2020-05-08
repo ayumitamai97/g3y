@@ -14,7 +14,13 @@
         </div>
         <div v-if='isAuthenticated()'>
           <p class='mb-10'>Logged in as {{ userName() }}</p>
-          <a @click='logout'>Logout</a>
+          <div class='menu'>
+            <ul class='menu-list'>
+              <li><router-link :to='"/"'>Home</router-link></li>
+              <li><router-link :to='"/explore"'>Explore</router-link></li>
+              <li><a @click='logout' class='has-text-grey-light'>Logout</a></li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>

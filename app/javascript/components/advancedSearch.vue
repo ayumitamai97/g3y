@@ -21,25 +21,23 @@ export default {
   data() {
     return {
       query: { keywordOr: '', keywordAnd: '' },
-      modalVisibility: true
     }
   },
   computed: {
     modalVisibilityClass(): String {
-      if (this.modalVisibility) {
-        return 'modal is-block'
-      } else {
-        return 'modal'
-      }
+      return this.modalVisibility ? 'modal is-block' : 'modal'
+    },
+    modalVisibility(): Boolean {
+      return this.$route.query.advancedSearch
     },
   },
   methods: {
-    closeModal(): void {
-      this.modalVisibility = false
-    },
     search(): void {
       this.closeModal()
       this.$emit('searchPosts', this.query)
+    },
+    closeModal(): void {
+      this.$router.push('explore')
     },
   },
 }
