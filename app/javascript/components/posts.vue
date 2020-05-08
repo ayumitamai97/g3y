@@ -51,7 +51,7 @@ export default {
   created() {
     this.$store.subscribe(async (mutation) => {
       if (mutation.type === 'postsUpdated') {
-        await Util.sleep(500)
+        await Util.sleep(1000)
         this.$apollo.queries.posts.refetch()
       }
     })
