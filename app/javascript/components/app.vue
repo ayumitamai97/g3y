@@ -33,7 +33,7 @@ export default {
     this.isAuthenticated = authUtil.isAuthenticated
   },
   methods: {
-    userName() {
+    userName(): String {
       return this.$store.state.user_name
     },
     logout(): void {
