@@ -1,5 +1,18 @@
 <template>
   <div class='container'>
+    <div class='notification is-danger' v-if='errors.length > 0'>
+      <button class='delete' @click='closeError'></button>
+      <div v-for='error in errors' :key='error'>
+        <p>{{ error }}</p>
+      </div>
+    </div>
+    <div class='notification is-warning' v-if='warnings.length > 0'>
+      <button class='delete' @click='closeWarning'></button>
+      <div v-for='warning in warnings' :key='warning'>
+        <p>{{ warning }}</p>
+      </div>
+    </div>
+
     <article v-for="post in posts" :key="post.id" class='media'>
       <figure class='media-left'>image<br>image</figure>
       <div class='media-content'>
@@ -17,7 +30,7 @@
 
 <script lang='ts'>
 import gql from 'graphql-tag'
-import Util from '../src/util.ts'
+import util from '../src/util.ts'
 
 const pagePer: number = 20
 
@@ -27,18 +40,26 @@ export default {
       posts: '',
       page: 0,
       showMoreEnabled: true,
+      errors: [],
+      warnings: [],
     }
   },
   props: {
     query: {
       type: Object,
-      default: () => ({ qContentOr: '', qContentAnd: '', qUsername: '' })
+      default: (): Object => ({
+        qContentOr: '',
+        qContentAnd: '',
+        qUsername: '',
+        qCreatedAtAfter: '',
+        qCreatedAtBefore: '',
+      }),
     },
   },
   apollo: {
     posts: {
-      query: gql`query posts ($contentOr: String, $contentAnd: String, $username: String, $page: Int!, $pagePer: Int!) {
-        posts(contentOr: $contentOr, contentAnd: $contentAnd, username: $username, page: $page, pagePer: $pagePer) {
+      query: gql`query posts ($contentOr: String, $contentAnd: String, $username: String, $createdAtAfter: String, $createdAtBefore: String, $page: Int!, $pagePer: Int!) {
+        posts(contentOr: $contentOr, contentAnd: $contentAnd, username: $username, createdAtAfter: $createdAtAfter, createdAtBefore: $createdAtBefore, page: $page, pagePer: $pagePer) {
           content
           createdAt
           user {
@@ -49,25 +70,39 @@ export default {
       }`,
       // ref. Reactive parameters
       // https://apollo.vuejs.org/guide/apollo/queries.html#reactive-parameters
-      variables() {
+      variables(): Object {
         return {
           contentOr: this.query.qContentOr,
           contentAnd: this.query.qContentAnd,
           username: this.query.qUsername,
+          createdAtAfter: this.query.qCreatedAtAfter,
+          createdAtBefore: this.query.qCreatedAtBefore,
           page: 0,
           pagePer,
         }
       },
+      // https://v4.apollo.vuejs.org/api/smart-query.html#options
+      result({ data }): void {
+        if (data.posts.length === 0) { this.warnings = ['Posts not found...'] }
+      },
+      error(error) {
+        this.errors.push(error.toString())
+      },
     },
 
   },
-  created() {
+  created(): void {
     this.$store.subscribe(async (mutation) => {
       if (mutation.type === 'postsUpdated') {
-        await Util.sleep(1000)
+        await util.sleep(1000)
         this.$apollo.queries.posts.refetch()
       }
     })
+    this.closeError = util.closeError.bind(this)
+    this.closeWarning = util.closeWarning.bind(this)
+  },
+  beforeUpdate(): void {
+    this.errors = this.errors.filter((v, i, a) => a.indexOf(v) === i)
   },
   methods: {
     // ref.

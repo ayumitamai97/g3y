@@ -6,6 +6,7 @@ Metrics/MethodLength:
 Metrics/BlockLength:
   Exclude:
     - 'lib/tasks/auto_annotate_models.rake'
+    - 'app/graphql/types/query_type.rb'
     - 'spec/**/*'
 
 Naming/MethodParameterName:

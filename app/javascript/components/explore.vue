@@ -28,7 +28,7 @@ library.add(faSearch)
 export default {
   data() {
     return {
-      query: { qContentOr: '', qContentAnd: '', qUsername: '' },
+      query: {},
     }
   },
   components: { Posts, AdvancedSearch },
