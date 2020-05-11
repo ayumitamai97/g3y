@@ -19,7 +19,7 @@
 import gql from 'graphql-tag'
 
 export default {
-  data() {
+  data(): Object {
     return {
       post: { content: '' },
     }

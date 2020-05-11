@@ -26,7 +26,7 @@ import AdvancedSearch from './advancedSearch.vue'
 library.add(faSearch)
 
 export default {
-  data() {
+  data(): Object {
     return {
       query: {},
     }

@@ -20,7 +20,7 @@
           <span class='has-text-weight-bold'>{{ post.user.name }}</span>
           <span class='is-size-7'>{{ post.createdAt }}</span>
         </div>
-        <div class='is-size-6'>{{ post.content }}</div>
+        <div class='is-size-6 wb-all'>{{ post.content }}</div>
       </div>
     </article>
 
@@ -35,7 +35,7 @@ import util from '../src/util.ts'
 const pagePer: number = 20
 
 export default {
-  data() {
+  data(): Object {
     return {
       posts: '',
       page: 0,

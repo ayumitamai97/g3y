@@ -15,7 +15,7 @@ import authUtil from '../src/authUtil.ts'
 
 export default {
   components: { Posts, newPostForm },
-  created() {
+  created(): void {
     if (!authUtil.isAuthenticated()) {
       this.$router.push('/login')
     }

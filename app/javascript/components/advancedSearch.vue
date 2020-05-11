@@ -1,6 +1,6 @@
 <template>
   <div :class='modalVisibilityClass'>
-    <div class='modal-background'></div>
+    <div class='modal-background' @click='closeModal'></div>
     <div class='modal-card mt-20'>
       <div class='modal-card-head'>
         <h1 class='modal-card-title is-2'>Advanced Search</h1>
@@ -48,7 +48,7 @@ import Datepicker from 'vuejs-datepicker'
 
 export default {
   components: { Datepicker },
-  data() {
+  data(): Object {
     return {
       query: {
         qContentOr: '',

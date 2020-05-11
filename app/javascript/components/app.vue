@@ -3,7 +3,7 @@
     <section class='section column is-3 is-offset-1'>
       <div>
         <h1 class='title is-1 mb-20'>
-          <router-link to='/'>g3y</router-link>
+          <router-link to='/'>gummy</router-link>
         </h1>
       </div>
       <div>
@@ -35,7 +35,7 @@ import authUtil from '../src/authUtil.ts'
 
 export default {
   name: 'app',
-  created() {
+  created(): void {
     this.isAuthenticated = authUtil.isAuthenticated
   },
   methods: {
