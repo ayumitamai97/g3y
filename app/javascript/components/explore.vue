@@ -13,7 +13,7 @@
       </div>
     </div>
     <advanced-search v-on:searchPosts='setQuery'></advanced-search>
-    <posts v-bind:keywordOr='this.keywordOr'></posts>
+    <posts v-bind:query='this.query'></posts>
   </div>
 </template>
 
@@ -28,14 +28,13 @@ library.add(faSearch)
 export default {
   data() {
     return {
-      // TODO: keyword and search etc
-      keywordOr: '',
+      query: { qContentOr: '', qContentAnd: '', qUsername: '' },
     }
   },
   components: { Posts, AdvancedSearch },
   methods: {
-    setQuery(query) {
-      this.keywordOr = query.keywordOr
+    setQuery(query): void {
+      this.query = query
     },
   },
 }

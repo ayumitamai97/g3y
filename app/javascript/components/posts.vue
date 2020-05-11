@@ -30,17 +30,12 @@ export default {
     }
   },
   props: {
-    keywordOr: {
-      type: String,
-    },
-    keywordAnd: {
-      type: String, // TODO
-    },
+    query: { type: Object }
   },
   apollo: {
     posts: {
-      query: gql`query posts ($content: String, $page: Int!, $pagePer: Int!) {
-        posts(content: $content, page: $page, pagePer: $pagePer) {
+      query: gql`query posts ($contentOr: String, $contentAnd: String, $username: String, $page: Int!, $pagePer: Int!) {
+        posts(contentOr: $contentOr, contentAnd: $contentAnd, username: $username, page: $page, pagePer: $pagePer) {
           content
           createdAt
           user {
@@ -53,7 +48,9 @@ export default {
       // https://apollo.vuejs.org/guide/apollo/queries.html#reactive-parameters
       variables() {
         return {
-          content: this.keywordOr,
+          contentOr: this.query.qContentOr,
+          contentAnd: this.query.qContentAnd,
+          username: this.query.qUsername,
           page: 0,
           pagePer,
         }

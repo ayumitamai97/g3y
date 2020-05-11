@@ -7,7 +7,13 @@
         <button class='delete' @click='closeModal'></button>
       </div>
       <div class='modal-card-body'>
-        <input type='text' v-model='query.keywordOr' class='input' placeholder='OR search'>
+        <input type='text' v-model='query.qContentOr' class='input' placeholder='OR search'>
+      </div>
+      <div class='modal-card-body'>
+        <input type='text' v-model='query.qContentAnd' class='input' placeholder='AND search'>
+      </div>
+      <div class='modal-card-body'>
+        <input type='text' v-model='query.qUsername' class='input' placeholder='username'>
       </div>
       <div class='modal-card-foot'>
         <button class='button' @click='search'>Search</button>
@@ -20,7 +26,7 @@
 export default {
   data() {
     return {
-      query: { keywordOr: '', keywordAnd: '' },
+      query: { qContentOr: '', qContentAnd: '', qUsername: '' },
     }
   },
   computed: {

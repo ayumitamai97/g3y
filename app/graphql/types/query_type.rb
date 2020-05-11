@@ -16,8 +16,12 @@ module Types
 
     field :posts, [PostType], null: false do
       description 'Incremental searchに使われる想定'
-      argument :content, String, required: false
+      argument :contentOr, String, required: false, as: :content_or
+      argument :contentAnd, String, required: false, as: :content_and
       argument :userId, ID, required: false, as: :user_id
+      argument :username, String, required: false, prepare: ->(username, _ctx) do
+        User.find_by(name: username)
+      end
       argument :page, Integer, required: false
       argument :pagePer, Integer, required: false, as: :page_per
     end
@@ -32,9 +36,9 @@ module Types
       Post.find(id)
     end
 
-    def posts(content: nil, user_id: nil, page: 0, page_per: 20)
+    def posts(content_or: nil, content_and: nil, user_id: nil, username: nil, page: 0, page_per: 20)
       req = {
-        query: posts_query(content: content, user_id: user_id).deep_stringify_keys,
+        query: posts_query(content_or: content_or, content_and: content_and, user_id: user_id).deep_stringify_keys,
         sort: { created_at: 'desc' },
         size: page_per,
         from: page_per * page,
@@ -45,19 +49,38 @@ module Types
 
     private
 
-    def posts_query(content:, user_id:)
+    # Example:
+    # {
+    #   bool: {
+    #     must: {
+    #       [
+    #         { match: { content: 'and_1' } },
+    #         { match: { content: 'and_2' } },
+    #         { match: { content: 'or_1 or_2' } },
+    #         { parent_id: { type: child_type, id: parent_id } }
+    #       ]
+    #     }
+    #   }
+    # }
+
+    def posts_query(content_or:, content_and:, user_id:)
       # TODO: kuromoji
 
-      if content.blank? && user_id.blank?
-        { match: { relation_type: 'post' } }
-      elsif content.blank?
-        parent_id(child_type: 'post', parent_id: user_id)
-      elsif user_id.blank?
-        match(content: content)
-      else
-        parent_query = parent_id(child_type: 'post', parent_id: user_id)
-        and_condition(parent_query: parent_query, match_query: match(content: content))
+      if content_or.blank? && content_and.blank? && user_id.blank?
+        return { match: { relation_type: 'post' } }
       end
+
+      content_queries = content_and.split(/[[:blank:]]/).push(content_or)
+                                   .map { |c| match(content: c) if c.present? }
+
+      parent_query = user_id.present? ? post_by_user(user_id: user_id) : nil
+      queries = content_queries.push(parent_query).compact
+
+      and_condition(queries)
+    end
+
+    def post_by_user(user_id:)
+      parent_id(child_type: 'post', parent_id: user_id)
     end
 
     def parent_id(child_type:, parent_id:)
@@ -68,12 +91,8 @@ module Types
       { match: hash }
     end
 
-    def and_condition(parent_query:, match_query:)
-      {
-        bool: {
-          must: [parent_query, match_query],
-        },
-      }
+    def and_condition(queries)
+      { bool: { must: queries } }
     end
   end
 end
