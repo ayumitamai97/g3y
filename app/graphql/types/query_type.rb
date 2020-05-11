@@ -105,8 +105,7 @@ module Types
     def posts_by_content_query(c_and:, c_or:)
       return if [c_and, c_or].all?(&:blank?)
 
-      [c_and&.split(/[[:blank:]]/), c_or]
-        .map { |c| match(content: c) if c.present? }
+      [c_and&.split(/[[:blank:]]/), c_or].flatten.map { |c| match(content: c) if c.present? }
     end
 
     def parent_id(child_type:, parent_id:)

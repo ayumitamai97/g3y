@@ -50,7 +50,7 @@ export default {
       errors: [],
     }
   },
-  created(): Object {
+  created(): void {
     this.setToken = authUtil.setToken.bind(this)
     this.authenticateUser = authUtil.authenticateUser.bind(this)
   },
