@@ -30,7 +30,10 @@ export default {
     }
   },
   props: {
-    query: { type: Object }
+    query: {
+      type: Object,
+      default: () => ({ qContentOr: '', qContentAnd: '', qUsername: '' })
+    },
   },
   apollo: {
     posts: {

@@ -18,17 +18,23 @@ module Types
       description 'Incremental searchに使われる想定'
       argument :contentOr, String, required: false, as: :content_or
       argument :contentAnd, String, required: false, as: :content_and
-      argument :userId, ID, required: false, as: :user_id
-      argument :username, String, required: false, prepare: ->(username, _ctx) do
-        User.find_by(name: username)
-      end
+      argument :userId, ID, required: false, as: :user_id, prepare: lambda { |id, _ctx|
+        if id.present?
+          User.exists?(id: id) ? id : raise(ActiveRecord::RecordNotFound)
+        end
+      }
+      argument :username, String, required: false, prepare: lambda { |name, _ctx|
+        if name.present?
+          User.exists?(name: name) ? name : raise(ActiveRecord::RecordNotFound)
+        end
+      }
       argument :page, Integer, required: false
       argument :pagePer, Integer, required: false, as: :page_per
     end
 
     def user(id: nil, name: nil)
       User.find(id)
-    rescue StandardError
+    rescue ActiveRecord::RecordNotFound
       User.find_by!(name: name)
     end
 
@@ -36,9 +42,11 @@ module Types
       Post.find(id)
     end
 
-    def posts(content_or: nil, content_and: nil, user_id: nil, username: nil, page: 0, page_per: 20)
+    def posts(content_or: nil, content_and: nil, user_id: nil, username: nil, page: 0, page_per: 20) # rubocop:disable Metrics/ParameterLists
+      user = User.find_by(id: user_id) || User.find_by(name: username)
+
       req = {
-        query: posts_query(content_or: content_or, content_and: content_and, user_id: user_id).deep_stringify_keys,
+        query: posts_query(content_or: content_or, content_and: content_and, user_id: user&.id).deep_stringify_keys,
         sort: { created_at: 'desc' },
         size: page_per,
         from: page_per * page,
@@ -63,12 +71,10 @@ module Types
     #   }
     # }
 
-    def posts_query(content_or:, content_and:, user_id:)
+    def posts_query(content_or: nil, content_and: nil, user_id: nil)
       # TODO: kuromoji
 
-      if content_or.blank? && content_and.blank? && user_id.blank?
-        return { match: { relation_type: 'post' } }
-      end
+      return { match: { relation_type: 'post' } } if content_or.blank? && content_and.blank? && user_id.blank?
 
       content_queries = content_and.split(/[[:blank:]]/).push(content_or)
                                    .map { |c| match(content: c) if c.present? }
