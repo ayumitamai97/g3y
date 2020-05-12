@@ -48,10 +48,10 @@ module Types
 
       return [] if (user_id.present? || username.present?) && user.nil?
 
-      posts_query = Elasticsearch::PostsQuery.new(
+      Elasticsearch::PostsQuery.new(
         content_or: content_or, content_and: content_and, user_id: user&.id,
         created_at_after: created_at_after, created_at_before: created_at_before,
-        page: page, page_per: page_per,
+        page: page, page_per: page_per
       ).call
     end
   end

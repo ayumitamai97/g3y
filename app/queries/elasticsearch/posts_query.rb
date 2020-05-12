@@ -1,7 +1,7 @@
+# frozen_string_literal: true
+
 module Elasticsearch
   class PostsQuery < Elasticsearch::BaseQuery
-    include ActiveModel::Model
-
     def initialize(**params)
       super(**params)
     end
@@ -10,25 +10,27 @@ module Elasticsearch
                   :created_at_after, :created_at_before
 
     def call
-      if [content_or, content_and, user_id, created_at_after, created_at_before].all?(&:blank?)
-        body = body(query: { match: { relation_type: 'post' } })
-        Post.search(body).results
-      end
+      validate!
+
+      query_body = body(query: query)
+      Post.search(query_body).results
+    end
+
+    private
+
+    def query
+      return { match: { relation_type: 'post' } } if params_blank?
 
       content_queries = posts_by_content_query(c_and: content_and, c_or: content_or) || []
       parent_query = posts_by_user_query(user_id: user_id)
       range_query = range(created_at_after: created_at_after, created_at_before: created_at_before)
 
       query_parts = posts_base_query
-                .push(*content_queries, parent_query, range_query)
-                .compact
+                    .push(*content_queries, parent_query, range_query)
+                    .compact
 
-      body = body(query: and_condition(query_parts))
-
-      Post.search(body).results
+      and_condition(query_parts)
     end
-
-    private
 
     def posts_base_query
       [{ match: { relation_type: 'post' } }]
@@ -44,6 +46,10 @@ module Elasticsearch
       return if [c_and, c_or].all?(&:blank?)
 
       [c_and&.split(/[[:blank:]]/), c_or].flatten.map { |c| match(content: c) if c.present? }
+    end
+
+    def params_blank?
+      [content_or, content_and, user_id, created_at_after, created_at_before].all?(&:blank?)
     end
   end
 end

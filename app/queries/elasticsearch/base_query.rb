@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 module Elasticsearch
   class BaseQuery
     include ActiveModel::Model
+    include ActiveModel::Validations
 
     def initialize(**params)
       params.each do |k, v|
@@ -10,12 +13,16 @@ module Elasticsearch
 
     attr_accessor :page, :page_per
 
+    validates :page, :page_per, presence: true
+
     def call
       raise NotImplementedError
     end
 
+    private
+
     def body(query:)
-      req = {
+      {
         query: query&.deep_stringify_keys,
         sort: { created_at: 'desc' }, size: page_per, from: page_per * page,
       }
