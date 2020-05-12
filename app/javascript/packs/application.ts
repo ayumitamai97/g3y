@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { path: '/explore', component: Explore },
   ]
 
-  const router = new VueRouter({ mode: 'history', linkExactActiveClass: 'is-active', routes })
+  const router = new VueRouter({ mode: 'history', linkActiveClass: 'is-active', routes })
 
   // Apollo
   // ref. https://github.com/vuejs/vue-apollo/issues/144#issuecomment-522945282

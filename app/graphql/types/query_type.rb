@@ -15,7 +15,6 @@ module Types
     end
 
     field :posts, [PostType], null: false do
-      description 'Incremental searchに使われる想定'
       argument :contentOr, String, required: false, as: :content_or
       argument :contentAnd, String, required: false, as: :content_and
       argument :userId, ID, required: false, as: :user_id
@@ -26,6 +25,13 @@ module Types
       argument :createdAtBefore, String,
                required: false, as: :created_at_before,
                prepare: ->(date, _ctx) { format_date(date: date) }
+      argument :page, Integer, required: false
+      argument :pagePer, Integer, required: false, as: :page_per
+    end
+
+    field :fuzzy_posts, [PostType], null: false do
+      argument :contentOr, String, required: false, as: :content_or
+      argument :username, String, required: false
       argument :page, Integer, required: false
       argument :pagePer, Integer, required: false, as: :page_per
     end
@@ -51,6 +57,21 @@ module Types
       Elasticsearch::PostsQuery.new(
         content_or: content_or, content_and: content_and, user_id: user&.id,
         created_at_after: created_at_after, created_at_before: created_at_before,
+        page: page, page_per: page_per
+      ).call
+    end
+
+    def users(name:)
+    end
+
+    def fuzzy_posts(keyword:)
+      # TODO: where or elasticseach
+      user = User.find_by(name: username)
+
+      return [] if username.present? && user.nil?
+
+      Elasticsearch::PostsQuery.new(
+        content_or: content_or, user_id: user&.id,
         page: page, page_per: page_per
       ).call
     end

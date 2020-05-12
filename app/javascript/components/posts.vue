@@ -51,9 +51,14 @@ export default {
         qContentOr: '',
         qContentAnd: '',
         qUsername: '',
+        qKeyword: '',
         qCreatedAtAfter: '',
         qCreatedAtBefore: '',
       }),
+    },
+    queryField: {
+      type: String,
+      default: 'posts',
     },
   },
   apollo: {
