@@ -45,92 +45,14 @@ module Types
       created_at_after: nil, created_at_before: nil, page: 0, page_per: 20
     )
       user = User.find_by(id: user_id) || User.find_by(name: username)
+
       return [] if (user_id.present? || username.present?) && user.nil?
 
-      req = {
-        query: posts_query(
-          content_or: content_or, content_and: content_and, user_id: user&.id,
-          created_at_after: created_at_after, created_at_before: created_at_before
-        ).deep_stringify_keys,
-        sort: { created_at: 'desc' }, size: page_per, from: page_per * page,
-      }
-
-      Post.search(req).results
-    end
-
-    private
-
-    # Example:
-    # {
-    #   bool: {
-    #     must: {
-    #       [
-    #         { match: { content: 'and_1' } },
-    #         { match: { content: 'and_2' } },
-    #         { match: { content: 'or_1 or_2' } },
-    #         { parent_id: { type: child_type, id: parent_id } }
-    #       ]
-    #     }
-    #   }
-    # }
-
-    def posts_query(content_or: nil, content_and: nil, user_id: nil, created_at_after: nil, created_at_before: nil)
-      # TODO: kuromoji
-
-      if [content_or, content_and, user_id, created_at_after, created_at_before].all?(&:blank?)
-        return { match: { relation_type: 'post' } }
-      end
-
-      content_queries = posts_by_content_query(c_and: content_and, c_or: content_or) || []
-      parent_query = posts_by_user_query(user_id: user_id)
-      range_query = range(created_at_after: created_at_after, created_at_before: created_at_before)
-
-      queries = posts_base_query
-                .push(*content_queries, parent_query, range_query)
-                .compact
-
-      and_condition(queries)
-    end
-
-    def posts_base_query
-      [{ match: { relation_type: 'post' } }]
-    end
-
-    def posts_by_user_query(user_id: nil)
-      return if user_id.blank?
-
-      parent_id(child_type: 'post', parent_id: user_id)
-    end
-
-    def posts_by_content_query(c_and:, c_or:)
-      return if [c_and, c_or].all?(&:blank?)
-
-      [c_and&.split(/[[:blank:]]/), c_or].flatten.map { |c| match(content: c) if c.present? }
-    end
-
-    def parent_id(child_type:, parent_id:)
-      { parent_id: { type: child_type, id: parent_id } }
-    end
-
-    def match(hash)
-      { match: hash }
-    end
-
-    def range(created_at_after: nil, created_at_before: nil)
-      return if [created_at_after, created_at_before].all?(&:blank?)
-
-      {
-        range: {
-          created_at: {
-            gte: created_at_after.presence,
-            lte: created_at_before.presence,
-          },
-        },
-      }
-    end
-
-    def and_condition(queries)
-      { bool: { must: queries } }
+      posts_query = Elasticsearch::PostsQuery.new(
+        content_or: content_or, content_and: content_and, user_id: user&.id,
+        created_at_after: created_at_after, created_at_before: created_at_before,
+        page: page, page_per: page_per,
+      ).call
     end
   end
 end
