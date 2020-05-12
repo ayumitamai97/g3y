@@ -83,7 +83,11 @@ export default {
       },
       // https://v4.apollo.vuejs.org/api/smart-query.html#options
       result({ data }): void {
-        if (data.posts.length === 0) { this.warnings = ['Posts not found...'] }
+        if (data.posts.length === 0) {
+          this.warnings = ['Posts not found...']
+        } else {
+          this.warnings = []
+        }
       },
       error(error) {
         this.errors.push(error.toString())
