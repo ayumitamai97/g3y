@@ -13,16 +13,9 @@
       </div>
     </div>
 
-    <article v-for="post in fuzzyPosts" :key="post.id" class='media'>
-      <figure class='media-left'>image<br>image</figure>
-      <div class='media-content'>
-        <div>
-          <span class='has-text-weight-bold'>{{ post.user.name }}</span>
-          <span class='is-size-7'>{{ post.createdAt }}</span>
-        </div>
-        <div class='is-size-6 wb-all'>{{ post.content }}</div>
-      </div>
-    </article>
+    <post
+     v-for='post in fuzzyPosts' class='media' v-bind:key='post.id' v-bind:item='post'
+    ></post>
 
     <infinite-loading @infinite='infiniteHandler' ref='infiniteLoading'></infinite-loading>
   </div>
@@ -31,10 +24,12 @@
 <script lang='ts'>
 import gql from 'graphql-tag'
 import util from '../src/util.ts'
+import Post from '../components/post.vue'
 
 const pagePer: number = 20
 
 export default {
+  components: { Post },
   data(): Object {
     return {
       page: 0,

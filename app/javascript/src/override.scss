@@ -1,6 +1,22 @@
+body {
+  font-family: 'Lato', Arial, 'ヒラギノ角ゴ W3', 'Hiragino Kaku Gothic Pro',
+               'Hiragino Sans', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
+}
+
 // Bulma
 
 .modal-card,
 .modal-card-body {
   overflow: visible;
+}
+
+.textarea,
+.input {
+  outline: none;
+  box-shadow: none;
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
 }

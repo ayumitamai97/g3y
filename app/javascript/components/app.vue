@@ -13,7 +13,7 @@
           <router-link to="/signup">Signup</router-link>
         </div>
         <div v-if='isAuthenticated()'>
-          <p class='mb-10'>Logged in as {{ userName() }}</p>
+          <p class='mb-20'>Logged in as {{ userName() }}</p>
           <div class='menu'>
             <ul class='menu-list'>
               <li><router-link :to='"/"' exact>Home</router-link></li>

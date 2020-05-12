@@ -11,6 +11,7 @@
     "apollo-link-http": "^1.5.17",
     "bulma": "^0.8.2",
     "dotenv": "^8.2.0",
+    "google-fonts-plugin": "^5.0.2",
     "graphql": "^15.0.0",
     "graphql-tag": "^2.10.3",
     "jwt-decode": "^2.2.0",

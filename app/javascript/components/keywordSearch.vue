@@ -22,8 +22,8 @@
 
 <script lang='ts'>
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
-import { faEllipsisH } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faEllipsisH } from '@fortawesome/free-solid-svg-icons'
+
 
 library.add(faSearch, faEllipsisH)
 
@@ -39,7 +39,7 @@ export default {
     showAdvancedButton: {
       type: Boolean,
       default: true,
-    }
+    },
   },
   methods: {
     search(event): void {
@@ -47,10 +47,9 @@ export default {
 
       this.$emit('search', {
         qKeyword: this.query.qKeyword,
-        queryField: 'fuzzyPosts'
+        queryField: 'fuzzyPosts',
       })
     },
   },
 }
 </script>
-

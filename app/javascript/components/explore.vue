@@ -2,7 +2,7 @@
   <div>
     <div class='columns'>
       <div class='column is-4'>
-        <h1 class='title is-size-2'>Explore</h1>
+        <h1 class='title is-size-2 has-text-grey-dark'>Explore</h1>
       </div>
       <div class='column is-8'>
         <keyword-search @search='keywordSearch'></keyword-search>

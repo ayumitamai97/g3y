@@ -1,6 +1,7 @@
 const { environment } = require('@rails/webpacker')
 const webpack = require('webpack')
 const dotenv = require('dotenv')
+const GoogleFontsPlugin = require('google-fonts-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 const typescript = require('./loaders/typescript')
 const vue = require('./loaders/vue')
@@ -21,8 +22,37 @@ dotenvFiles.forEach((dotenvFile) => {
 })
 
 // https://webpack.js.org/plugins/environment-plugin/#usage-with-default-values
-environment.plugins.prepend('Environment', new webpack.EnvironmentPlugin({
-  HOST: process.env.HOST,
-}))
+environment.plugins.prepend('Environment',
+  new webpack.EnvironmentPlugin({
+    HOST: process.env.HOST,
+  })
+)
+
+environment.plugins.prepend(
+  'Provide',
+  new GoogleFontsPlugin({
+    fonts: [
+      {
+        family: 'Noto Sans JP',
+        variants: [
+          '400',
+          '700',
+        ],
+        "subsets": [
+          "japanese"
+        ]
+      },
+      {
+        family: 'Lato',
+        variants: [
+          '400',
+          '700',
+        ],
+      },
+    ],
+    filename: 'fonts.scss',
+    path: 'src/fonts',
+  })
+)
 
 module.exports = environment
