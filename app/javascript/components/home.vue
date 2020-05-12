@@ -13,20 +13,20 @@
     </div>
     <new-post-form></new-post-form>
     <div>
-      <posts></posts>
+      <timeline></timeline>
     </div>
   </div>
 </template>
 
 <script lang='ts'>
-import Posts from './posts.vue'
+import Timeline from './timeline.vue'
 import newPostForm from './newPostForm.vue'
 import authUtil from '../src/authUtil.ts'
 
 const jpKeyCode: number = 13
 
 export default {
-  components: { Posts, newPostForm },
+  components: { Timeline, newPostForm },
   data(): Object {
     return {
       query: { qKeyword: '' },

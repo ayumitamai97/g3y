@@ -20,7 +20,10 @@ import Explore from '../components/explore.vue'
 document.addEventListener('DOMContentLoaded', () => {
   Vue.use(VueRouter)
   Vue.use(VueApollo)
-  Vue.use(InfiniteLoading)
+  Vue.use(InfiniteLoading, {
+    slots: { noResults: '', noMore: '' },
+    props: { spinner: 'waveDots' },
+  })
   Vue.use(Vuex)
 
   const routes = [

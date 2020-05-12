@@ -29,6 +29,7 @@ module Types
       argument :pagePer, Integer, required: false, as: :page_per
     end
 
+    # field :fuzzy_posts, resolver: Queries::FuzzyPostsQuery
     field :fuzzy_posts, [PostType], null: false do
       argument :keyword, String, required: false
       argument :page, Integer, required: false
@@ -60,8 +61,8 @@ module Types
       ).call
     end
 
-    def users(name:)
-    end
+    # TODO
+    def users(name:); end
 
     def fuzzy_posts(keyword:, page:, page_per:)
       # TODO: where or elasticseach

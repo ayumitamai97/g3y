@@ -13,7 +13,7 @@
       </div>
     </div>
 
-    <article v-for="post in posts" :key="post.id" class='media'>
+    <article v-for="post in fuzzyPosts" :key="post.id" class='media'>
       <figure class='media-left'>image<br>image</figure>
       <div class='media-content'>
         <div>
@@ -61,9 +61,9 @@ export default {
     },
   },
   apollo: {
-    posts: {
-      query: gql`query posts ($contentOr: String, $contentAnd: String, $username: String, $createdAtAfter: String, $createdAtBefore: String, $page: Int!, $pagePer: Int!) {
-        posts(contentOr: $contentOr, contentAnd: $contentAnd, username: $username, createdAtAfter: $createdAtAfter, createdAtBefore: $createdAtBefore, page: $page, pagePer: $pagePer) {
+    fuzzyPosts: {
+      query: gql`query fuzzyPosts ($keyword: String, $page: Int!, $pagePer: Int!) {
+        fuzzyPosts(keyword: $keyword, page: $page, pagePer: $pagePer) {
           content
           createdAt
           user {
@@ -76,18 +76,14 @@ export default {
       // https://apollo.vuejs.org/guide/apollo/queries.html#reactive-parameters
       variables(): Object {
         return {
-          contentOr: this.query.qContentOr,
-          contentAnd: this.query.qContentAnd,
-          username: this.query.qUsername,
-          createdAtAfter: this.query.qCreatedAtAfter,
-          createdAtBefore: this.query.qCreatedAtBefore,
+          keyword: this.query.qKeyword,
           page: 0,
           pagePer,
         }
       },
       // https://v4.apollo.vuejs.org/api/smart-query.html#options
       result({ data }): void {
-        if (data.posts.length === 0) {
+        if (data.fuzzyPosts.length === 0) {
           this.warnings = ['Posts not found...']
         } else {
           this.warnings = []
@@ -117,15 +113,15 @@ export default {
     // https://peachscript.github.io/vue-infinite-loading/guide/start-with-hn.html
     infiniteHandler($state): void {
       this.page += 1
-      this.$apollo.queries.posts.fetchMore({
+      this.$apollo.queries.fuzzyPosts.fetchMore({
         variables: {
           page: this.page,
           pagePer,
         },
         updateQuery: (previousResult, { fetchMoreResult }): Object => {
-          this.changeInfiniteState($state, fetchMoreResult.posts.length)
+          this.changeInfiniteState($state, fetchMoreResult.fuzzyPosts.length)
 
-          return { posts: [...previousResult.posts, ...fetchMoreResult.posts] }
+          return { fuzzyPosts: [...previousResult.fuzzyPosts, ...fetchMoreResult.fuzzyPosts] }
         },
       })
     },
