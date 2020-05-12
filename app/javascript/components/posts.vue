@@ -13,7 +13,7 @@
       </div>
     </div>
 
-    <article v-for="post in posts" :key="post.id" class='media'>
+    <article v-for="post in postsList" :key="post.id" class='media'>
       <figure class='media-left'>image<br>image</figure>
       <div class='media-content'>
         <div>
@@ -37,7 +37,6 @@ const pagePer: number = 20
 export default {
   data(): Object {
     return {
-      posts: '',
       page: 0,
       showMoreEnabled: true,
       errors: [],
@@ -87,18 +86,57 @@ export default {
         }
       },
       // https://v4.apollo.vuejs.org/api/smart-query.html#options
+      skip(): Boolean {
+        return this.isFuzzySearch
+      },
       result({ data }): void {
-        if (data.posts.length === 0) {
+        if (this.isExactSearch && data.posts.length === 0) {
           this.warnings = ['Posts not found...']
         } else {
           this.warnings = []
         }
       },
       error(error) {
-        this.errors.push(error.toString())
+        if (this.isExactSearch) { this.errors.push(error.toString()) }
       },
     },
+    fuzzyPosts: {
+      query: gql`query fuzzyPosts ($keyword: String, $page: Int!, $pagePer: Int!) {
+        fuzzyPosts(keyword: $keyword, page: $page, pagePer: $pagePer) {
+          content
+          createdAt
+          user {
+            id
+            name
+          }
+        }
+      }`,
+      // ref. Reactive parameters
+      // https://apollo.vuejs.org/guide/apollo/queries.html#reactive-parameters
+      variables(): Object {
+        return {
+          keyword: this.query.qKeyword,
+          page: 0,
+          pagePer,
+        }
+      },
+      // https://v4.apollo.vuejs.org/api/smart-query.html#options
+      skip(): Boolean {
+        return this.isExactSearch
+      },
+      result({ data }): void {
+        if (!data.fuzzyPosts) { return }
 
+        if (this.isFuzzySearch && data.fuzzyPosts.length === 0) {
+          this.warnings = ['Posts not found...']
+        } else {
+          this.warnings = []
+        }
+      },
+      error(error) {
+        if (this.isFuzzySearch) { this.errors.push(error.toString()) }
+      },
+    },
   },
   created(): void {
     this.$store.subscribe(async (mutation) => {
@@ -113,6 +151,29 @@ export default {
   beforeUpdate(): void {
     this.errors = this.errors.filter((v, i, a) => a.indexOf(v) === i)
   },
+  computed: {
+    postsList(): Object[] {
+      let posts: Object[]
+      if (this.isFuzzySearch) {
+        posts = this.fuzzyPosts
+      } if (this.isExactSearch) {
+        posts = this.posts
+      }
+      return posts
+    },
+    isFuzzySearch(): Boolean {
+      return this.queryField === 'fuzzyPosts'
+    },
+    isExactSearch(): Boolean {
+      return this.queryField === 'posts'
+    },
+  },
+  watch: {
+    queryField(): void {
+      this.$apollo.queries.posts.refetch()
+      this.$apollo.queries.fuzzyPosts.refetch()
+    },
+  },
   methods: {
     // ref.
     // https://apollo.vuejs.org/guide/apollo/pagination.html
@@ -125,14 +186,24 @@ export default {
           pagePer,
         },
         updateQuery: (previousResult, { fetchMoreResult }): Object => {
-          if (fetchMoreResult.posts.length > 0) {
-            $state.loaded()
-          } else {
-            $state.complete()
-          }
-          return { posts: [...previousResult.posts, ...fetchMoreResult.posts] }
+          const previousPosts = Object.values(previousResult)
+          const fetchedPosts = Object.values(fetchMoreResult)
+
+          this.changeInfiniteState($state, [].concat(...fetchedPosts).length)
+
+          const result: Object = {}
+          result[this.queryField] = [].concat(...previousPosts, ...fetchedPosts)
+
+          return result
         },
       })
+    },
+    changeInfiniteState(state, length): void {
+      if (length > 0) {
+        state.loaded()
+      } else {
+        state.complete()
+      }
     },
   },
 }

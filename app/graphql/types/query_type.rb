@@ -30,8 +30,7 @@ module Types
     end
 
     field :fuzzy_posts, [PostType], null: false do
-      argument :contentOr, String, required: false, as: :content_or
-      argument :username, String, required: false
+      argument :keyword, String, required: false
       argument :page, Integer, required: false
       argument :pagePer, Integer, required: false, as: :page_per
     end
@@ -64,14 +63,13 @@ module Types
     def users(name:)
     end
 
-    def fuzzy_posts(keyword:)
+    def fuzzy_posts(keyword:, page:, page_per:)
       # TODO: where or elasticseach
-      user = User.find_by(name: username)
-
-      return [] if username.present? && user.nil?
+      # TODO: OR search
+      user = User.find_by(name: keyword)
 
       Elasticsearch::PostsQuery.new(
-        content_or: content_or, user_id: user&.id,
+        content_or: keyword, user_id: user&.id,
         page: page, page_per: page_per
       ).call
     end

@@ -5,7 +5,10 @@
         <h2 class='title is-size-2'>Home Timeline</h2>
       </div>
       <div class='column is-6'>
-        <input class='input' @keydown.enter='search' v-model='query.qKeyword'>
+        <input
+         class='input' @keydown.enter='search' v-model='query.qKeyword'
+         placeholder='Search by username or post content'
+        >
       </div>
     </div>
     <new-post-form></new-post-form>
@@ -26,7 +29,7 @@ export default {
   components: { Posts, newPostForm },
   data(): Object {
     return {
-      query: { qKeyword: '' }
+      query: { qKeyword: '' },
     }
   },
   created(): void {
