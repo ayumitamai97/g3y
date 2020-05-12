@@ -5,10 +5,7 @@
         <h2 class='title is-size-2'>Home Timeline</h2>
       </div>
       <div class='column is-6'>
-        <input
-         class='input' @keydown.enter='search' v-model='query.qKeyword'
-         placeholder='Search by username or post content'
-        >
+        <keyword-search @search='keywordSearch' :showAdvancedButton=false></keyword-search>
       </div>
     </div>
     <new-post-form></new-post-form>
@@ -20,13 +17,12 @@
 
 <script lang='ts'>
 import Timeline from './timeline.vue'
-import newPostForm from './newPostForm.vue'
+import KeywordSearch from './keywordSearch.vue'
+import NewPostForm from './newPostForm.vue'
 import authUtil from '../src/authUtil.ts'
 
-const jpKeyCode: number = 13
-
 export default {
-  components: { Timeline, newPostForm },
+  components: { Timeline, KeywordSearch, NewPostForm },
   data(): Object {
     return {
       query: { qKeyword: '' },
@@ -38,12 +34,10 @@ export default {
     }
   },
   methods: {
-    search(event): void {
-      if (event.keyCode !== jpKeyCode) return
-
+    keywordSearch(query): void {
       this.$router.push({
         path: 'explore',
-        query: { qKeyword: this.query.qKeyword, queryField: 'fuzzyPosts' },
+        query: { qKeyword: query.qKeyword, queryField: query.queryField },
       })
     },
   },

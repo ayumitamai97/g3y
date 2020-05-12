@@ -1,0 +1,17 @@
+.new-post-form {
+  &__textarea {
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: 1px $primary solid;
+    resize: none;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+}
