@@ -28,7 +28,7 @@ module Queries
       )
       or_clause = query_by_user.append(query_by_content.call).build_or_clause
 
-      or_clause.merge(and_condition([posts_base_query]))
+      or_clause.merge(and_condition([posts_base_query])) { |_key, or_c, and_c| or_c.merge(and_c) }
     end
 
     def meta(page:, page_per:)
