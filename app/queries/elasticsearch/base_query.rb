@@ -66,5 +66,9 @@ module Elasticsearch
     def and_condition(queries)
       { bool: { must: queries } }
     end
+
+    def or_condition(queries)
+      { bool: { should: queries }, minimum_should_match: 1 }
+    end
   end
 end
