@@ -70,7 +70,7 @@ export default {
       },
       // https://v4.apollo.vuejs.org/api/smart-query.html#options
       result({ data }): void {
-        if (!data.fuzzyPosts) { return }
+        if (!data) return
         if (data.fuzzyPosts.length === 0) {
           this.warnings = ['Posts not found...']
         } else {
