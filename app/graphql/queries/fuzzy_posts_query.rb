@@ -4,9 +4,9 @@ module Queries
   class FuzzyPostsQuery < Types::BaseQuery
     type [Types::PostType], null: false
 
-    argument :keywords, String, required: false
-    argument :page, Integer, required: false
-    argument :pagePer, Integer, required: false, as: :page_per
+    argument :keywords, String, required: true
+    argument :page, Integer, required: true
+    argument :pagePer, Integer, required: true, as: :page_per
 
     def resolve(keywords:, page:, page_per:)
       query_body = {
