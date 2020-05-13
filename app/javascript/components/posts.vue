@@ -82,6 +82,7 @@ export default {
       },
       // https://v4.apollo.vuejs.org/api/smart-query.html#options
       result({ data }): void {
+        if (!data.posts) { return }
         if (data.posts.length === 0) {
           this.warnings = ['Posts not found...']
         } else {
