@@ -24,8 +24,5 @@ module Types
     def post(id:)
       Post.find(id)
     end
-
-    # TODO
-    def users(name:); end
   end
 end

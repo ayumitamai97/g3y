@@ -27,5 +27,9 @@ module Types
     def range_klass
       ElasticQueries::RangeCondition
     end
+
+    def and_condition(queries)
+      { bool: { must: queries } }
+    end
   end
 end

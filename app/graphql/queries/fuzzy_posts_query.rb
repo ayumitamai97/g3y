@@ -19,19 +19,16 @@ module Queries
     private
 
     def query(keywords:)
-      content_match = match_klass.new(content: keywords).call
+      query_by_content = match_klass.new(content: keywords)
 
       name_match = match_klass.new(name: keywords).call
-      or_clause = has_parent_klass.new(
+      query_by_user = has_parent_klass.new(
         parent_type: 'user',
         match_conditions: [name_match]
-      ).append(content_match).build_or_clause
+      )
+      or_clause = query_by_user.append(query_by_content.call).build_or_clause
 
       or_clause.merge(and_condition([posts_base_query]))
-    end
-
-    def and_condition(queries)
-      { bool: { must: queries } }
     end
 
     def meta(page:, page_per:)

@@ -37,8 +37,13 @@ module Queries
       content_or: nil, content_and: nil, username: nil,
       created_at_after: nil, created_at_before: nil
     )
-      queries_by_content = [content_and&.split(/[[:blank:]]/), content_or]
-                           .flatten.map { |c| match_klass.new(content: c).call if c.present? }
+      return posts_base_query if [content_or, content_and, username, created_at_after, created_at_before].all?(&:blank?)
+
+      queries_by_content =
+        [content_and&.split(/[[:blank:]]/), content_or]
+        .flatten.map do |c|
+          match_klass.new(content: c).call if c.present?
+        end
 
       query_by_user = has_parent_klass.new(
         parent_type: 'user',
@@ -48,11 +53,8 @@ module Queries
       query_by_range =
         range_klass.new(field: 'created_at', gte: created_at_after, lte: created_at_before).call
 
-      [posts_base_query].push(*queries_by_content, query_by_user, query_by_range).compact
-    end
-
-    def and_condition(queries)
-      { bool: { must: queries } }
+      conditions = [posts_base_query].push(*queries_by_content, query_by_user, query_by_range).compact
+      and_condition(conditions)
     end
 
     def meta(page:, page_per:)

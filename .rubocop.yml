@@ -1,6 +1,7 @@
 require: rubocop-rails
 
 Metrics/MethodLength:
+  Max: 15
   Exclude:
     - 'app/controllers/graphql_controller.rb'
     - 'spec/**/*'
