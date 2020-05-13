@@ -87,11 +87,11 @@ RSpec.describe Types::QueryType do
       end
     end
 
-    context 'search by user_id' do
+    context 'search by username' do
       let(:query) do
         <<~GRAPHQL
-          query($user_id: ID!) {
-            posts(userId: $user_id, pagePer: 100) {
+          query($username: String!) {
+            posts(username: $username, pagePer: 100) {
               content
               user {
                 id
@@ -102,7 +102,7 @@ RSpec.describe Types::QueryType do
       end
 
       it 'returns all the posts from first_user' do
-        result = G3ySchema.execute(query, { variables: { user_id: first_user.id } })
+        result = G3ySchema.execute(query, { variables: { username: first_user.name } })
         result_posts = result.dig('data', 'posts')
 
         expect(result_posts.count).to eq first_user.posts.count
@@ -159,11 +159,11 @@ RSpec.describe Types::QueryType do
       end
     end
 
-    context 'search by both user_id and contentOr' do
+    context 'search by both username and contentOr' do
       let(:query) do
         <<~GRAPHQL
-          query($contentOr: String!, $user_id: ID!) {
-            posts(contentOr: $contentOr, userId: $user_id, pagePer: 100) {
+          query($contentOr: String!, $username: String!) {
+            posts(contentOr: $contentOr, username: $username, pagePer: 100) {
               content
               user {
                 id
@@ -178,7 +178,7 @@ RSpec.describe Types::QueryType do
         result = G3ySchema.execute(query, {
                                      variables: {
                                        contentOr: query_string,
-                                       user_id: first_user.id,
+                                       username: first_user.name,
                                      },
                                    })
         result_posts = result.dig('data', 'posts')

@@ -20,35 +20,36 @@ module Queries
       content_or: nil, content_and: nil, username: nil,
       created_at_after: nil, created_at_before: nil, page: 0, page_per: 20
     )
-      queries_by_content = [content_and&.split(/[[:blank:]]/), content_or].flatten
-                                                                          .map do |c|
-        match_klass.new(content: c).call if c.present?
-      end
-
-      name_match = match_klass.new(name: username).call
-      query_by_user = has_parent_klass.new(
-        parent_type: 'user',
-        match_conditions: [name_match]
-      ).call
-
-      query_by_range = range_klass.new(
-        field: 'created_at',
-        gte: created_at_after,
-        lte: created_at_before
-      ).call
-
-      query_parts = [posts_base_query]
-                    .push(*queries_by_content, query_by_user, query_by_range)
-                    .compact
 
       query_body = {
-        query: and_condition(query_parts),
+        query: query(
+          content_or: content_or, content_and: content_and, username: username,
+          created_at_after: created_at_after, created_at_before: created_at_before
+        ),
       }.merge(meta(page: page, page_per: page_per))
 
       Post.search(query_body).results
     end
 
     private
+
+    def query( # rubocop:disable Metrics/AbcSize
+      content_or: nil, content_and: nil, username: nil,
+      created_at_after: nil, created_at_before: nil
+    )
+      queries_by_content = [content_and&.split(/[[:blank:]]/), content_or]
+                           .flatten.map { |c| match_klass.new(content: c).call if c.present? }
+
+      query_by_user = has_parent_klass.new(
+        parent_type: 'user',
+        match_conditions: [match_klass.new(name: username).call]
+      ).call
+
+      query_by_range =
+        range_klass.new(field: 'created_at', gte: created_at_after, lte: created_at_before).call
+
+      [posts_base_query].push(*queries_by_content, query_by_user, query_by_range).compact
+    end
 
     def and_condition(queries)
       { bool: { must: queries } }

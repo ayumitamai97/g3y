@@ -9,23 +9,26 @@ module Queries
     argument :pagePer, Integer, required: false, as: :page_per
 
     def resolve(keywords:, page:, page_per:)
-      and_clause = and_condition([posts_base_query])
-
-      content_match = match_klass.new(content: keywords).call
-      name_match = match_klass.new(name: keywords).call
-      or_clause = has_parent_klass.new(
-        parent_type: 'user',
-        match_conditions: [name_match]
-      ).append(content_match).build_or_clause
-
       query_body = {
-        query: and_clause.merge(or_clause),
+        query: query(keywords: keywords),
       }.merge(meta(page: page, page_per: page_per))
 
       Post.search(query_body).results
     end
 
     private
+
+    def query(keywords:)
+      content_match = match_klass.new(content: keywords).call
+
+      name_match = match_klass.new(name: keywords).call
+      or_clause = has_parent_klass.new(
+        parent_type: 'user',
+        match_conditions: [name_match]
+      ).append(content_match).build_or_clause
+
+      or_clause.merge(and_condition([posts_base_query]))
+    end
 
     def and_condition(queries)
       { bool: { must: queries } }

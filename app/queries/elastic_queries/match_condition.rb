@@ -21,7 +21,7 @@ module ElasticQueries
       return self if invalid?
       return self unless args.all? { |arg| arg.instance_of?(Hash) }
 
-      set_conditions(*args)
+      merge_conditions(*args)
       self
     end
 
@@ -33,7 +33,7 @@ module ElasticQueries
 
     private
 
-    def set_conditions(*args)
+    def merge_conditions(*args)
       @conditions ||= [condition, *args]
     end
 
