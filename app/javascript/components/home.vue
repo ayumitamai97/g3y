@@ -1,6 +1,6 @@
 <template>
   <div class='container'>
-    <h2 class='title is-2'>Home Timeline</h2>
+    <h2 class='title is-size-2'>Home Timeline</h2>
     <new-post-form></new-post-form>
     <div>
       <posts></posts>
@@ -15,7 +15,7 @@ import authUtil from '../src/authUtil.ts'
 
 export default {
   components: { Posts, newPostForm },
-  created() {
+  created(): void {
     if (!authUtil.isAuthenticated()) {
       this.$router.push('/login')
     }

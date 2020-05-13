@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class='notification is-danger' v-if='errors.length > 0'>
-      <button class='delete'></button>
+      <button class='delete' @click='closeError'></button>
       <div v-for='error in errors' :key='error'>
         <p>{{ error }}</p>
       </div>
@@ -32,18 +32,20 @@
 
 <script lang="ts">
 import jwtDecode from 'jwt-decode'
+import util from '../src/util.ts'
 import authUtil from '../src/authUtil.ts'
 
 export default {
-  data() {
+  data(): Object {
     return {
       user: { name: '', email: '', password: '' },
       errors: [],
     }
   },
-  created() {
+  created(): void {
     this.setToken = authUtil.setToken.bind(this)
     this.authenticateUser = authUtil.authenticateUser.bind(this)
+    this.closeError = util.closeError.bind(this)
   },
   methods: {
     async login(): Promise<void> {

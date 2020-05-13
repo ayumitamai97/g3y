@@ -3,9 +3,11 @@ require: rubocop-rails
 Metrics/MethodLength:
   Exclude:
     - 'app/controllers/graphql_controller.rb'
+    - 'spec/**/*'
 Metrics/BlockLength:
   Exclude:
     - 'lib/tasks/auto_annotate_models.rake'
+    - 'app/graphql/types/query_type.rb'
     - 'spec/**/*'
 
 Naming/MethodParameterName:
@@ -90,6 +92,8 @@ Layout/TrailingEmptyLines:
 # [SHOULD] Keep lines shorter than 128 characters.
 Layout/LineLength:
   Max: 128
+  Exclude:
+    - 'spec/**/*'
 
 ########################
 # Numbers

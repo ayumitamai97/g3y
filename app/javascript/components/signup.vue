@@ -44,13 +44,13 @@ import jwtDecode from 'jwt-decode'
 import authUtil from '../src/authUtil.ts'
 
 export default {
-  data() {
+  data(): Object {
     return {
       user: { name: '', email: '', password: '' },
       errors: [],
     }
   },
-  created() {
+  created(): void {
     this.setToken = authUtil.setToken.bind(this)
     this.authenticateUser = authUtil.authenticateUser.bind(this)
   },

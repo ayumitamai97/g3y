@@ -3,7 +3,7 @@
     <section class='section column is-3 is-offset-1'>
       <div>
         <h1 class='title is-1 mb-20'>
-          <router-link to='/'>g3y</router-link>
+          <router-link to='/'>gummy</router-link>
         </h1>
       </div>
       <div>
@@ -14,7 +14,13 @@
         </div>
         <div v-if='isAuthenticated()'>
           <p class='mb-10'>Logged in as {{ userName() }}</p>
-          <a @click='logout'>Logout</a>
+          <div class='menu'>
+            <ul class='menu-list'>
+              <li><router-link :to='"/"'>Home</router-link></li>
+              <li><router-link :to='"/explore"'>Explore</router-link></li>
+              <li><a @click='logout' class='has-text-grey-light'>Logout</a></li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
@@ -29,7 +35,7 @@ import authUtil from '../src/authUtil.ts'
 
 export default {
   name: 'app',
-  created() {
+  created(): void {
     this.isAuthenticated = authUtil.isAuthenticated
   },
   methods: {
