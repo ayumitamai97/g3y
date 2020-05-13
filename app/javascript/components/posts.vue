@@ -1,17 +1,7 @@
 <template>
   <div class='container'>
-    <div class='notification is-danger' v-if='errors.length > 0'>
-      <button class='delete' @click='closeError'></button>
-      <div v-for='error in errors' :key='error'>
-        <p>{{ error }}</p>
-      </div>
-    </div>
-    <div class='notification is-warning' v-if='warnings.length > 0'>
-      <button class='delete' @click='closeWarning'></button>
-      <div v-for='warning in warnings' :key='warning'>
-        <p>{{ warning }}</p>
-      </div>
-    </div>
+    <errors v-bind:errors='this.errors'></errors>
+    <warnings v-bind:warnings='this.warnings'></warnings>
 
     <post
      v-for='post in posts' class='media' v-bind:key='post.id' v-bind:item='post'
@@ -25,11 +15,13 @@
 import gql from 'graphql-tag'
 import util from '../src/util.ts'
 import Post from './post.vue'
+import Errors from './errors.vue'
+import Warnings from './warnings.vue'
 
 const pagePer: number = 20
 
 export default {
-  components: { Post },
+  components: { Post, Errors, Warnings },
   data(): Object {
     return {
       page: 0,
@@ -101,8 +93,6 @@ export default {
         this.$apollo.queries.posts.refetch()
       }
     })
-    this.closeError = util.closeError.bind(this)
-    this.closeWarning = util.closeWarning.bind(this)
   },
   beforeUpdate(): void {
     this.errors = this.errors.filter((v, i, a) => a.indexOf(v) === i)

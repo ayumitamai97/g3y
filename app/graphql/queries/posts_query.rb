@@ -13,8 +13,8 @@ module Queries
     argument :createdAtBefore, String,
              required: false, as: :created_at_before,
              prepare: ->(date, _ctx) { format_date(date: date) }
-    argument :page, Integer, required: false
-    argument :pagePer, Integer, required: false, as: :page_per
+    argument :page, Integer, required: true
+    argument :pagePer, Integer, required: true, as: :page_per
 
     def resolve( # rubocop:disable Metrics/ParameterLists
       content_or: nil, content_and: nil, username: nil,

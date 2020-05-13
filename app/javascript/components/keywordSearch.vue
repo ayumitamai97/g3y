@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     search(event): void {
-      if (event.keyCode !== jpKeyCode) return
+      if (event.keyCode !== jpKeyCode || this.query.qKeyword === '') return
 
       this.$emit('search', {
         qKeyword: this.query.qKeyword,
