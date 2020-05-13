@@ -3,13 +3,14 @@
     <div class='field'>
       <div class='control'>
         <textarea placeholder="What's new?" v-model='post.content'
-         class='textarea' rows='1' @input='expandTextarea'
+         class='textarea new-post-form__textarea'
+         rows='1' @input='expandTextarea'
         ></textarea>
       </div>
     </div>
     <div class='field level-right'>
       <div class='control'>
-        <button class='button' @click='createPost'>Submit</button>
+        <button class='button is-primary is-rounded' @click='createPost'>Submit</button>
       </div>
     </div>
   </div>

@@ -87,11 +87,11 @@ RSpec.describe Types::QueryType do
       end
     end
 
-    context 'search by user_id' do
+    context 'search by username' do
       let(:query) do
         <<~GRAPHQL
-          query($user_id: ID!) {
-            posts(userId: $user_id, pagePer: 100) {
+          query($username: String!) {
+            posts(username: $username, pagePer: 100) {
               content
               user {
                 id
@@ -102,7 +102,7 @@ RSpec.describe Types::QueryType do
       end
 
       it 'returns all the posts from first_user' do
-        result = G3ySchema.execute(query, { variables: { user_id: first_user.id } })
+        result = G3ySchema.execute(query, { variables: { username: first_user.name } })
         result_posts = result.dig('data', 'posts')
 
         expect(result_posts.count).to eq first_user.posts.count
@@ -159,11 +159,11 @@ RSpec.describe Types::QueryType do
       end
     end
 
-    context 'search by both user_id and contentOr' do
+    context 'search by both username and contentOr' do
       let(:query) do
         <<~GRAPHQL
-          query($contentOr: String!, $user_id: ID!) {
-            posts(contentOr: $contentOr, userId: $user_id, pagePer: 100) {
+          query($contentOr: String!, $username: String!) {
+            posts(contentOr: $contentOr, username: $username, pagePer: 100) {
               content
               user {
                 id
@@ -178,7 +178,7 @@ RSpec.describe Types::QueryType do
         result = G3ySchema.execute(query, {
                                      variables: {
                                        contentOr: query_string,
-                                       user_id: first_user.id,
+                                       username: first_user.name,
                                      },
                                    })
         result_posts = result.dig('data', 'posts')
@@ -244,6 +244,51 @@ RSpec.describe Types::QueryType do
         expect(result_posts.count).to eq 3
         expect(result_posts.first['content']).to include 'apple'
         expect(result_posts.first['content'].include?('cherry') || result_posts.first['content'].include?('dragonfruit')).to eq true
+      end
+    end
+  end
+
+  describe '#fuzzy_posts' do
+    let(:name) { 'testuser' }
+    let!(:user) { create(:user, name: name) }
+
+    before do
+      ActiveRecord::Base.transaction do
+        user.posts.create!(content: 'apple banana cherry dragonfruit')
+        user.posts.create!(content: 'apple banana dragonfruit')
+        user.posts.create!(content: 'apple cherry')
+      end
+
+      sleep 3
+    end
+
+    after do
+      Elasticsearch::DeleteIndicesService.new.execute
+      Elasticsearch::CreateIndicesService.new.execute
+
+      sleep 3
+    end
+
+    context 'search by contentOr and contentAnd' do
+      let(:query) do
+        <<~GRAPHQL
+          query($keywords: String!) {
+            fuzzyPosts(keywords: $keywords, page: 0, pagePer: 100) {
+              content
+              user {
+                id
+              }
+            }
+          }
+        GRAPHQL
+      end
+
+      it 'returns two matching posts' do
+        result = G3ySchema.execute(query, { variables: { keywords: "#{name} cherry" } })
+        result_posts = result.dig('data', 'fuzzyPosts')
+
+        expect(result_posts.count).to eq 3
+        expect(result_posts.first['content']).to include 'cherry'
       end
     end
   end

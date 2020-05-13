@@ -20,7 +20,10 @@ import Explore from '../components/explore.vue'
 document.addEventListener('DOMContentLoaded', () => {
   Vue.use(VueRouter)
   Vue.use(VueApollo)
-  Vue.use(InfiniteLoading)
+  Vue.use(InfiniteLoading, {
+    slots: { noResults: '', noMore: '' },
+    props: { spinner: 'waveDots' },
+  })
   Vue.use(Vuex)
 
   const routes = [
@@ -30,7 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
     { path: '/explore', component: Explore },
   ]
 
-  const router = new VueRouter({ mode: 'history', linkExactActiveClass: 'is-active', routes })
+  const router = new VueRouter({
+    mode: 'history',
+    linkActiveClass: 'is-active has-text-weight-bold',
+    routes,
+  })
 
   // Apollo
   // ref. https://github.com/vuejs/vue-apollo/issues/144#issuecomment-522945282

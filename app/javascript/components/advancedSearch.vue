@@ -73,7 +73,10 @@ export default {
       this.$emit('searchPosts', this.query)
     },
     closeModal(): void {
-      this.$router.push('explore')
+      this.$router.push({
+        path: 'explore',
+        query: { qKeyword: this.query.qKeyword, queryField: 'posts' },
+      })
     },
   },
 }
