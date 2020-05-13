@@ -9,18 +9,25 @@ module Mutations
     argument :email, String, required: true
     argument :password, String, required: true
 
+    # TODO: refresh
     def resolve(email:, password:)
       user = User.find_by(email: email)
 
       if user.present? && user.authenticate(password)
-        payload = { user_id: user.id }
-        session = ::JWTSessions::Session.new(payload: payload)
+        session = ::JWTSessions::Session.new(payload: payload(user: user))
         session.login.merge(errors: [])
       else
         {
           errors: ['user does not exist'],
         }
       end
+    end
+
+    def payload(user:)
+      {
+        user_id: user.id,
+        user_name: user.name,
+      }
     end
   end
 end

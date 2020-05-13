@@ -2,6 +2,9 @@
 - gummy
 - https://g3y.herokuapp.com/
 
+![g3y_login](https://user-images.githubusercontent.com/29456740/81251315-efef0a00-905d-11ea-8809-9aefc36f6b9a.gif)
+
+
 ## Summary
 
 ```shell
@@ -76,13 +79,15 @@ $ tree app/javascript
 app/javascript
 ├── components
 │   ├── app.vue
-│   └── posts.vue
+│   ├── home.vue
+│   ├── login.vue
+│   ├── posts.vue
+│   └── signup.vue
 ├── packs
 │   ├── application.scss
 │   └── application.ts
 └── src
-    ├── c-post.scss
-    └── p-home.scss
+    └── authUtil.ts
 ```
 
 # Local
