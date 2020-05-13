@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class='container'>
     <article v-for="post in posts" :key="post.id" class='media'>
       <figure class='media-left'>image<br>image</figure>
       <div class='media-content'>
@@ -17,6 +17,7 @@
 
 <script lang='ts'>
 import gql from 'graphql-tag'
+import Util from '../src/util.ts'
 
 const pagePer: number = 20
 
@@ -46,6 +47,14 @@ export default {
         pagePer,
       },
     },
+  },
+  created() {
+    this.$store.subscribe(async (mutation) => {
+      if (mutation.type === 'postsUpdated') {
+        await Util.sleep(1000)
+        this.$apollo.queries.posts.refetch()
+      }
+    })
   },
   methods: {
     // ref.

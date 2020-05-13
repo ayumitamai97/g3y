@@ -31,7 +31,7 @@
 
       <div class='field'>
         <div class='control'>
-          <button v-on:click='signup' class='button'>Signup</button>
+          <button @click='signup' class='button'>Signup</button>
         </div>
       </div>
     </div>
