@@ -8,9 +8,9 @@
       </div>
       <div>
         <div v-if='!isAuthenticated()'>
-          <router-link to="/login">Login</router-link>
+          <router-link to="/login" class='has-text-grey-dark'>Login</router-link>
           <span> | </span>
-          <router-link to="/signup">Signup</router-link>
+          <router-link to="/signup" class='has-text-grey-dark'>Signup</router-link>
         </div>
         <div v-if='isAuthenticated()'>
           <p class='mb-20'>Logged in as {{ userName() }}</p>

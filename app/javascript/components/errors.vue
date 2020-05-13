@@ -1,6 +1,6 @@
 <template>
   <div class='notification is-danger' v-if='errors.length > 0'>
-    <button class='delete' @click='closeError'></button>
+    <button class='delete m-10' @click='closeError'></button>
     <div v-for='error in errors' :key='error'>
       <p>{{ error }}</p>
     </div>
@@ -14,7 +14,7 @@ export default {
   props: {
     errors: {
       type: Array,
-      default: []
+      default: () => [],
     },
   },
   created(): void {
@@ -23,4 +23,3 @@ export default {
   },
 }
 </script>
-

@@ -14,7 +14,7 @@ export default {
   props: {
     warnings: {
       type: Array,
-      default: []
+      default: () => [],
     },
   },
   created(): void {
@@ -22,4 +22,3 @@ export default {
   },
 }
 </script>
-

@@ -7,6 +7,11 @@
     resize: none;
     border-radius: 0;
     background: none;
+
+    &:hover,
+    &:focus {
+      border-bottom: 1px $primary solid;
+    }
   }
 }
 
@@ -31,5 +36,22 @@
 
   &__body {
     word-break: break-all;
+  }
+}
+
+.advanced-search-form {
+  &__input {
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: 1px $grey-lighter solid;
+    resize: none;
+    border-radius: 0;
+    background: none;
+
+    &:hover,
+    &:focus {
+      border-bottom: 1px $grey solid;
+    }
   }
 }

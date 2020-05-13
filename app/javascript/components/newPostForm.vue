@@ -10,7 +10,10 @@
     </div>
     <div class='field level-right'>
       <div class='control'>
-        <button class='button is-primary is-rounded' @click='createPost'>Submit</button>
+        <button
+         class='button is-primary is-rounded has-text-weight-bold' @click='createPost'>
+          Submit
+        </button>
       </div>
     </div>
   </div>

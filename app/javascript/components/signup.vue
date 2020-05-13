@@ -1,37 +1,34 @@
 <template>
-  <div>
-    <div class='notification is-danger' v-if='errors.length > 0'>
-      <button class='delete'></button>
-      <div v-for='error in errors' :key='error'>
-        <p>{{ error }}</p>
-      </div>
-    </div>
+  <div class='mt-20'>
+    <errors v-bind:errors='this.errors'></errors>
 
     <div>
       <div class='field'>
         <div class='control'>
           <input type="text" v-model='user.name'
-           placeholder='Username' class='input'>
+           placeholder='Username' class='input is-rounded'>
         </div>
       </div>
 
       <div class='field'>
         <div class='control'>
           <input type="email" v-model='user.email'
-           placeholder='Email' class='input'>
+           placeholder='Email' class='input is-rounded'>
         </div>
       </div>
 
       <div class='field'>
         <div class='control'>
           <input type="password" v-model='user.password'
-           placeholder='Password' class='input'>
+           placeholder='Password' class='input is-rounded'>
         </div>
       </div>
 
       <div class='field'>
         <div class='control'>
-          <button @click='signup' class='button'>Signup</button>
+          <button @click='signup' class='button is-rounded is-primary has-text-weight-bold'>
+            Signup
+          </button>
         </div>
       </div>
     </div>
@@ -42,8 +39,10 @@
 import gql from 'graphql-tag'
 import jwtDecode from 'jwt-decode'
 import authUtil from '../src/authUtil.ts'
+import Errors from './errors.vue'
 
 export default {
+  components: { Errors },
   data(): Object {
     return {
       user: { name: '', email: '', password: '' },
