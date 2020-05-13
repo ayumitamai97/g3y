@@ -9,5 +9,23 @@ module Types
 
       date.match(DATE_FORMAT)&.to_s || raise(G3ySchema::InvalidQueryError)
     end
+
+    private
+
+    def posts_base_query
+      match_klass.new(relation_type: 'post').call
+    end
+
+    def match_klass
+      ElasticQueries::MatchCondition
+    end
+
+    def has_parent_klass
+      ElasticQueries::HasParentCondition
+    end
+
+    def range_klass
+      ElasticQueries::RangeCondition
+    end
   end
 end

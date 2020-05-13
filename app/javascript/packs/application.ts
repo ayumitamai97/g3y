@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const router = new VueRouter({
     mode: 'history',
     linkActiveClass: 'is-active has-text-weight-bold',
-    routes
+    routes,
   })
 
   // Apollo

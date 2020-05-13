@@ -24,7 +24,7 @@
 <script lang='ts'>
 import gql from 'graphql-tag'
 import util from '../src/util.ts'
-import Post from '../components/post.vue'
+import Post from './post.vue'
 
 const pagePer: number = 20
 
@@ -57,8 +57,8 @@ export default {
   },
   apollo: {
     fuzzyPosts: {
-      query: gql`query fuzzyPosts ($keyword: String, $page: Int!, $pagePer: Int!) {
-        fuzzyPosts(keyword: $keyword, page: $page, pagePer: $pagePer) {
+      query: gql`query fuzzyPosts ($keywords: String, $page: Int!, $pagePer: Int!) {
+        fuzzyPosts(keywords: $keywords, page: $page, pagePer: $pagePer) {
           content
           createdAt
           user {
@@ -71,7 +71,7 @@ export default {
       // https://apollo.vuejs.org/guide/apollo/queries.html#reactive-parameters
       variables(): Object {
         return {
-          keyword: this.query.qKeyword,
+          keywords: this.query.qKeyword,
           page: 0,
           pagePer,
         }

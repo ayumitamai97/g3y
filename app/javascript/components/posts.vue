@@ -24,7 +24,7 @@
 <script lang='ts'>
 import gql from 'graphql-tag'
 import util from '../src/util.ts'
-import Post from '../components/post.vue'
+import Post from './post.vue'
 
 const pagePer: number = 20
 
