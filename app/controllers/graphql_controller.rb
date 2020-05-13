@@ -6,17 +6,13 @@ class GraphqlController < ApplicationController
   # but you'll have to authenticate your user separately
   # protect_from_forgery with: :null_session
 
-  before_action { authorize_access_request! unless skip_authentication? }
+  before_action { authorize_user_with_token! if require_authentication? }
 
   def execute
     variables = ensure_hash(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
-    # TODO: ユーザのホームタイムラインを表示するとき使える
-    context = {
-      # Query context goes here, for example:
-      # current_user: current_user,
-    }
+
     result = G3ySchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
   rescue StandardError => e
@@ -26,6 +22,14 @@ class GraphqlController < ApplicationController
   end
 
   private
+
+  def context
+    if require_authentication?
+      { current_user: current_user }
+    else
+      {}
+    end
+  end
 
   # Handle form data, JSON body, or a blank value
   def ensure_hash(ambiguous_param)
@@ -52,7 +56,7 @@ class GraphqlController < ApplicationController
     render json: { errors: [{ message: e.message, backtrace: e.backtrace }], data: {} }, status: :internal_server_error
   end
 
-  def skip_authentication?
-    params[:operationName].in?(%w[createUser authenticateUser])
+  def require_authentication?
+    !params[:operationName].in?(%w[createUser authenticateUser])
   end
 end
