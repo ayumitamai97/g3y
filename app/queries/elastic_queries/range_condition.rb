@@ -16,7 +16,6 @@ module ElasticQueries
     end
 
     def append(*args)
-      return self if invalid?
       return self unless args.all? { |arg| arg.instance_of?(Hash) }
 
       merge_conditions(*args)

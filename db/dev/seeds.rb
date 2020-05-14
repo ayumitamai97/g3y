@@ -14,8 +14,8 @@ Elasticsearch::DeleteIndicesService.new.execute
 Elasticsearch::CreateIndicesService.new.execute
 
 5.times do
-  User.create!(
-    name: Faker::Name.name,
+  User.create(
+    name: Faker::Internet.username(separators: ['_']),
     email: Faker::Internet.email,
     password: Faker::Number.number(digits: 8).to_s
   )

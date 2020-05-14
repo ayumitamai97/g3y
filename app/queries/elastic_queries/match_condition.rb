@@ -12,13 +12,12 @@ module ElasticQueries
     validate do
       if kwargs.keys.count > 1
         errors.add(:base, 'kwargs should be exactly one key/value pair')
-      elsif kwargs.values.all?(&:blank?)
+      elsif kwargs.values.all?(&:blank?) && conditions&.blank?
         errors.add(:base, 'the value of a key/value pair should be present')
       end
     end
 
     def append(*args)
-      return self if invalid?
       return self unless args.all? { |arg| arg.instance_of?(Hash) }
 
       merge_conditions(*args)
@@ -34,11 +33,11 @@ module ElasticQueries
     private
 
     def merge_conditions(*args)
-      @conditions ||= [condition, *args]
+      @conditions ||= [condition, *args].compact
     end
 
     def condition
-      { match: kwargs }
+      { match: kwargs.compact.presence }.compact.presence
     end
   end
 end
