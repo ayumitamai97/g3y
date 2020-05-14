@@ -1,24 +1,35 @@
 <template>
   <div class='mt-20'>
-    <errors v-bind:errors='this.errors'></errors>
+    <errors :errors='errors' />
 
     <div>
       <div class='field'>
         <div class='control'>
-          <input type="email" v-model='user.email'
-           placeholder='Email' class='input is-rounded'>
+          <input
+            v-model='user.email'
+            type='email'
+            placeholder='Email'
+            class='input is-rounded'
+          >
         </div>
       </div>
       <div class='field'>
         <div class='control'>
-          <input type="password" v-model='user.password'
-           placeholder='Password' class='input is-rounded'>
+          <input
+            v-model='user.password'
+            type='password'
+            placeholder='Password'
+            class='input is-rounded'
+          >
         </div>
       </div>
 
       <div class='field'>
         <div class='control'>
-          <button @click='login' class='button is-rounded is-primary has-text-weight-bold'>
+          <button
+            class='button is-rounded is-primary has-text-weight-bold'
+            @click='login'
+          >
             Login
           </button>
         </div>

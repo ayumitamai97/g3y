@@ -2,16 +2,21 @@
   <div class='container mb-20'>
     <div class='field'>
       <div class='control'>
-        <textarea placeholder="What's new?" v-model='post.content'
-         class='textarea new-post-form__textarea'
-         rows='1' @input='expandTextarea'
-        ></textarea>
+        <textarea
+          v-model='post.content'
+          placeholder='What&apos;s new?'
+          class='textarea new-post-form__textarea'
+          rows='1'
+          @input='expandTextarea'
+        />
       </div>
     </div>
     <div class='field level-right'>
       <div class='control'>
         <button
-         class='button is-primary is-rounded has-text-weight-bold' @click='createPost'>
+          class='button is-primary is-rounded has-text-weight-bold'
+          @click='createPost'
+        >
           Submit
         </button>
       </div>

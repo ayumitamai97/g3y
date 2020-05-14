@@ -15,30 +15,6 @@
   }
 }
 
-.post {
-  &__image {
-    // TODO: allow users to upload avatar
-    height: 50px;
-    width: 50px;
-  }
-
-  &__head {
-    margin-bottom: 5px;
-
-    &--name {
-      padding-right: 5px;
-    }
-
-    &--datetime {
-      align-items: baseline;
-    }
-  }
-
-  &__body {
-    word-break: break-all;
-  }
-}
-
 .advanced-search-form {
   &__input {
     border-top: none;
@@ -49,9 +25,32 @@
     border-radius: 0;
     background: none;
 
-    &:hover,
+    &:hover {
+      border-bottom: 1px $grey-light solid;
+    }
+
     &:focus {
       border-bottom: 1px $grey solid;
+    }
+  }
+}
+
+.keyword-search-form {
+  &__input {
+    &:hover {
+      border: 1px $grey-light solid;
+
+      & + .keyword-search-form__icon {
+        color: $grey-light;
+      }
+    }
+
+    &:focus {
+      border: 1px $grey solid;
+
+      & + .keyword-search-form__icon {
+        color: $grey;
+      }
     }
   }
 }

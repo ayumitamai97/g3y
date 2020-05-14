@@ -2,15 +2,20 @@
   <div class='container'>
     <div class='columns'>
       <div class='column is-6'>
-        <h2 class='title is-size-2 has-text-grey-dark'>Home Timeline</h2>
+        <h2 class='title is-size-2 has-text-grey-dark'>
+          Home Timeline
+        </h2>
       </div>
       <div class='column is-6'>
-        <keyword-search @search='keywordSearch' :showAdvancedButton=false></keyword-search>
+        <keyword-search
+          :show-advanced-button='false'
+          @search='keywordSearch'
+        />
       </div>
     </div>
-    <new-post-form></new-post-form>
+    <new-post-form />
     <div>
-      <timeline></timeline>
+      <timeline />
     </div>
   </div>
 </template>

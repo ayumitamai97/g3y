@@ -5,6 +5,8 @@
   },
   "extends": [
     "plugin:vue/essential",
+    "plugin:vue/strongly-recommended",
+    "plugin:vue/recommended",
     "airbnb-base"
   ],
   "globals": {
@@ -22,6 +24,8 @@
   ],
   "rules": {
     "semi": ["error", "never"],
+    "quotes": ["error", "single"],
+    "vue/html-quotes": [ "error", "single", { "avoidEscape": false } ],
     "no-param-reassign": [
       "error",
       {

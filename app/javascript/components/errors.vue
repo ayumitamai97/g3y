@@ -1,7 +1,16 @@
 <template>
-  <div class='notification is-danger' v-if='errors.length > 0'>
-    <button class='delete m-10' @click='closeError'></button>
-    <div v-for='error in errors' :key='error'>
+  <div
+    v-if='errors.length > 0'
+    class='notification is-danger'
+  >
+    <button
+      class='delete m-10'
+      @click='closeError'
+    />
+    <div
+      v-for='error in errors'
+      :key='error'
+    >
       <p>{{ error }}</p>
     </div>
   </div>
