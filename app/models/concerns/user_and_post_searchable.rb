@@ -10,11 +10,12 @@ module UserAndPostSearchable
   module_function
 
   INDEX_NAME = "users_and_posts_#{Rails.env}"
+  SETTINGS = { analysis: { analyzer: 'kuromoji' } }.freeze
 
   def create_index!(options = {})
     delete_index if options.delete(:force)
 
-    settings = User.settings.to_hash.merge(Post.settings.to_hash)
+    settings = User.settings.to_hash.merge(Post.settings.to_hash).merge(SETTINGS)
     index_info = {
       index: INDEX_NAME,
       body: {
