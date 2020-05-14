@@ -25,3 +25,29 @@ export default {
   },
 }
 </script>
+
+<style lang='sass'>
+.post {
+  &__image {
+    // TODO: allow users to upload avatar
+    height: 50px;
+    width: 50px;
+  }
+
+  &__head {
+    margin-bottom: 5px;
+
+    &--name {
+      padding-right: 5px;
+    }
+
+    &--datetime {
+      align-items: baseline;
+    }
+  }
+
+  &__body {
+    word-break: break-all;
+  }
+}
+</style>
