@@ -27,6 +27,11 @@ class Post < ApplicationRecord
   validates :content, presence: true
 
   JOIN_TYPE = 'post'
+  settings do
+    mappings dynamic: 'false' do
+      indexes :content, analyzer: 'kuromoji', index_options: 'offsets'
+    end
+  end
 
   after_commit -> { __elasticsearch__.index_document(routing: user_id) }, on: :create
   after_commit -> { __elasticsearch__.update_document(routing: user_id) }, on: :update
