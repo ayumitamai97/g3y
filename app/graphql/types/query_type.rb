@@ -12,6 +12,9 @@ module Types
     field :post, PostType, null: false do
       argument :id, ID, required: true
     end
+    field :followings, [UserType], null: false do
+      argument :followerId, ID, required: true, as: :follower_id
+    end
     field :posts, resolver: Queries::PostsQuery
     field :fuzzy_posts, resolver: Queries::FuzzyPostsQuery
 
@@ -23,6 +26,11 @@ module Types
 
     def post(id:)
       Post.find(id)
+    end
+
+    def followings(follower_id:)
+      # TODO: pagination
+      User.find(follower_id).followings
     end
   end
 end
