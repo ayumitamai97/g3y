@@ -118,7 +118,7 @@ jobs:
           MYSQL_DATABASE: g3y_test
           MYSQL_USER: root
 
-      - image: docker.elastic.co/elasticsearch/elasticsearch:7.6.2
+      - image: ayumitamai97/elastic-kuromoji:7.6.2
         environment:
           - cluster.name: elasticsearch
           - xpack.security.enabled: false
