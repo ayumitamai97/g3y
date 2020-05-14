@@ -31,6 +31,13 @@ class Relationship < ApplicationRecord
   validates :following, :follower, presence: true
   validates :following, uniqueness: { scope: :follower_id, message: 'is already in your followings' }
 
+  settings do
+    mappings dynamic: 'false' do
+      indexes :following_name, analyzer: 'trigram', index_options: 'offsets'
+      indexes :follower_name, analyzer: 'trigram', index_options: 'offsets'
+    end
+  end
+
   after_commit -> { __elasticsearch__.index_document  }, on: :create
   after_commit -> { __elasticsearch__.update_document }, on: :update
   after_commit -> { __elasticsearch__.delete_document }, on: :destroy

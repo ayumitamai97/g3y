@@ -10,11 +10,28 @@ module RelationshipSearchable
   module_function
 
   INDEX_NAME = "followings_#{Rails.env}"
+  SETTINGS = {
+    analysis: {
+      analyzer: {
+        trigram: {
+          tokenizer: 'trigram'
+        }
+      },
+      tokenizer: {
+        trigram: {
+          type: 'ngram',
+          min_gram: 3,
+          max_gram: 4,
+          token_chars: ['letter', 'digit']
+        }
+      }
+    }
+  }.freeze
 
   def create_index!(options = {})
     delete_index if options.delete(:force)
 
-    settings = Relationship.settings.to_hash
+    settings = Relationship.settings.to_hash.merge(SETTINGS)
     index_info = {
       index: INDEX_NAME,
       body: {
