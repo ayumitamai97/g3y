@@ -25,9 +25,32 @@
     border-radius: 0;
     background: none;
 
-    &:hover,
+    &:hover {
+      border-bottom: 1px $grey-light solid;
+    }
+
     &:focus {
       border-bottom: 1px $grey solid;
+    }
+  }
+}
+
+.keyword-search-form {
+  &__input {
+    &:hover {
+      border: 1px $grey-light solid;
+
+      & + .keyword-search-form__icon {
+        color: $grey-light;
+      }
+    }
+
+    &:focus {
+      border: 1px $grey solid;
+
+      & + .keyword-search-form__icon {
+        color: $grey;
+      }
     }
   }
 }

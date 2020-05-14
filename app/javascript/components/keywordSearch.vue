@@ -3,11 +3,11 @@
     <div class='control has-icons-right is-expanded'>
       <input
         v-model='query.qKeyword'
-        class='input is-rounded'
+        class='input is-rounded keyword-search-form__input'
         placeholder='Username or post content'
         @keydown.enter='search'
       >
-      <span class='icon is-small is-right'>
+      <span class='icon is-small is-right keyword-search-form__icon'>
         <font-awesome-icon :icon='["fas", "search"]' />
       </span>
     </div>
