@@ -37,6 +37,8 @@ module ElasticQueries
     end
 
     def condition
+      return if kwargs.values.all?(&:blank?)
+
       { match: kwargs.compact.presence }.compact.presence
     end
   end

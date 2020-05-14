@@ -14,18 +14,18 @@ module RelationshipSearchable
     analysis: {
       analyzer: {
         trigram: {
-          tokenizer: 'trigram'
-        }
+          tokenizer: 'trigram',
+        },
       },
       tokenizer: {
         trigram: {
           type: 'ngram',
           min_gram: 3,
           max_gram: 4,
-          token_chars: ['letter', 'digit']
-        }
-      }
-    }
+          token_chars: %w[letter digit],
+        },
+      },
+    },
   }.freeze
 
   def create_index!(options = {})
@@ -37,7 +37,7 @@ module RelationshipSearchable
       body: {
         settings: settings.to_hash,
         mappings: {
-          properties: Relationship.mappings.to_hash[:properties]
+          properties: Relationship.mappings.to_hash[:properties],
         },
       },
     }.merge(options)

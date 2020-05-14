@@ -11,14 +11,13 @@ module Queries
 
     def resolve(follower_id: nil, follower_name: nil, page:, page_per:)
       query = match_klass.new(follower_name: follower_name)
-        .append(match_klass.new(follower_id: follower_id).call)
-        .build_or_clause
+                         .append(match_klass.new(follower_id: follower_id).call)
+                         .build_or_clause
 
       query_body = { query: query }.merge(meta(page: page, page_per: page_per))
 
       Relationship.search(query_body).results
     end
-
 
     def meta(page:, page_per:)
       {
