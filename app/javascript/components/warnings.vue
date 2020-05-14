@@ -1,7 +1,16 @@
 <template>
-  <div class='notification is-warning' v-if='warnings.length > 0'>
-    <button class='delete' @click='closeWarning'></button>
-    <div v-for='warning in warnings' :key='warning'>
+  <div
+    v-if='warnings.length > 0'
+    class='notification is-warning'
+  >
+    <button
+      class='delete'
+      @click='closeWarning'
+    />
+    <div
+      v-for='warning in warnings'
+      :key='warning'
+    >
       <p>{{ warning }}</p>
     </div>
   </div>

@@ -3,29 +3,59 @@
     <section class='section column is-3 is-offset-1'>
       <div>
         <h1 class='title is-1 mb-20'>
-          <router-link to='/'>gummy</router-link>
+          <router-link to='/'>
+            gummy
+          </router-link>
         </h1>
       </div>
       <div>
         <div v-if='!isAuthenticated()'>
-          <router-link to="/login" class='has-text-grey-dark'>Login</router-link>
+          <router-link
+            to='/login'
+            class='has-text-grey-dark'
+          >
+            Login
+          </router-link>
           <span> | </span>
-          <router-link to="/signup" class='has-text-grey-dark'>Signup</router-link>
+          <router-link
+            to='/signup'
+            class='has-text-grey-dark'
+          >
+            Signup
+          </router-link>
         </div>
         <div v-if='isAuthenticated()'>
-          <p class='mb-20'>Logged in as {{ userName() }}</p>
+          <p class='mb-20'>
+            Logged in as {{ userName() }}
+          </p>
           <div class='menu'>
             <ul class='menu-list'>
-              <li><router-link :to='"/"' exact>Home</router-link></li>
-              <li><router-link :to='"/explore"'>Explore</router-link></li>
-              <li><a @click='logout' class='has-text-grey-light'>Logout</a></li>
+              <li>
+                <router-link
+                  :to='&quot;/&quot;'
+                  exact
+                >
+                  Home
+                </router-link>
+              </li>
+              <li>
+                <router-link :to='&quot;/explore&quot;'>
+                  Explore
+                </router-link>
+              </li>
+              <li>
+                <a
+                  class='has-text-grey-light'
+                  @click='logout'
+                >Logout</a>
+              </li>
             </ul>
           </div>
         </div>
       </div>
     </section>
     <section class='section column is-four-fifths is-6'>
-      <router-view></router-view>
+      <router-view />
     </section>
   </div>
 </template>
@@ -34,7 +64,7 @@
 import authUtil from '../src/authUtil.ts'
 
 export default {
-  name: 'app',
+  name: 'App',
   created(): void {
     this.isAuthenticated = authUtil.isAuthenticated
   },

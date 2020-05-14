@@ -1,13 +1,19 @@
 <template>
   <div class='container'>
-    <errors v-bind:errors='this.errors'></errors>
-    <warnings v-bind:warnings='this.warnings'></warnings>
+    <errors :errors='errors' />
+    <warnings :warnings='warnings' />
 
     <post
-     v-for='post in posts' class='media' v-bind:key='post.id' v-bind:item='post'
-    ></post>
+      v-for='post in posts'
+      :key='post.id'
+      class='media'
+      :item='post'
+    />
 
-    <infinite-loading @infinite='infiniteHandler' ref='infiniteLoading'></infinite-loading>
+    <infinite-loading
+      ref='infiniteLoading'
+      @infinite='infiniteHandler'
+    />
   </div>
 </template>
 
@@ -22,14 +28,6 @@ const pagePer: number = 20
 
 export default {
   components: { Post, Errors, Warnings },
-  data(): Object {
-    return {
-      page: 0,
-      showMoreEnabled: true,
-      errors: [],
-      warnings: [],
-    }
-  },
   props: {
     query: {
       type: Object,
@@ -46,6 +44,14 @@ export default {
       type: String,
       default: 'posts',
     },
+  },
+  data(): Object {
+    return {
+      page: 0,
+      showMoreEnabled: true,
+      errors: [],
+      warnings: [],
+    }
   },
   apollo: {
     posts: {

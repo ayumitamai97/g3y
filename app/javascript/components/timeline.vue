@@ -1,8 +1,14 @@
 <template>
   <div class='container'>
     <!-- TODO: error, warning 共通化 -->
-    <posts v-if='isExactSearch' v-bind:query='query'></posts>
-    <fuzzy-posts v-if='isFuzzySearch' v-bind:query='query'></fuzzy-posts>
+    <posts
+      v-if='isExactSearch'
+      :query='query'
+    />
+    <fuzzy-posts
+      v-if='isFuzzySearch'
+      :query='query'
+    />
   </div>
 </template>
 
@@ -12,14 +18,6 @@ import FuzzyPosts from './fuzzyPosts.vue'
 
 export default {
   components: { Posts, FuzzyPosts },
-  data(): Object {
-    return {
-      page: 0,
-      showMoreEnabled: true,
-      errors: [],
-      warnings: [],
-    }
-  },
   props: {
     query: {
       type: Object,
@@ -36,6 +34,14 @@ export default {
       type: String,
       default: 'posts',
     },
+  },
+  data(): Object {
+    return {
+      page: 0,
+      showMoreEnabled: true,
+      errors: [],
+      warnings: [],
+    }
   },
   computed: {
     isFuzzySearch(): Boolean {
