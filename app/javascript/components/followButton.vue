@@ -4,8 +4,8 @@
       class='button is-rounded'
       :class='followButtonClassName'
       @click='requestFollowStatusChange'
-      @mouseover='toggleClassName("hover"); toggleFollowStatusText("hover")'
-      @mouseleave='toggleClassName("blur"); toggleFollowStatusText("blur")'
+      @mouseover='formatFollowStatusText("hover")'
+      @mouseleave='formatFollowStatusText("blur")'
     >
       {{ followStatusText }}
     </button>
@@ -26,46 +26,36 @@ export default {
     return {
       followStatus: 'following',
       followStatusText: 'Following',
-      followButtonClassName: 'is-outlined is-primary',
     }
   },
+  computed: {
+    followButtonClassName(): String {
+      const classNameMapper: Object = {
+        Follow: 'is-primary is-outlined',
+        Following: 'is-primary is-outlined',
+        Unfollow: 'is-danger',
+      }
+
+      return classNameMapper[this.followStatusText]
+    },
+  },
   methods: {
-    // TODO: refactor!!!
+    formatFollowStatusText(eventName): void {
+      const textMappter: Object = {
+        unfollowed: () => 'Follow',
+        following: (e) => (e === 'hover' ? 'Unfollow' : 'Following'),
+      }
+      this.followStatusText = textMappter[this.followStatus](eventName)
+    },
     async requestFollowStatusChange(): Promise<void> {
       if (this.followStatus === 'unfollowed') {
         await this.follow()
-        this.followStatus = 'following'
-        this.followStatusText = 'Following'
       } else if (this.followStatus === 'following') {
         await this.unfollow()
-        this.followStatus = 'unfollowed'
-        this.followStatusText = 'Follow'
       }
     },
-    toggleClassName(status): void {
-      if (status === 'hover') {
-        if (this.followStatus === 'unfollowed') {
-          this.followButtonClassName = 'is-primary'
-        } else if (this.followStatus === 'following') {
-          this.followButtonClassName = 'is-danger'
-        }
-      } else if (status === 'blur') {
-        this.followButtonClassName = 'is-outlined is-primary'
-      }
-    },
-    toggleFollowStatusText(status): void {
-      if (status === 'hover' && this.followStatus === 'following') {
-        this.followStatusText = 'Unfollow'
-      } else if (status === 'hover' && this.followStatus === 'unfollowed') {
-        this.followStatusText = 'Follow'
-      } else if (status === 'blur' && this.followStatus === 'following') {
-        this.followStatusText = 'Following'
-      } else if (status === 'blur' && this.followStatus === 'unfollowed') {
-        this.followStatusText = 'Follow'
-      }
-    },
-    async follow(): Promise<Object> {
-      return this.$apollo.mutate({
+    async follow(): Promise<void> {
+      this.$apollo.mutate({
         mutation: gql`mutation followUser ($followingId: ID!) {
           followUser(input: { followingId: $followingId }) {
             following {
@@ -79,9 +69,11 @@ export default {
           followingId: this.followingId,
         },
       })
+      this.followStatus = 'following'
+      this.followStatusText = 'Following'
     },
-    async unfollow(): Promise<Object> {
-      return this.$apollo.mutate({
+    async unfollow(): Promise<void> {
+      this.$apollo.mutate({
         mutation: gql`mutation unfollowUser ($followingId: ID!) {
           unfollowUser(input: { followingId: $followingId }) {
             following {
@@ -95,6 +87,8 @@ export default {
           followingId: this.followingId,
         },
       })
+      this.followStatus = 'unfollowed'
+      this.followStatusText = 'Follow'
     },
   },
 }
