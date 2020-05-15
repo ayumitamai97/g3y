@@ -2,7 +2,7 @@
   <div class='container'>
     <relationship-user
       v-for='user in users'
-      :key='user.userId'
+      :key='user.id'
       :item='user'
       class='media'
     />
@@ -58,7 +58,7 @@ export default {
         if (!data) return
 
         this.users = data.followings.map((user) => (
-          { userId: user.followingId, name: user.followingName }
+          { id: user.followingId, name: user.followingName }
         ))
         if (data.followings.length === 0) {
           this.warnings = ['Followings not found...']
@@ -70,10 +70,6 @@ export default {
         this.errors.push(error.toString())
       },
     },
-  },
-  created(): void {
-  },
-  beforeUpdate(): void {
   },
   methods: {
     // ref.

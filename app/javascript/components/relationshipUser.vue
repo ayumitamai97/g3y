@@ -10,15 +10,19 @@
     <div class='media-content user__name has-text-weight-bold'>
       {{ item.name }}
     </div>
+    <follow-button :following-id='item.id' />
   </article>
 </template>
 
 <script lang='ts'>
+import FollowButton from './followButton.vue'
+
 export default {
+  components: { FollowButton },
   props: {
     item: {
       type: Object,
-      default: () => {},
+      default: () => ({ id: '', name: '' }),
     },
   },
 }

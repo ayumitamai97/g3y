@@ -59,7 +59,11 @@ class User < ApplicationRecord
   after_commit -> { __elasticsearch__.delete_document }, on: :destroy
 
   def follow(user:)
-    following_relationships.build(following: user).save!
+    following_relationships.build(following: user).save
+  end
+
+  def unfollow(user:)
+    following_relationships.find_by(following: user).destroy
   end
 
   # elasticsearch-model

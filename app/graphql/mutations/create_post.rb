@@ -15,9 +15,5 @@ module Mutations
         errors: post.errors.full_messages,
       }
     end
-
-    def current_user
-      context[:current_user]
-    end
   end
 end

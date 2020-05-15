@@ -11,7 +11,7 @@ module Types
     end
 
     def current_user
-      context.to_h[:current_user]
+      context[:current_user]
     end
 
     private
