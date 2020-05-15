@@ -10,6 +10,8 @@ Metrics/BlockLength:
     - 'lib/tasks/auto_annotate_models.rake'
     - 'app/graphql/types/query_type.rb'
     - 'spec/**/*'
+Metrics/AbcSize:
+  Max: 20
 
 Naming/MethodParameterName:
   Exclude:

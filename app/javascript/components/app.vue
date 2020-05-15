@@ -32,15 +32,20 @@
             <ul class='menu-list'>
               <li>
                 <router-link
-                  :to='&quot;/&quot;'
+                  :to='"/"'
                   exact
                 >
                   Home
                 </router-link>
               </li>
               <li>
-                <router-link :to='&quot;/explore&quot;'>
+                <router-link :to='"/explore"'>
                   Explore
+                </router-link>
+              </li>
+              <li>
+                <router-link :to='"/relationship"'>
+                  Relationship
                 </router-link>
               </li>
               <li>

@@ -10,6 +10,10 @@ module Types
       date.match(DATE_FORMAT)&.to_s || raise(G3ySchema::InvalidQueryError)
     end
 
+    def current_user
+      context[:current_user]
+    end
+
     private
 
     def posts_base_query

@@ -20,7 +20,6 @@ module Queries
       content_or: nil, content_and: nil, username: nil,
       created_at_after: nil, created_at_before: nil, page: 0, page_per: 20
     )
-
       query_body = {
         query: query(
           content_or: content_or, content_and: content_and, username: username,

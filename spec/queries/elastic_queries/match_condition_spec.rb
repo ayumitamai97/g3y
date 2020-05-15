@@ -61,7 +61,6 @@ RSpec.describe ElasticQueries::MatchCondition do
             { match: { content: 'test' } },
             { match: { content: 'test2' } },
           ],
-          minimum_should_match: 1,
         },
       }
     end

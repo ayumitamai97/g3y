@@ -6,8 +6,8 @@
     <post
       v-for='post in posts'
       :key='post.id'
-      class='media'
       :item='post'
+      class='media'
     />
 
     <infinite-loading

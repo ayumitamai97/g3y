@@ -14,6 +14,7 @@ module Types
     end
     field :posts, resolver: Queries::PostsQuery
     field :fuzzy_posts, resolver: Queries::FuzzyPostsQuery
+    field :followings, resolver: Queries::FollowingsQuery
 
     def user(id: nil, name: nil)
       User.find(id)

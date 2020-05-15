@@ -48,4 +48,19 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe '#follow' do
+    let!(:follower_user) { create(:user) }
+    let!(:followed_user) { create(:user) }
+
+    it 'increases Relationship.count' do
+      expect { follower_user.follow(user: followed_user) }.to change { Relationship.count }.by 1
+    end
+
+    it 'increases Relationship.count' do
+      follower_user.follow(user: followed_user)
+      expect(follower_user.followings).to include followed_user
+      expect(followed_user.followers).to include follower_user
+    end
+  end
 end

@@ -70,7 +70,6 @@ RSpec.describe ElasticQueries::RangeCondition do
             { range: { field => { gte: gte, lte: lte } } },
             { match: { content: 'test' } },
           ],
-          minimum_should_match: 1,
         },
       }
     end
