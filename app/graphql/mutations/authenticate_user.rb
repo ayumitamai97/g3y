@@ -11,7 +11,6 @@ module Mutations
 
     # TODO: refresh
     def resolve(email:, password:)
-      binding.pry
       user = User.find_by(email: email)
 
       if user.present? && user.authenticate(password)

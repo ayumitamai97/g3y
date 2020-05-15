@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mutations
   class FollowUser < BaseMutation
     field :following, Types::UserType, null: true

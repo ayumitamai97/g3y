@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mutations
   class UnfollowUser < BaseMutation
     field :following, Types::UserType, null: true

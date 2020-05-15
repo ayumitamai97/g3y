@@ -19,6 +19,7 @@ export default {
   props: {
     followingId: {
       type: String,
+      default: null,
     },
   },
   data() {
@@ -31,11 +32,11 @@ export default {
   methods: {
     // TODO: refactor!!!
     async requestFollowStatusChange(): Promise<void> {
-      if (this.followStatus == 'unfollowed') {
+      if (this.followStatus === 'unfollowed') {
         await this.follow()
         this.followStatus = 'following'
         this.followStatusText = 'Following'
-      } else if (this.followStatus == 'following') {
+      } else if (this.followStatus === 'following') {
         await this.unfollow()
         this.followStatus = 'unfollowed'
         this.followStatusText = 'Follow'
@@ -48,18 +49,18 @@ export default {
         } else if (this.followStatus === 'following') {
           this.followButtonClassName = 'is-danger'
         }
-      } else if (status==='blur') {
+      } else if (status === 'blur') {
         this.followButtonClassName = 'is-outlined is-primary'
       }
     },
     toggleFollowStatusText(status): void {
       if (status === 'hover' && this.followStatus === 'following') {
         this.followStatusText = 'Unfollow'
-      } else if (status==='hover' && this.followStatus === 'unfollowed') {
+      } else if (status === 'hover' && this.followStatus === 'unfollowed') {
         this.followStatusText = 'Follow'
-      } else if (status==='blur' && this.followStatus === 'following') {
+      } else if (status === 'blur' && this.followStatus === 'following') {
         this.followStatusText = 'Following'
-      } else if (status==='blur' && this.followStatus === 'unfollowed') {
+      } else if (status === 'blur' && this.followStatus === 'unfollowed') {
         this.followStatusText = 'Follow'
       }
     },

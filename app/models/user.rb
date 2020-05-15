@@ -42,6 +42,7 @@ class User < ApplicationRecord
   validates :name, :email, presence: true
   validates :name,
             uniqueness: { case_sensitive: false },
+            length: { maximum: 20 },
             format: { with: /\A([a-zA-Z0-9]|\_)+\z/, message: 'should be alphanumerical' },
             allow_blank: true
   validates :email,
