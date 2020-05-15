@@ -3,7 +3,7 @@
     <div class='columns'>
       <div class='column is-6'>
         <h1 class='title is-size-2 has-text-grey-dark'>
-          Your Relationship
+          Relationship
         </h1>
       </div>
       <div class='column is-6'>
@@ -26,8 +26,8 @@
         </li>
       </ul>
     </div>
-    <following v-show='activeTab == "following"' />
-    <div v-show='activeTab == "followers"'>
+    <following v-if='activeTab == "following"' />
+    <div v-if='activeTab == "followers"'>
       Not yet implemented...
     </div>
   </div>

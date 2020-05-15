@@ -1,11 +1,11 @@
 <template>
   <div class='container'>
-    <div
-      v-for='following in followings'
-      :key='following.followingId'
-    >
-      {{ following.followingName }}
-    </div>
+    <relationship-user
+      v-for='user in users'
+      :key='user.userId'
+      :item='user'
+      class='media'
+    />
 
     <infinite-loading
       ref='infiniteLoading'
@@ -16,10 +16,12 @@
 
 <script lang='ts'>
 import gql from 'graphql-tag'
+import RelationshipUser from './relationshipUser.vue'
 
 const pagePer: number = 20
 
 export default {
+  components: { RelationshipUser },
   props: {
     query: {
       type: Object,
@@ -32,6 +34,7 @@ export default {
       page: 0,
       errors: [],
       warnings: [],
+      users: [],
     }
   },
   apollo: {
@@ -53,6 +56,10 @@ export default {
       // https://v4.apollo.vuejs.org/api/smart-query.html#options
       result({ data }): void {
         if (!data) return
+
+        this.users = data.followings.map((user) => (
+          { userId: user.followingId, name: user.followingName }
+        ))
         if (data.followings.length === 0) {
           this.warnings = ['Followings not found...']
         } else {
