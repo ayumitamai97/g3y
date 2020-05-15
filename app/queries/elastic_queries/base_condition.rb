@@ -21,7 +21,8 @@ module ElasticQueries
       return if invalid?
       return if conditions.blank?
 
-      { bool: { should: conditions, minimum_should_match: 1 } }
+      # minimum_should_match default value varies depend on whether must condition exists or not
+      { bool: { should: conditions } }
     end
   end
 end
