@@ -7,7 +7,11 @@
         </h1>
       </div>
       <div class='column is-6'>
-        <!-- TODO: search form -->
+        <input
+          v-model='query.qUsername'
+          class='input is-rounded keyword-search-form__input'
+          placeholder='Username'
+        >
       </div>
     </div>
     <div class='tabs is-centered is-large is-fullwidth'>
@@ -26,7 +30,10 @@
         </li>
       </ul>
     </div>
-    <following v-if='activeTab == "following"' />
+    <following
+      v-if='activeTab == "following"'
+      :query='query'
+    />
     <div v-if='activeTab == "followers"'>
       Not yet implemented...
     </div>
@@ -41,7 +48,7 @@ export default {
   data(): Object {
     return {
       activeTab: 'following',
-      // TODO: initialize props `query` in order to pass to following.vue
+      query: { qUsername: '' },
     }
   },
   computed: {

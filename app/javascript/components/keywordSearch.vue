@@ -36,8 +36,6 @@ import { faSearch, faEllipsisH } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faSearch, faEllipsisH)
 
-const jpKeyCode: number = 13
-
 export default {
   props: {
     showAdvancedButton: {
@@ -52,7 +50,7 @@ export default {
   },
   methods: {
     search(event): void {
-      if (event.keyCode !== jpKeyCode || this.query.qKeyword === '') return
+      if (event.keyCode !== process.env.JP_KEYCODE || this.query.qKeyword === '') return
 
       this.$emit('search', {
         qKeyword: this.query.qKeyword,

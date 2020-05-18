@@ -32,7 +32,9 @@ module Types
       ElasticQueries::RangeCondition
     end
 
-    def and_condition(queries)
+    def and_clause(*queries)
+      return {} if queries.blank? || queries.all?(&:blank?)
+
       { bool: { must: queries } }
     end
   end

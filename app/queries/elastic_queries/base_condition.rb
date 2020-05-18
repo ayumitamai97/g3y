@@ -18,8 +18,8 @@ module ElasticQueries
     end
 
     def build_or_clause
-      return if invalid?
-      return if conditions.blank?
+      return {} if invalid?
+      return {} if conditions.blank?
 
       # minimum_should_match default value varies depend on whether must condition exists or not
       { bool: { should: conditions } }
