@@ -63,16 +63,20 @@ document.addEventListener('DOMContentLoaded', () => {
   // Vuex
   const store = new Vuex.Store({
     state: {
-      user_name: '',
+      userName: '',
       postsUpdatedDatetime: Date.now(),
+      relationshipUpdatedDatetime: Date.now(),
     },
     mutations: {
       setUserName(state, userName): void {
         // TODO: camel calse !!
-        state.user_name = userName
+        state.userName = userName
       },
       postsUpdated(state, datetime): void {
         state.postsUpdatedDatetime = datetime
+      },
+      relationshipUpdated(state, datetime): void {
+        state.relationshipUpdatedDatetime = datetime
       },
     },
     plugins: [createPersistedState()],

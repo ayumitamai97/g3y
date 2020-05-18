@@ -30,7 +30,7 @@ export default {
   },
   computed: {
     myUsername(): String {
-      return this.$store.state.user_name
+      return this.$store.state.userName
     },
     isMyself(): Boolean {
       return this.item.name === this.myUsername

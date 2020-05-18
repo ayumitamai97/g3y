@@ -19,7 +19,7 @@ export default {
   props: {
     followingId: {
       type: String,
-      default: null,
+      default: () => {},
     },
   },
   data() {
@@ -37,6 +37,34 @@ export default {
       }
 
       return classNameMapper[this.followStatusText]
+    },
+  },
+  created() {
+    this.$apollo.queries.relationship.refetch()
+  },
+  apollo: {
+    relationship: {
+      query: gql`query relationship ($followingId: ID!) {
+        relationship (followingId: $followingId) {
+          id
+        }
+      }`,
+      variables(): Object {
+        return {
+          followingId: this.followingId,
+        }
+      },
+      result({ data }): void {
+        if (!data) return
+
+        if (data.relationship) {
+          this.followStatus = 'following'
+          this.followStatusText = 'Following'
+        } else {
+          this.followStatus = 'unfollowed'
+          this.followStatusText = 'Follow'
+        }
+      },
     },
   },
   methods: {
@@ -71,6 +99,7 @@ export default {
       })
       this.followStatus = 'following'
       this.followStatusText = 'Following'
+      this.$store.commit('relationshipUpdated', Date.now())
     },
     async unfollow(): Promise<void> {
       this.$apollo.mutate({
@@ -89,6 +118,7 @@ export default {
       })
       this.followStatus = 'unfollowed'
       this.followStatusText = 'Follow'
+      this.$store.commit('relationshipUpdated', Date.now())
     },
   },
 }

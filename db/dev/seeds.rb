@@ -12,6 +12,7 @@ require 'faker'
 
 Elasticsearch::DeleteIndicesService.new.execute
 Elasticsearch::CreateIndicesService.new.execute
+sleep 3
 
 5.times do
   User.create(
