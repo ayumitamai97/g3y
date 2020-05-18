@@ -1,10 +1,11 @@
 <template>
   <div class='container mb-20'>
+    <errors :errors='errors' />
     <div class='field'>
       <div class='control'>
         <textarea
           v-model='post.content'
-          placeholder='What&apos;s new?'
+          placeholder="What's new?"
           class='textarea new-post-form__textarea'
           rows='1'
           @input='expandTextarea'
@@ -26,11 +27,14 @@
 
 <script lang='ts'>
 import gql from 'graphql-tag'
+import Errors from './errors.vue'
 
 export default {
+  components: { Errors },
   data(): Object {
     return {
       post: { content: '' },
+      errors: [],
     }
   },
   methods: {
@@ -39,7 +43,7 @@ export default {
       target.style.height = target.scrollHeight
     },
     async createPost(): Promise<void> {
-      await this.$apollo.mutate({
+      const request = this.$apollo.mutate({
         mutation: gql`mutation createPost ($content: String!) {
           createPost(input: { content: $content }) {
             post {
@@ -52,8 +56,13 @@ export default {
           content: this.post.content,
         },
       })
-      this.$store.commit('postsUpdated', Date.now())
-      this.post.content = ''
+      const { data } = await request
+      if (data.createPost.post) {
+        this.$store.commit('postsUpdated', Date.now())
+        this.post.content = ''
+      } else if (data.createPost.errors.length > 0) {
+        this.errors = data.createPost.errors
+      }
     },
   },
 }
