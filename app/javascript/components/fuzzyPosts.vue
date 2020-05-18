@@ -89,10 +89,11 @@ export default {
     },
   },
   created(): void {
+    this.$apollo.queries.fuzzyPosts.refetch()
     this.$store.subscribe(async (mutation) => {
-      if (mutation.type === 'postsUpdated') {
+      if (mutation.type === 'postsUpdated' || mutation.type === 'relationshipUpdated') {
         await util.sleep(1000)
-        this.$apollo.queries.posts.refetch()
+        this.$apollo.queries.fuzzyPosts.refetch()
       }
     })
     this.closeError = util.closeError.bind(this)

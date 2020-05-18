@@ -30,7 +30,7 @@ export default {
   },
   computed: {
     myUsername(): String {
-      return this.$store.state.user_name
+      return this.$store.state.userName
     },
     isMyself(): Boolean {
       return this.item.name === this.myUsername
@@ -43,7 +43,8 @@ export default {
 .post-user {
   position: absolute;
   border-radius: 15px;
-  margin-left: 80px;
+  margin-top: 30px;
+  margin-left: -250px;
   padding: 20px;
 
   &__image {
@@ -52,7 +53,7 @@ export default {
   }
 
   &__name {
-    width: 200px;
+    width: 150px;
     margin-left: 20px;
   }
 }

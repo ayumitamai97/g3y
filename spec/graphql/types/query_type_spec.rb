@@ -6,39 +6,24 @@ require 'rails_helper'
 # https://graphql-ruby.org/testing/integration_tests#testing-interface-level-behaviors
 
 RSpec.describe Types::QueryType do
-  describe '#user' do
-    let!(:user) { create(:user) }
+  describe '#relationship' do
+    let!(:followed) { create(:user) }
+    let!(:follower) { create(:user) }
     let(:query) do
       <<~GRAPHQL
-        query($id: ID!){
-          user(id: $id) {
-            name
+        query($followingId: ID!, $followerId: ID!){
+          relationship (followingId: $followingId, followerId: $followerId) {
+            id
+            followingId
           }
         }
       GRAPHQL
     end
+    before { follower.follow(user: followed) }
 
     it do
-      result = G3ySchema.execute(query, variables: { id: user.id })
-      expect(result.dig('data', 'user', 'name')).to eq user.name
-    end
-  end
-
-  describe '#post' do
-    let!(:post) { create(:post) }
-    let(:query) do
-      <<~GRAPHQL
-        query($id: ID!) {
-          post(id: $id) {
-            content
-          }
-        }
-      GRAPHQL
-    end
-
-    it do
-      result = G3ySchema.execute(query, variables: { id: post.id })
-      expect(result.dig('data', 'post', 'content')).to eq post.content
+      result = G3ySchema.execute(query, variables: { followingId: followed.id, followerId: follower.id })
+      expect(result.dig('data', 'relationship', 'followingId')).to eq followed.id.to_s
     end
   end
 end

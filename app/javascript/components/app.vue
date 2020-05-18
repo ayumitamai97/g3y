@@ -26,7 +26,7 @@
         </div>
         <div v-if='isAuthenticated()'>
           <p class='mb-20'>
-            Logged in as {{ userName() }}
+            Logged in as {{ userName }}
           </p>
           <div class='menu'>
             <ul class='menu-list'>
@@ -70,13 +70,15 @@ import authUtil from '../src/authUtil.ts'
 
 export default {
   name: 'App',
+  computed: {
+    userName(): String {
+      return this.$store.state.userName
+    },
+  },
   created(): void {
     this.isAuthenticated = authUtil.isAuthenticated
   },
   methods: {
-    userName(): String {
-      return this.$store.state.user_name
-    },
     logout(): void {
       localStorage.removeItem('access')
       localStorage.removeItem('accessExpiresAt')

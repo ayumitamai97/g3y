@@ -38,6 +38,7 @@ export default {
         qKeyword: '',
         qCreatedAtAfter: '',
         qCreatedAtBefore: '',
+        qOnlyFollowings: false,
       }),
     },
     queryField: {
@@ -55,8 +56,8 @@ export default {
   },
   apollo: {
     posts: {
-      query: gql`query posts ($contentOr: String, $contentAnd: String, $username: String, $createdAtAfter: String, $createdAtBefore: String, $page: Int!, $pagePer: Int!) {
-        posts(contentOr: $contentOr, contentAnd: $contentAnd, username: $username, createdAtAfter: $createdAtAfter, createdAtBefore: $createdAtBefore, page: $page, pagePer: $pagePer) {
+      query: gql`query posts ($contentOr: String, $contentAnd: String, $username: String, $createdAtAfter: String, $createdAtBefore: String, $onlyFollowings: Boolean, $page: Int!, $pagePer: Int!) {
+        posts(contentOr: $contentOr, contentAnd: $contentAnd, username: $username, createdAtAfter: $createdAtAfter, createdAtBefore: $createdAtBefore, onlyFollowings: $onlyFollowings, page: $page, pagePer: $pagePer) {
           content
           createdAt
           user {
@@ -74,6 +75,7 @@ export default {
           username: this.query.qUsername,
           createdAtAfter: this.query.qCreatedAtAfter,
           createdAtBefore: this.query.qCreatedAtBefore,
+          onlyFollowings: this.query.qOnlyFollowings,
           page: 0,
           pagePer,
         }
@@ -94,8 +96,9 @@ export default {
     },
   },
   created(): void {
+    this.$apollo.queries.posts.refetch()
     this.$store.subscribe(async (mutation) => {
-      if (mutation.type === 'postsUpdated') {
+      if (mutation.type === 'postsUpdated' || mutation.type === 'relationshipUpdated') {
         await util.sleep(1000)
         this.$apollo.queries.posts.refetch()
       }

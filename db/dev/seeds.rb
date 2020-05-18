@@ -12,6 +12,7 @@ require 'faker'
 
 Elasticsearch::DeleteIndicesService.new.execute
 Elasticsearch::CreateIndicesService.new.execute
+sleep 3
 
 5.times do
   User.create(
@@ -26,3 +27,7 @@ User.find_each do |user|
     user.posts.create!(content: Faker::Lorem.sentence(word_count: 5))
   end
 end
+
+User.find(1).follow(user: User.find(2))
+
+Elasticsearch::Model.client.indices.flush

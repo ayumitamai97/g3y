@@ -1,17 +1,10 @@
 <template>
   <div>
     <div class='columns'>
-      <div class='column is-6'>
+      <div class='column is-12'>
         <h1 class='title is-size-2 has-text-grey-dark'>
           Relationship
         </h1>
-      </div>
-      <div class='column is-6'>
-        <input
-          v-model='query.qUsername'
-          class='input is-rounded keyword-search-form__input'
-          placeholder='Username'
-        >
       </div>
     </div>
     <div class='tabs is-centered is-large is-fullwidth'>
@@ -48,7 +41,7 @@ export default {
   data(): Object {
     return {
       activeTab: 'following',
-      query: { qUsername: '' },
+      query: {},
     }
   },
   computed: {

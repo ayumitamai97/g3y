@@ -1,6 +1,5 @@
 <template>
   <div class='container'>
-    <!-- TODO: error, warning 共通化 -->
     <posts
       v-if='isExactSearch'
       :query='query'
@@ -28,6 +27,7 @@ export default {
         qKeyword: '',
         qCreatedAtAfter: '',
         qCreatedAtBefore: '',
+        qOnlyFollowings: false,
       }),
     },
     queryField: {

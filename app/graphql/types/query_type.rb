@@ -4,26 +4,17 @@ module Types
   class QueryType < Types::BaseObject
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
-
-    field :user, UserType, null: false do
-      argument :id, ID, required: false
-      argument :name, String, required: false
-    end
-    field :post, PostType, null: false do
-      argument :id, ID, required: true
-    end
     field :posts, resolver: Queries::PostsQuery
     field :fuzzy_posts, resolver: Queries::FuzzyPostsQuery
     field :followings, resolver: Queries::FollowingsQuery
 
-    def user(id: nil, name: nil)
-      User.find(id)
-    rescue ActiveRecord::RecordNotFound
-      User.find_by!(name: name)
+    field :relationship, RelationshipType, null: true do
+      argument :follower_id, ID, required: false, as: :follower_id
+      argument :following_id, ID, required: true, as: :following_id
     end
 
-    def post(id:)
-      Post.find(id)
+    def relationship(follower_id: nil, following_id:)
+      Relationship.find_by(follower_id: follower_id || current_user.id, following_id: following_id)
     end
   end
 end

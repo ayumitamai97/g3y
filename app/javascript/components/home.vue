@@ -15,7 +15,7 @@
     </div>
     <new-post-form />
     <div>
-      <timeline />
+      <timeline :query='query' />
     </div>
   </div>
 </template>
@@ -30,7 +30,7 @@ export default {
   components: { Timeline, KeywordSearch, NewPostForm },
   data(): Object {
     return {
-      query: { qKeyword: '' },
+      query: { qKeyword: '', qOnlyFollowings: true },
     }
   },
   created(): void {
