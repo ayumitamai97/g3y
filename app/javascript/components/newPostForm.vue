@@ -5,7 +5,7 @@
       <div class='control'>
         <textarea
           v-model='post.content'
-          placeholder="What's new?"
+          placeholder='What&apos;s new?'
           class='textarea new-post-form__textarea'
           rows='1'
           @input='expandTextarea'

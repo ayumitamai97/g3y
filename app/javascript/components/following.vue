@@ -39,8 +39,8 @@ export default {
   },
   apollo: {
     followings: {
-      query: gql`query followings ($followerId: ID, $followerName: String, $page: Int!, $pagePer: Int!) {
-        followings(followerId: $followerId, followerName: $followerName, page: $page, pagePer: $pagePer) {
+      query: gql`query followings ($followerId: ID, $followerName: String, $followingName: String, $page: Int!, $pagePer: Int!) {
+        followings(followerId: $followerId, followerName: $followerName, followingName: $followingName, page: $page, pagePer: $pagePer) {
           followingId
           followingName
         }
@@ -51,6 +51,7 @@ export default {
         return {
           page: 0,
           pagePer,
+          followingName: this.query.qUsername,
         }
       },
       // https://v4.apollo.vuejs.org/api/smart-query.html#options

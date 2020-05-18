@@ -25,6 +25,7 @@ dotenvFiles.forEach((dotenvFile) => {
 environment.plugins.prepend('Environment',
   new webpack.EnvironmentPlugin({
     HOST: process.env.HOST,
+    JP_KEYCODE: 13,
   })
 )
 
