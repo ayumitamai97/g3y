@@ -1,5 +1,12 @@
 <template>
   <div class='container'>
+    <div class='mb-20'>
+      <input
+        v-model='query.qUsername'
+        class='input is-rounded keyword-search-form__input'
+        placeholder='Username'
+      >
+    </div>
     <relationship-user
       v-for='user in users'
       :key='user.id'

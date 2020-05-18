@@ -7,20 +7,23 @@ require 'rails_helper'
 
 RSpec.describe Types::QueryType do
   describe '#relationship' do
-    let!(:user) { create(:user) }
+    let!(:followed) { create(:user) }
+    let!(:follower) { create(:user) }
     let(:query) do
       <<~GRAPHQL
-        query($id: ID!){
-          user(id: $id) {
-            name
+        query($followingId: ID!, $followerId: ID!){
+          relationship (followingId: $followingId, followerId: $followerId) {
+            id
+            followingId
           }
         }
       GRAPHQL
     end
+    before { follower.follow(user: followed) }
 
     it do
-      result = G3ySchema.execute(query, variables: { id: user.id })
-      expect(result.dig('data', 'user', 'name')).to eq user.name
+      result = G3ySchema.execute(query, variables: { followingId: followed.id, followerId: follower.id })
+      expect(result.dig('data', 'relationship', 'followingId')).to eq followed.id.to_s
     end
   end
 end

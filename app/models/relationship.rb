@@ -30,6 +30,7 @@ class Relationship < ApplicationRecord
 
   validates :following, :follower, presence: true
   validates :following, uniqueness: { scope: :follower_id, message: 'is already in your followings' }
+  validates :following, exclusion: { in: ->(rel) { [rel.follower] } }
 
   settings do
     mappings dynamic: 'false' do
