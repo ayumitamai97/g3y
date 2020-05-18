@@ -13,6 +13,9 @@ Metrics/BlockLength:
 Metrics/AbcSize:
   Max: 20
 
+Metrics/ParameterLists:
+  Max: 6
+
 Naming/MethodParameterName:
   Exclude:
     - 'app/controllers/graphql_controller.rb'
@@ -33,7 +36,6 @@ Style/HashTransformValues:
   Enabled: true
 Style/AsciiComments:
   Enabled: false
-
 
 # Cookpad styleguide
 # https://github.com/cookpad/styleguide/blob/master/.rubocop.yml

@@ -41,7 +41,7 @@ module ElasticQueries
           parent_type: parent_type,
           query: {
             bool: {
-              should: match_conditions,
+              should: match_conditions.compact,
             },
           },
         },
