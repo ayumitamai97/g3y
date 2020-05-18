@@ -43,7 +43,8 @@ export default {
 .post-user {
   position: absolute;
   border-radius: 15px;
-  margin-left: 80px;
+  margin-top: 30px;
+  margin-left: -250px;
   padding: 20px;
 
   &__image {
@@ -52,7 +53,7 @@ export default {
   }
 
   &__name {
-    width: 200px;
+    width: 150px;
     margin-left: 20px;
   }
 }

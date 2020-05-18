@@ -35,12 +35,15 @@ export default {
     return {
       post: { content: '' },
       errors: [],
+      textarea: '',
     }
   },
   methods: {
     expandTextarea(event): void {
       const { target } = event
-      target.style.height = target.scrollHeight
+      target.style.height = 'initial'
+      target.style.height = target.scrollHeight + 1 // 微調整
+      this.textarea = target
     },
     async createPost(): Promise<void> {
       const request = this.$apollo.mutate({
@@ -60,6 +63,7 @@ export default {
       if (data.createPost.post) {
         this.$store.commit('postsUpdated', Date.now())
         this.post.content = ''
+        this.textarea.style.height = 'auto'
       } else if (data.createPost.errors.length > 0) {
         this.errors = data.createPost.errors
       }

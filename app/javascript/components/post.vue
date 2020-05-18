@@ -1,10 +1,16 @@
 <template>
-  <article
-    class='post'
-    @mouseover='showUserModal'
-    @mouseleave='hideUserModal'
-  >
+  <article class='post'>
     <!-- TODO: implement avatar -->
+    <div
+      class='post__mouseover-zone--name'
+      @mouseover='showUserModal'
+      @mouseleave='hideUserModal'
+    />
+    <div
+      class='post__mouseover-zone--image'
+      @mouseover='showUserModal'
+      @mouseleave='hideUserModal'
+    />
     <figure
       class='media-left post__image'
     >
@@ -50,7 +56,7 @@ export default {
     }
   },
   methods: {
-    showUserModal(): void {
+    async showUserModal() {
       this.isUserModalActive = true
     },
     hideUserModal(): void {
@@ -82,6 +88,19 @@ export default {
 
   &__body {
     word-break: break-all;
+  }
+
+  &__mouseover-zone {
+    &--name {
+      width: 300px;
+      height: 30px;
+      position: absolute;
+    }
+    &--image {
+      width: 55px;
+      height: 55px;
+      position: absolute;
+    }
   }
 }
 </style>
