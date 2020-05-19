@@ -38,13 +38,11 @@ import Following from './following.vue'
 
 export default {
   components: { Following },
-  data(): Object {
+  data(): object {
     return {
       activeTab: 'following',
       query: {},
     }
-  },
-  computed: {
   },
   methods: {
     setActiveTab(name): void {

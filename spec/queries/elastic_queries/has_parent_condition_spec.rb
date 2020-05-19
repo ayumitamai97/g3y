@@ -72,6 +72,7 @@ RSpec.describe ElasticQueries::HasParentCondition do
             },
             { match: { content: 'test' } },
           ],
+          minimum_should_match: nil,
         },
       }
     end

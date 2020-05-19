@@ -17,12 +17,13 @@ module ElasticQueries
       raise NotImplementedError
     end
 
-    def build_or_clause
+    def build_or_clause(minimum_should_match: nil)
       return {} if invalid?
       return {} if conditions.blank?
 
-      # minimum_should_match default value varies depend on whether must condition exists or not
-      { bool: { should: conditions } }
+      # By Elasticsearch default, minimum_should_match default value
+      # varies depend on whether must condition exists or not
+      { bool: { should: conditions, minimum_should_match: minimum_should_match } }
     end
   end
 end

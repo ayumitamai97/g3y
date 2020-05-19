@@ -66,7 +66,7 @@ module Queries
         range_klass.new(field: 'created_at', gte: created_at_after, lte: created_at_before).call
 
       conditions = [posts_base_query].push(*queries_by_content, query_by_user, query_by_range).compact
-      and_clause(conditions)
+      and_clause(*conditions)
     end
 
     def meta(page:, page_per:)

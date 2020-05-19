@@ -43,6 +43,9 @@ export default {
       users: [],
     }
   },
+  created(): void {
+    this.$apollo.queries.followings.refetch()
+  },
   apollo: {
     followings: {
       query: gql`query followings ($followerId: ID, $followerName: String, $followingName: String, $page: Int!, $pagePer: Int!) {
