@@ -26,7 +26,7 @@ module Queries
         parent_type: 'user',
         match_conditions: [name_match]
       )
-      or_condition = query_by_user.append(query_by_content.call).build_or_clause
+      or_condition = query_by_user.append(query_by_content.call).build_or_clause(minimum_should_match: 1)
       and_condition = and_clause(posts_base_query)
 
       or_condition.merge(and_condition) { |_key, or_c, and_c| or_c.merge(and_c) }
