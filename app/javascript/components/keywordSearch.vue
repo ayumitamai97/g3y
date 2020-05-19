@@ -33,7 +33,6 @@
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faSearch, faEllipsisH } from '@fortawesome/free-solid-svg-icons'
 
-
 library.add(faSearch, faEllipsisH)
 
 export default {

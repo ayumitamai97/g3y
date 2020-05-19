@@ -9,6 +9,7 @@
     "apollo-link": "^1.2.14",
     "apollo-link-context": "^1.0.20",
     "apollo-link-http": "^1.5.17",
+    "aws-sdk": "^2.679.0",
     "bulma": "^0.8.2",
     "dotenv": "^8.2.0",
     "google-fonts-plugin": "^5.0.2",

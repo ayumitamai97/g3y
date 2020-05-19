@@ -96,8 +96,6 @@ export default {
         this.$apollo.queries.fuzzyPosts.refetch()
       }
     })
-    this.closeError = util.closeError.bind(this)
-    this.closeWarning = util.closeWarning.bind(this)
   },
   beforeUpdate(): void {
     this.errors = this.errors.filter((v, i, a) => a.indexOf(v) === i)

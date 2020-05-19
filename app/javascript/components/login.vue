@@ -40,7 +40,6 @@
 
 <script lang="ts">
 import jwtDecode from 'jwt-decode'
-import util from '../src/util.ts'
 import authUtil from '../src/authUtil.ts'
 import Errors from './errors.vue'
 
@@ -55,7 +54,6 @@ export default {
   created(): void {
     this.setToken = authUtil.setToken.bind(this)
     this.authenticateUser = authUtil.authenticateUser.bind(this)
-    this.closeError = util.closeError.bind(this)
   },
   methods: {
     async login(): Promise<void> {

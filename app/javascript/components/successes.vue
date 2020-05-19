@@ -1,17 +1,17 @@
 <template>
   <div
-    v-if='errors.length > 0'
-    class='notification is-danger'
+    v-if='notifications.length > 0'
+    class='notification is-success'
   >
     <button
-      class='delete m-10'
+      class='delete'
       @click='closeNotification'
     />
     <div
-      v-for='error in errors'
-      :key='error'
+      v-for='notification in notifications'
+      :key='notification'
     >
-      <p>{{ error }}</p>
+      <p>{{ notification }}</p>
     </div>
   </div>
 </template>
@@ -21,14 +21,14 @@ import util from '../src/util.ts'
 
 export default {
   props: {
-    errors: {
+    successes: {
       type: Array,
       default: (): string[] => [],
     },
   },
   data(): object {
     return {
-      notifications: this.errors,
+      notifications: this.successes,
     }
   },
   created(): void {

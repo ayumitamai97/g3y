@@ -1,12 +1,8 @@
 <template>
   <div>
-    <div class='columns'>
-      <div class='column is-12'>
-        <h1 class='title is-size-2 has-text-grey-dark'>
-          Relationship
-        </h1>
-      </div>
-    </div>
+    <h2 class='title is-size-2 has-text-grey-dark'>
+      Relationship
+    </h2>
     <div class='tabs is-centered is-large is-fullwidth'>
       <ul>
         <li

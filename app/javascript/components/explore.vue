@@ -2,9 +2,9 @@
   <div>
     <div class='columns'>
       <div class='column is-4'>
-        <h1 class='title is-size-2 has-text-grey-dark'>
+        <h2 class='title is-size-2 has-text-grey-dark'>
           Explore
-        </h1>
+        </h2>
       </div>
       <div class='column is-8'>
         <keyword-search
