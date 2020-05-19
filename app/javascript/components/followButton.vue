@@ -19,18 +19,18 @@ export default {
   props: {
     followingId: {
       type: String,
-      default: () => {},
+      default: null,
     },
   },
-  data() {
+  data(): object {
     return {
       followStatus: 'following',
       followStatusText: 'Following',
     }
   },
   computed: {
-    followButtonClassName(): String {
-      const classNameMapper: Object = {
+    followButtonClassName(): string {
+      const classNameMapper: object = {
         Follow: 'is-primary is-outlined',
         Following: 'is-primary is-outlined',
         Unfollow: 'is-danger',
@@ -39,7 +39,7 @@ export default {
       return classNameMapper[this.followStatusText]
     },
   },
-  created() {
+  created(): void {
     this.$apollo.queries.relationship.refetch()
   },
   apollo: {
@@ -49,7 +49,7 @@ export default {
           id
         }
       }`,
-      variables(): Object {
+      variables(): object {
         return {
           followingId: this.followingId,
         }

@@ -22,7 +22,7 @@ export default {
   props: {
     item: {
       type: Object,
-      default: () => ({ id: '', name: '' }),
+      default: (): object => ({ id: '', name: '' }),
     },
   },
 }

@@ -68,7 +68,7 @@ export default {
       }`,
       // ref. Reactive parameters
       // https://apollo.vuejs.org/guide/apollo/queries.html#reactive-parameters
-      variables(): Object {
+      variables(): object {
         return {
           contentOr: this.query.qContentOr,
           contentAnd: this.query.qContentAnd,
@@ -90,7 +90,7 @@ export default {
           this.warnings = []
         }
       },
-      error(error) {
+      error(error): void {
         this.errors.push(error.toString())
       },
     },

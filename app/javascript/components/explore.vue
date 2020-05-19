@@ -39,7 +39,7 @@ export default {
       advSearchComponentKey: 0,
     }
   },
-  beforeRouteEnter(route, redirect, next) {
+  beforeRouteEnter(route, redirect, next): void {
     next((vm: any) => {
       vm.setQuery(route.query)
       if (route.query.queryField) {

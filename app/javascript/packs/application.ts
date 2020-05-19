@@ -69,7 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     mutations: {
       setUserName(state, userName): void {
-        // TODO: camel calse !!
         state.userName = userName
       },
       postsUpdated(state, datetime): void {
@@ -93,6 +92,6 @@ document.addEventListener('DOMContentLoaded', () => {
     router,
     store,
     apolloProvider,
-    render: (h) => h(App),
+    render: (h): any => h(App),
   })
 })

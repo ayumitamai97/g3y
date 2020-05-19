@@ -23,7 +23,7 @@ export default {
   props: {
     warnings: {
       type: Array,
-      default: () => [],
+      default: (): string[] => [],
     },
   },
   created(): void {

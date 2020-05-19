@@ -31,7 +31,7 @@ export default {
   props: {
     query: {
       type: Object,
-      default: (): Object => ({
+      default: (): object => ({
         qContentOr: '',
         qContentAnd: '',
         qUsername: '',
@@ -45,7 +45,7 @@ export default {
       default: 'posts',
     },
   },
-  data(): Object {
+  data(): object {
     return {
       page: 0,
       showMoreEnabled: true,
@@ -67,7 +67,7 @@ export default {
       }`,
       // ref. Reactive parameters
       // https://apollo.vuejs.org/guide/apollo/queries.html#reactive-parameters
-      variables(): Object {
+      variables(): object {
         return {
           keywords: this.query.qKeyword,
           page: 0,
@@ -83,7 +83,7 @@ export default {
           this.warnings = []
         }
       },
-      error(error) {
+      error(error): void {
         this.errors.push(error.toString())
       },
     },
@@ -113,7 +113,7 @@ export default {
           page: this.page,
           pagePer,
         },
-        updateQuery: (previousResult, { fetchMoreResult }): Object => {
+        updateQuery: (previousResult, { fetchMoreResult }): object => {
           this.changeInfiniteState($state, fetchMoreResult.fuzzyPosts.length)
 
           return { fuzzyPosts: [...previousResult.fuzzyPosts, ...fetchMoreResult.fuzzyPosts] }
