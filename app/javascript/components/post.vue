@@ -47,16 +47,16 @@ export default {
   props: {
     item: {
       type: Object,
-      default: () => {},
+      default: (): object => ({}),
     },
   },
-  data() {
+  data(): object {
     return {
       isUserModalActive: false,
     }
   },
   methods: {
-    async showUserModal() {
+    showUserModal(): void {
       this.isUserModalActive = true
     },
     hideUserModal(): void {

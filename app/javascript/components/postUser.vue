@@ -25,11 +25,11 @@ export default {
   props: {
     item: {
       type: Object,
-      default: () => ({ id: '', name: '' }),
+      default: (): object => ({ id: '', name: '' }),
     },
   },
   computed: {
-    myUsername(): String {
+    myUsername(): string {
       return this.$store.state.userName
     },
     isMyself(): Boolean {
