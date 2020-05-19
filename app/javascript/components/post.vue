@@ -2,15 +2,16 @@
   <article class='post'>
     <!-- TODO: implement avatar -->
     <div
-      class='post__mouseover-zone--name'
       @mouseover='showUserModal'
       @mouseleave='hideUserModal'
-    />
-    <div
-      class='post__mouseover-zone--image'
-      @mouseover='showUserModal'
-      @mouseleave='hideUserModal'
-    />
+    >
+      <div class='post__mouseover-zone--image' />
+      <div class='post__mouseover-zone--name' />
+      <post-user
+        v-show='isUserModalActive'
+        :item='item.user'
+      />
+    </div>
     <figure
       class='media-left post__image'
     >
@@ -32,10 +33,6 @@
         {{ item.content }}
       </div>
     </div>
-    <post-user
-      v-show='isUserModalActive'
-      :item='item.user'
-    />
   </article>
 </template>
 
@@ -92,8 +89,8 @@ export default {
 
   &__mouseover-zone {
     &--name {
-      width: 300px;
-      height: 30px;
+      width: 200px;
+      height: 35px;
       position: absolute;
     }
     &--image {
