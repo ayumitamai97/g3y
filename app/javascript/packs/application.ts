@@ -17,6 +17,7 @@ import Login from '../components/login.vue'
 import Signup from '../components/signup.vue'
 import Explore from '../components/explore.vue'
 import Relationship from '../components/relationship.vue'
+import Profile from '../components/profile.vue'
 
 document.addEventListener('DOMContentLoaded', () => {
   Vue.use(VueRouter)
@@ -33,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { path: '/signup', component: Signup },
     { path: '/explore', component: Explore },
     { path: '/relationship', component: Relationship },
+    { path: '/profile', component: Profile },
   ]
 
   const router = new VueRouter({
