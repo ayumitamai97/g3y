@@ -1,5 +1,5 @@
 <template>
-  <div class='container'>
+  <div class='container profile'>
     <h2 class='title is-size-2 has-text-grey-dark'>
       Your Profile
     </h2>
@@ -28,7 +28,10 @@
     </div>
     <div class='field'>
       <div class='control'>
-        <img :src='imageSrc'>
+        <img
+          :src='imageSrc'
+          class='profile__image'
+        >
       </div>
     </div>
   </div>
@@ -51,6 +54,9 @@ export default {
       notifications: [],
       imageSrc: '',
     }
+  },
+  created(): void {
+    this.$apollo.queries.user.refetch()
   },
   apollo: {
     user: {
@@ -107,3 +113,11 @@ export default {
   },
 }
 </script>
+
+<style lang='sass'>
+.profile {
+  &__image {
+    width: 300px;
+  }
+}
+</style>
