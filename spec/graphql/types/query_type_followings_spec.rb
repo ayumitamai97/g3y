@@ -21,7 +21,7 @@ RSpec.describe Types::QueryType do
     end
 
     before do
-      sleep 1.5
+      sleep 2
       follower_user.follow(user: followed_user)
       sleep 2
     end
