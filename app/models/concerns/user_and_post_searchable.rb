@@ -12,7 +12,7 @@ module UserAndPostSearchable
   INDEX_NAME = "users_and_posts_#{Rails.env}"
   SETTINGS = {
     index: { number_of_shards: 5, number_of_replicas: 0 },
-    analysis: { analyzer: 'kuromoji' }
+    analysis: { analyzer: 'kuromoji' },
   }.freeze
 
   def create_index!(options = {})

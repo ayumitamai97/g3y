@@ -157,6 +157,7 @@ RSpec.describe Types::QueryType do
     let!(:user) { create(:user) }
 
     before do
+      sleep 1.5
       ActiveRecord::Base.transaction do
         user.posts.create!(content: 'apple banana cherry dragonfruit')
         user.posts.create!(content: 'apple banana dragonfruit')
@@ -217,6 +218,7 @@ RSpec.describe Types::QueryType do
     let!(:user) { create(:user, name: name) }
 
     before do
+      sleep 1.5
       ActiveRecord::Base.transaction do
         user.posts.create!(content: 'apple banana cherry dragonfruit')
         user.posts.create!(content: 'apple banana dragonfruit')
