@@ -99,7 +99,9 @@ export default {
     this.$apollo.queries.posts.refetch()
     this.$store.subscribe(async (mutation) => {
       if (mutation.type === 'postsUpdated' || mutation.type === 'relationshipUpdated') {
-        await util.sleep(1500)
+        await util.sleep(1000)
+        this.$apollo.queries.posts.refetch()
+        await util.sleep(1000)
         this.$apollo.queries.posts.refetch()
       }
     })
