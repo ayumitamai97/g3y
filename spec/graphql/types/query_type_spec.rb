@@ -26,4 +26,8 @@ RSpec.describe Types::QueryType do
       expect(result.dig('data', 'relationship', 'followingId')).to eq followed.id.to_s
     end
   end
+
+  describe '#user' do
+    # TODO
+  end
 end

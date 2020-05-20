@@ -1,6 +1,5 @@
 <template>
   <article class='post'>
-    <!-- TODO: implement avatar -->
     <div
       @mouseover='showUserModal'
       @mouseleave='hideUserModal'
@@ -15,10 +14,7 @@
     <figure
       class='media-left post__image'
     >
-      <img
-        alt='avatar'
-        src='https://pbs.twimg.com/profile_images/1127137125114056705/grUfEmX__400x400.jpg'
-      >
+      <user-avatar :user-id='item.user.id' />
     </figure>
     <div class='media-content post__content'>
       <div
@@ -38,9 +34,10 @@
 
 <script lang='ts'>
 import PostUser from './postUser.vue'
+import UserAvatar from './userAvatar.vue'
 
 export default {
-  components: { PostUser },
+  components: { PostUser, UserAvatar },
   props: {
     item: {
       type: Object,
@@ -66,7 +63,6 @@ export default {
 <style lang='sass'>
 .post {
   &__image {
-    // TODO: allow users to upload avatar
     height: 50px;
     width: 50px;
   }

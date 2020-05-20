@@ -16,5 +16,13 @@ module Types
     def relationship(follower_id: nil, following_id:)
       Relationship.find_by(follower_id: follower_id || current_user.id, following_id: following_id)
     end
+
+    field :user, UserType, null: true do
+      argument :id, ID, required: false
+    end
+
+    def user(id: nil)
+      User.find_by(id: id) || current_user
+    end
   end
 end

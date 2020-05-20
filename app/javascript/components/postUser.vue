@@ -1,11 +1,7 @@
 <template>
   <article class='post-user level-left card'>
     <figure class='post-user__image'>
-      <!-- TODO: implement avatar -->
-      <img
-        alt='avatar'
-        src='https://pbs.twimg.com/profile_images/1127137125114056705/grUfEmX__400x400.jpg'
-      >
+      <user-avatar :user-id='item.id' />
     </figure>
     <div class='post-user__name has-text-weight-bold'>
       {{ item.name }}
@@ -19,9 +15,10 @@
 
 <script lang='ts'>
 import FollowButton from './followButton.vue'
+import UserAvatar from './userAvatar.vue'
 
 export default {
-  components: { FollowButton },
+  components: { FollowButton, UserAvatar },
   props: {
     item: {
       type: Object,

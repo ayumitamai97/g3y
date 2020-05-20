@@ -37,16 +37,6 @@ environment.plugins.prepend(
   new GoogleFontsPlugin({
     fonts: [
       {
-        family: 'Noto Sans JP',
-        variants: [
-          '400',
-          '700',
-        ],
-        "subsets": [
-          "japanese"
-        ]
-      },
-      {
         family: 'Lato',
         variants: [
           '400',
