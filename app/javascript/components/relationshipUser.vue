@@ -19,7 +19,7 @@ export default {
   props: {
     item: {
       type: Object,
-      default: (): object => ({ id: '', name: '' }),
+      default: (): object => ({ id: '', name: '', avatarKey: '' }),
     },
   },
 }

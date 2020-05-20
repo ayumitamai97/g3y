@@ -63,6 +63,7 @@ export default {
           user {
             id
             name
+            avatarKey
           }
         }
       }`,

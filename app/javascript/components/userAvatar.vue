@@ -15,10 +15,30 @@ export default {
       type: String,
       default: null,
     },
+    avatarKey: {
+      type: String,
+      default: null,
+    },
   },
   data(): object {
     return {
       imageSrc: '',
+      skipFetchAvatar: true,
+    }
+  },
+  computed: {
+    defaultIconSrc(): string {
+      return `https://${process.env.AWS_BUCKET}.s3-${process.env.AWS_REGION}.amazonaws.com/icons/default.png`
+    },
+  },
+  created(): void {
+    if (this.avatarKey && this.avatarKey !== '') {
+      this.imageSrc = `https://${process.env.AWS_BUCKET}.s3-${process.env.AWS_REGION}.amazonaws.com/${this.avatarKey}`
+    } else if (this.userId) {
+      this.$apollo.queries.user.skip = false
+      this.$apollo.queries.user.refetch()
+    } else {
+      this.imageSrc = this.defaultIconSrc
     }
   },
   apollo: {
@@ -35,13 +55,15 @@ export default {
       },
       result({ data }): void {
         if (!data) return
-        const { avatarKey } = data.user
-        if (avatarKey) {
-          this.imageSrc = `https://${process.env.AWS_BUCKET}.s3-${process.env.AWS_REGION}.amazonaws.com/${avatarKey}`
+
+        const fetchedAvatarKey = data.user.avatarKey
+        if (fetchedAvatarKey) {
+          this.imageSrc = `https://${process.env.AWS_BUCKET}.s3-${process.env.AWS_REGION}.amazonaws.com/${fetchedAvatarKey}`
         } else {
-          this.imageSrc = `https://${process.env.AWS_BUCKET}.s3-${process.env.AWS_REGION}.amazonaws.com/icons/default.png`
+          this.imageSrc = this.defaultIconSrc
         }
       },
+      skip: true,
     },
   },
 }
