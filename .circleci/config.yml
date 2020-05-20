@@ -186,8 +186,7 @@ jobs:
 
       - run:
           name: RSpec
-          # 罪深い設定
-          command: bundle exec rspec spec/ || bundle exec rspec spec/ --only-failures
+          command: bundle exec rspec spec/
 
 workflows:
   version: 2
