@@ -11,6 +11,7 @@ module RelationshipSearchable
 
   INDEX_NAME = "followings_#{Rails.env}"
   SETTINGS = {
+    index: { number_of_shards: 5, number_of_replicas: 0 },
     analysis: {
       analyzer: {
         trigram: {

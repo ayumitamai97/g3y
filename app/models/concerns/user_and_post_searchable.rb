@@ -10,7 +10,10 @@ module UserAndPostSearchable
   module_function
 
   INDEX_NAME = "users_and_posts_#{Rails.env}"
-  SETTINGS = { analysis: { analyzer: 'kuromoji' } }.freeze
+  SETTINGS = {
+    index: { number_of_shards: 5, number_of_replicas: 0 },
+    analysis: { analyzer: 'kuromoji' }
+  }.freeze
 
   def create_index!(options = {})
     delete_index if options.delete(:force)
