@@ -29,6 +29,7 @@
     <div class='field'>
       <div class='control'>
         <img
+          v-if='imageSrc'
           :src='imageSrc'
           class='profile__image'
         >

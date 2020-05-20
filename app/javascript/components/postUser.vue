@@ -1,7 +1,7 @@
 <template>
   <article class='post-user level-left card'>
     <figure class='post-user__image'>
-      <user-avatar :user-id='item.id' />
+      <user-avatar :avatar-key='item.avatarKey' />
     </figure>
     <div class='post-user__name has-text-weight-bold'>
       {{ item.name }}
@@ -22,7 +22,7 @@ export default {
   props: {
     item: {
       type: Object,
-      default: (): object => ({ id: '', name: '' }),
+      default: (): object => ({ id: '', name: '', avatarKey: '' }),
     },
   },
   computed: {

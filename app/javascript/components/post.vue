@@ -14,7 +14,7 @@
     <figure
       class='media-left post__image'
     >
-      <user-avatar :user-id='item.user.id' />
+      <user-avatar :avatar-key='item.user.avatarKey' />
     </figure>
     <div class='media-content post__content'>
       <div
