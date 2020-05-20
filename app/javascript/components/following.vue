@@ -95,6 +95,7 @@ export default {
         updateQuery: (previousResult, { fetchMoreResult }): object => {
           this.changeInfiniteState($state, fetchMoreResult.followings.length)
 
+          if (!fetchMoreResult) { return { followings: previousResult.followings } }
           return { followings: [...previousResult.followings, ...fetchMoreResult.followings] }
         },
       })

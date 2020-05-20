@@ -5,6 +5,7 @@
 # Table name: users
 #
 #  id              :bigint           not null, primary key
+#  avatar_key      :string(255)
 #  email           :string(255)      default(""), not null
 #  name            :string(255)      not null
 #  password_digest :string(255)      default(""), not null
@@ -49,7 +50,7 @@ class User < ApplicationRecord
             uniqueness: { case_sensitive: false },
             format: { with: VALID_EMAIL_REGEX, message: 'should be properly formatted like name@example.com' },
             allow_blank: true
-  validates :password, length: { minimum: 8 }
+  validates :password, length: { minimum: 8 }, allow_blank: true
 
   # ref. https://github.com/elastic/elasticsearch-rails/blob/master/elasticsearch-model/spec/support/app/parent_and_child_searchable.rb
   JOIN_TYPE = 'user'

@@ -49,6 +49,11 @@
                 </router-link>
               </li>
               <li>
+                <router-link :to='"/profile"'>
+                  Profile
+                </router-link>
+              </li>
+              <li>
                 <a
                   class='has-text-grey-light'
                   @click='logout'

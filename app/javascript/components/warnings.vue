@@ -5,7 +5,7 @@
   >
     <button
       class='delete'
-      @click='closeWarning'
+      @click='closeNotification'
     />
     <div
       v-for='warning in warnings'
@@ -26,8 +26,13 @@ export default {
       default: (): string[] => [],
     },
   },
+  data(): object {
+    return {
+      notifications: this.warnings,
+    }
+  },
   created(): void {
-    this.closeWarning = util.closeWarning.bind(this)
+    this.closeNotification = util.closeNotification.bind(this)
   },
 }
 </script>

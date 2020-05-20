@@ -11,12 +11,15 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import VueApollo from 'vue-apollo'
 import InfiniteLoading from 'vue-infinite-loading'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import * as AWS from 'aws-sdk/global'
+import * as S3 from 'aws-sdk/clients/s3'
 import App from '../components/app.vue'
 import Home from '../components/home.vue'
 import Login from '../components/login.vue'
 import Signup from '../components/signup.vue'
 import Explore from '../components/explore.vue'
 import Relationship from '../components/relationship.vue'
+import Profile from '../components/profile.vue'
 
 document.addEventListener('DOMContentLoaded', () => {
   Vue.use(VueRouter)
@@ -33,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { path: '/signup', component: Signup },
     { path: '/explore', component: Explore },
     { path: '/relationship', component: Relationship },
+    { path: '/profile', component: Profile },
   ]
 
   const router = new VueRouter({
@@ -84,6 +88,20 @@ document.addEventListener('DOMContentLoaded', () => {
   // FontAwesome
   Vue.component('font-awesome-icon', FontAwesomeIcon)
   Vue.config.productionTip = false
+
+  const credentials = new AWS.CognitoIdentityCredentials({
+    IdentityPoolId: process.env.S3_IDENTITY_POOL_ID,
+  })
+  AWS.config.update({
+    region: process.env.AWS_REGION,
+    credentials,
+  })
+  const s3 = new S3({
+    apiVersion: '2006-03-01',
+    region: process.env.AWS_REGION,
+    credentials,
+  })
+  Vue.prototype.$s3 = s3
 
   new Vue({
     el: '#app',

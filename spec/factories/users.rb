@@ -5,6 +5,7 @@
 # Table name: users
 #
 #  id              :bigint           not null, primary key
+#  avatar_key      :string(255)
 #  email           :string(255)      default(""), not null
 #  name            :string(255)      not null
 #  password_digest :string(255)      default(""), not null

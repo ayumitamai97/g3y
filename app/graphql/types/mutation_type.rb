@@ -2,6 +2,7 @@
 
 module Types
   class MutationType < Types::BaseObject
+    field :update_user, mutation: Mutations::UpdateUser
     field :unfollow_user, mutation: Mutations::UnfollowUser
     field :follow_user, mutation: Mutations::FollowUser
     field :create_post, mutation: Mutations::CreatePost

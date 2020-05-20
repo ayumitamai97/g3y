@@ -26,6 +26,9 @@ environment.plugins.prepend('Environment',
   new webpack.EnvironmentPlugin({
     HOST: process.env.HOST,
     JP_KEYCODE: 13,
+    S3_IDENTITY_POOL_ID: process.env.G3Y_S3_IDENTITY_POOL_ID,
+    AWS_REGION: process.env.G3Y_AWS_REGION,
+    AWS_BUCKET: process.env.G3Y_AWS_BUCKET,
   })
 )
 
@@ -33,16 +36,6 @@ environment.plugins.prepend(
   'Provide',
   new GoogleFontsPlugin({
     fonts: [
-      {
-        family: 'Noto Sans JP',
-        variants: [
-          '400',
-          '700',
-        ],
-        "subsets": [
-          "japanese"
-        ]
-      },
       {
         family: 'Lato',
         variants: [

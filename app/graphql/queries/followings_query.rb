@@ -27,7 +27,7 @@ module Queries
     def query(follower_id: nil, follower_name: nil, following_name: nil)
       or_condition = match_klass.new(follower_name: follower_name)
                                 .append(match_klass.new(follower_id: follower_id).call)
-                                .build_or_clause
+                                .build_or_clause(minimum_should_match: 1)
 
       and_condition = and_clause(match_klass.new(following_name: following_name).call)
 
