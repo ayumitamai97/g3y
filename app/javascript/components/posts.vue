@@ -121,6 +121,7 @@ export default {
         updateQuery: (previousResult, { fetchMoreResult }): Object => {
           this.changeInfiniteState($state, fetchMoreResult.posts.length)
 
+          if (!fetchMoreResult) { return { posts: previousResult.posts } }
           return { posts: [...previousResult.posts, ...fetchMoreResult.posts] }
         },
       })
