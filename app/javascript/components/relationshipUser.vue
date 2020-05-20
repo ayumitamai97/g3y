@@ -1,11 +1,7 @@
 <template>
   <article class='user'>
     <figure class='media-left user__image'>
-      <!-- TODO: implement avatar -->
-      <img
-        alt='avatar'
-        src='https://pbs.twimg.com/profile_images/1127137125114056705/grUfEmX__400x400.jpg'
-      >
+      <user-avatar :user-id='item.id' />
     </figure>
     <div class='media-content user__name has-text-weight-bold'>
       {{ item.name }}
@@ -16,9 +12,10 @@
 
 <script lang='ts'>
 import FollowButton from './followButton.vue'
+import UserAvatar from './userAvatar.vue'
 
 export default {
-  components: { FollowButton },
+  components: { FollowButton, UserAvatar },
   props: {
     item: {
       type: Object,
@@ -31,7 +28,6 @@ export default {
 <style lang='sass'>
 .user {
   &__image {
-    // TODO: allow users to upload avatar
     height: 50px;
     width: 50px;
   }
