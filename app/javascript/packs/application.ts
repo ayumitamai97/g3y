@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Apollo
   // ref. https://github.com/vuejs/vue-apollo/issues/144#issuecomment-522945282
-  const httpLink = createHttpLink({ uri: `${process.env.HOST}/graphql` })
+  const httpLink = createHttpLink({ uri: `${process.env.SERVER_HOST}/graphql` })
   const authLink = setContext((_, { headers }) => {
     const token = localStorage.getItem('access')
     return {

@@ -24,7 +24,7 @@ dotenvFiles.forEach((dotenvFile) => {
 // https://webpack.js.org/plugins/environment-plugin/#usage-with-default-values
 environment.plugins.prepend('Environment',
   new webpack.EnvironmentPlugin({
-    HOST: process.env.HOST,
+    SERVER_HOST: process.env.SERVER_HOST,
     JP_KEYCODE: 13,
     S3_IDENTITY_POOL_ID: process.env.G3Y_S3_IDENTITY_POOL_ID,
     AWS_REGION: process.env.G3Y_AWS_REGION,
