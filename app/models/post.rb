@@ -28,7 +28,7 @@ class Post < ApplicationRecord
 
   JOIN_TYPE = 'post'
   settings do
-    mappings dynamic: 'false' do
+    mappings do
       indexes :content, analyzer: 'kuromoji', index_options: 'offsets'
     end
   end
