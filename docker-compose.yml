@@ -8,6 +8,15 @@ services:
       MYSQL_USER: root
       MYSQL_DATABASE: g3y_development
 
+  elasticsearch:
+    image: ayumitamai97/elastic-kuromoji:7.6.2
+    ports:
+      - '9200:9200'
+    environment:
+      node.name: es01
+      cluster.initial_master_nodes: es01
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+
   web:
     build: .
     entrypoint:
@@ -16,16 +25,19 @@ services:
       - 120s
       - -wait
       - tcp://db:3306
-    command: bundle exec rails s -p 3000 -b 0.0.0.0
+      - -wait
+      - tcp://elasticsearch:9200
+    command: sh -c 'bin/setup && rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b 0.0.0.0'
     volumes:
       - .:/g3y
     ports:
-      - "3000:3000"
+      - '3000:3000'
     depends_on:
       - db
     environment:
       DOCKER_DB_HOST: db
       DOCKER_WEBPACKER_HOST: frontend
+      DOCKER_ELASTICSEARCH_HOST: elasticsearch:9200
 
   frontend:
     build: .
@@ -33,4 +45,4 @@ services:
     volumes:
       - .:/g3y
     ports:
-      - "3035:3035"
+      - '3035:3035'

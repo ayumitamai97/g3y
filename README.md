@@ -105,4 +105,8 @@ $ bin/webpack-dev-server
 ```
 
 # docker-compose
-TODO
+```
+$ docker-compose build
+$ docker-compose up
+$ # Otherwise: docker-compose up --build
+```

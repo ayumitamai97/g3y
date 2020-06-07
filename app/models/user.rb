@@ -56,6 +56,8 @@ class User < ApplicationRecord
   JOIN_TYPE = 'user'
   JOIN_METADATA = { relation_type: JOIN_TYPE }.freeze
 
+  # FIXME: settings/mappings を正確に定義しておかないと初回index時の挙動がおかしい？
+
   after_commit -> { __elasticsearch__.index_document  }, on: :create
   after_commit -> { __elasticsearch__.update_document }, on: :update
   after_commit -> { __elasticsearch__.delete_document }, on: :destroy

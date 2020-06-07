@@ -61,7 +61,7 @@ development:
   # Reference: https://webpack.js.org/configuration/dev-server/
   dev_server:
     https: false
-    host: frontend # TODO: frontend or localhost
+    host: frontend # Replace with either localhost or frontend
     port: 3035
     public: localhost:3035
     hmr: false

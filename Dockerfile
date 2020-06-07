@@ -1,7 +1,9 @@
 FROM ruby:2.6.5
 
 RUN apt-get update && apt-get upgrade -y && apt-get install git
+
 ENV DOCKERIZE_VERSION v0.6.1
+
 RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
@@ -16,7 +18,6 @@ RUN bundle
 
 ENV NODE_VERSION 12.16.0
 
-# install nodejs
 RUN curl --compressed "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" > /tmp/node.tar.xz && \
   tar -xJf /tmp/node.tar.xz -C /usr/local --strip-components=1 && \
   ln -s /usr/local/bin/node /usr/local/bin/nodejs && \
